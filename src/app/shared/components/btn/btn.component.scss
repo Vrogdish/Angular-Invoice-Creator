@@ -21,6 +21,7 @@ button {
 
 .secondary {
   background-color: $color-btn-secondary;
+  color: $color-text-dark;
   &:hover {
     background-color: $color-btn-hover;
   }

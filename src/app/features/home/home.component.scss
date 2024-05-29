@@ -1,0 +1,22 @@
+.home {
+  margin: auto;
+
+  .hero {
+    img {
+      object-fit: cover;
+      height: 100%;
+      width: 100%;
+    }
+    .title {
+      padding: 20px;
+      h1 {
+        font-size: 2rem;
+        margin-bottom: 20px;
+      }
+    }
+  }
+  .cta {
+    width: 300px;
+    margin: 40px auto;
+  }
+}

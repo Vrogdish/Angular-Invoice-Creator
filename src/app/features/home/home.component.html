@@ -1,11 +1,18 @@
-<p>home works!</p>
-
-<div style="width: 200px ; display: flex; flex-direction: column; gap: 10px;">
-  <app-btn theme="primary" title="primary" />
-  <app-btn theme="secondary" title="secondary"/>
-  <app-btn theme="submit" title="submit"/>
-  <app-btn theme="disabled" title="disabled" />
-  <app-btn theme="loading" title="loading"/>
-  <app-btn theme="cancel" title="cancel" />
-  <app-btn theme="alert"  title="alert"/>
+<div class="home">
+  <div class="hero">
+    <img src="images/hero.webp" alt="bureau" />
+    <div class="title">
+      <h1>Créer vos factures en quelques clic !</h1>
+      <p>
+        Gérer votre liste de produits et clients, et créer vos factures au
+        format PDF
+      </p>
+    </div>
+  </div>
+  <div class="cta">
+    <app-btn *ngIf="!user else Auth " title="Se connecter / S'inscrire" theme="secondary" routerLink="/signin" />
+    <ng-template #Auth>
+      <app-btn title="Créer une facture" theme="secondary" routerLink="/invoices/create" />
+    </ng-template>
+  </div>
 </div>
