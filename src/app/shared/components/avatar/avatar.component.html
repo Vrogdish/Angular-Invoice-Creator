@@ -1,0 +1,6 @@
+<div class="avatar" [ngClass]="size">
+    <img *ngIf="user && user.photoURL; else defaultImage" src="{{user.photoURL}}" alt="profile">
+    <ng-template #defaultImage>
+        <img src="images/user.jpg" alt="profile">
+    </ng-template>
+</div>

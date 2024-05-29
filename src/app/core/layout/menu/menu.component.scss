@@ -1,0 +1,23 @@
+.menu {
+    display: flex;
+    flex-direction: column;
+    gap : 20px;
+    padding: 40px 20px;
+    a {
+        display: flex;
+        align-items: center;
+        gap :20px;
+    }
+
+    img {
+        width: 30px;
+        height: 30px;
+    }
+}
+
+.login-btn {
+   display: flex;
+   justify-content: center;
+   margin-top: 20px;
+}
+

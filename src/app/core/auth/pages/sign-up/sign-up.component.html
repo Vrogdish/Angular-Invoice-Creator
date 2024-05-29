@@ -1,0 +1,41 @@
+<div class="signup">
+  <h1>Création de compte</h1>
+  <form [formGroup]="signupForm" (ngSubmit)="onSubmit()">
+    <div class="form-group">
+      <label for="lastname">Nom :</label>
+      <input type="text" formControlName="lastname" id="lastname" required />
+    </div>
+    <div class="form-group">
+      <label for="firstname">Prénom :</label>
+      <input type="text" formControlName="firstname" id="firstname" required />
+    </div>
+    <div class="form-group">
+      <label for="email">Email :</label>
+      <input type="email" formControlName="email" id="email" required />
+    </div>
+    <div class="form-group">
+      <label for="password">Mot de passe :</label>
+      <input
+        type="password"
+        formControlName="password"
+        id="password"
+        required
+      />
+    </div>
+    <div class="form-group">
+      <label for="confirm">Confirmer le mot de passe :</label>
+      <input
+        type="password"
+        formControlName="confirmPassword"
+        id="confirm"
+        required
+      />
+    </div>
+    <div class="signup-btn">
+    <app-btn *ngIf="!isLoading ; else loading" title="S'enregistrer" theme="submit" /></div>
+    <ng-template #loading>
+      <app-btn  title="Chargement ..." theme="loading" />
+    </ng-template>
+  </form>
+  <p class="error-message">{{errorMessage}}</p>
+</div>

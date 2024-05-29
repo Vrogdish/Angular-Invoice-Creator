@@ -1,0 +1,30 @@
+.login {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+  max-width: 600px;
+  margin: auto;
+  padding: 10px;
+  h1 {
+    margin: 20px 0;
+  }
+
+  &-btn {
+    width: 300px;
+    margin: 20px auto;
+  }
+  h2 {
+    margin-top: 40px;
+  }
+}
+
+.reset {
+  cursor: pointer;
+}
+
+.error-message {
+  height: 20px;
+  color: red;
+  margin-top: 10px;
+}

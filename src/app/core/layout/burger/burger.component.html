@@ -1,0 +1,12 @@
+<div
+  class="burger-nav"
+  [ngClass]="{ 
+    'burger-close' : menuIsOpen,
+   }"
+  (click)="toggleMenu()"
+>
+  <div class="burger-bar"></div>
+</div>
+<div class="mobile-menu" [ngClass]="{ show: menuIsOpen }">
+  <app-menu (close)="toggleMenu()" />
+</div>

@@ -1,0 +1,17 @@
+<header>
+  <app-burger />
+  <p class="title">Gestion de factures</p>
+
+  <div *ngIf="user$ | async as user; else login" routerLink="profile" class="avatar">
+    <app-avatar [user]="user" size="small"/>
+  </div>
+
+  <ng-template #login>
+    <img
+      src="icons/login.png"
+      alt="connexion"
+      class="login-icon"
+      routerLink="signin"
+    />
+  </ng-template>
+</header>

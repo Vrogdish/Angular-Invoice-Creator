@@ -1,0 +1,32 @@
+<div class="login">
+  <h1>Se connecter</h1>
+  <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+    <div class="form-group">
+      <label for="email">Email :</label>
+      <input type="email" id="email" formControlName="email" required />
+    </div>
+    <div class="form-group">
+      <label for="password">Mot de passe :</label>
+      <input
+        type="password"
+        id="password"
+        formControlName="password"
+        required
+      />
+    </div>
+    <div class="login-btn">
+      <app-btn *ngIf="!isLoading else loading" title="Connexion" theme="submit" />
+      <ng-template #loading>
+        <app-btn  title="Chargement ..." theme="loading" />
+      </ng-template>
+    </div>
+  </form>
+  <a class="reset" routerLink="/reset">Mot de passe oublié ?</a>
+  <div class="error-message">
+    <p *ngIf="errorMessage">{{errorMessage}}</p>
+  </div>
+  <h2>Pas encore inscrit ?</h2>
+  <div class="login-btn">
+    <app-btn title="Créer un compte" routerLink="/signup" theme="secondary"></app-btn>
+  </div>
+</div>

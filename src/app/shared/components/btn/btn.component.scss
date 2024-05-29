@@ -1,0 +1,46 @@
+@import "../../../shared/styles/colors.scss";
+
+button {
+  color: $color-text-light;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  display: block;
+  width: 100%;
+}
+
+.primary,
+.submit {
+  background-color: $color-btn-primary;
+  &:hover {
+    background-color: $color-btn-hover;
+  }
+}
+
+.secondary {
+  background-color: $color-btn-secondary;
+  &:hover {
+    background-color: $color-btn-hover;
+  }
+}
+
+.disabled,
+.loading {
+  background-color: $color-btn-disabled;
+  cursor: not-allowed;
+}
+
+.alert {
+  background-color: $color-btn-alert;
+  &:hover {
+    background-color: darken($color-btn-alert, 10%);
+  }
+}
+.cancel {
+  background-color: $color-btn-secondary;
+  &:hover {
+    background-color: $color-btn-hover;
+  }
+}

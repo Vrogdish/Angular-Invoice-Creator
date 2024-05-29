@@ -1,0 +1,40 @@
+@import "../../shared/styles/colors.scss";
+
+.profile {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  max-width: 600px;
+  margin: auto;
+  &-photo {
+    margin: 40px auto;
+    p {
+      text-align: center;
+      margin: 10px 0;
+    }
+  }
+  .content {
+    margin: 10px 20px ;
+    .item {
+      display: flex;
+      gap: 30px;
+      align-items: center;
+    }
+    .icon {
+      width: 30px;
+      height: 30px;
+    }
+  }
+  h1 {
+    margin: 20px 0;
+    text-align: center;
+  }
+  
+  &-btn {
+    width: 300px;
+    margin: 60px auto;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+}

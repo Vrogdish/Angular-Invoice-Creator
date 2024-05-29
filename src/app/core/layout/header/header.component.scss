@@ -1,0 +1,25 @@
+@import '../../src/app/shared/styles/colors.scss';
+
+header {
+    background-color: $color-secondary;
+    position: sticky;
+    top: 0;
+    color: $color-text-light;
+    border-bottom: 1px solid #e9ecef;
+    padding: 10px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 60px;
+    width: 100%;
+   }
+
+.login-icon {
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+}
+
+.avatar {
+    cursor: pointer;
+}

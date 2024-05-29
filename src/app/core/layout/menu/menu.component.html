@@ -1,0 +1,31 @@
+<div *ngIf="user$ | async as user; else stdMenu">
+  <nav class="menu">
+    <a
+      *ngFor="let menu of onlineMenu"
+      [routerLink]="menu.link"
+      (click)="closeMenu()"
+    >
+      <img src="{{ menu.icons }}" alt="{{ menu.title }}" />
+      {{ menu.title }}
+    </a>
+  </nav>
+</div>
+
+<ng-template #stdMenu>
+  <nav class="menu">
+    <a
+      *ngFor="let menu of offlineMenu"
+      [routerLink]="menu.link"
+      (click)="closeMenu()"
+    >
+      <img src="{{ menu.icons }}" alt="{{ menu.title }}" />
+      {{ menu.title }}
+    </a>
+  </nav>
+  <div class="login-btn">
+    <app-btn
+      title="Se connecter / S'inscrire"
+      (click)="closeMenu()"
+      routerLink="/signin"
+    /></div
+></ng-template>

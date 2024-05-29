@@ -1,0 +1,13 @@
+<div class="reset">
+  <h1>Réinitialiser le mot de passe</h1>
+  <form [formGroup]="resetForm" (ngSubmit)="onSubmit()">
+    <div class="form-group">
+      <label for="email">Email :</label>
+      <input type="email" id="email" formControlName="email" required />
+    </div>
+    <div class="reset-btn">
+      <app-btn title="Réinitialiser" theme="submit" />
+    </div>
+  </form>
+  <a routerLink="/signin">Retour à la connexion</a>
+</div>
