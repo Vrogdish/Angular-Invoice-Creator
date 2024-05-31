@@ -1,0 +1,8 @@
+<h2 mat-dialog-title>Supprimer</h2>
+<mat-dialog-content>
+  <p>Êtes-vous sûr de vouloir supprimer cet élément ?</p>
+</mat-dialog-content>
+<mat-dialog-actions class="dialog-btn">
+  <app-btn title="Non" theme="cancel" (onClick)="onCancel()" />
+  <app-btn title="Oui" (onClick)="onConfirm()" />
+</mat-dialog-actions>

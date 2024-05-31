@@ -1,0 +1,36 @@
+<div class="add-product">
+  <h1>Ajouter un produit</h1>
+  <form [formGroup]="productForm" (ngSubmit)="onSubmit()">
+    <div class="form-group">
+      <label for="ref">Référence : (facultatif)</label>
+      <input type="text" id="ref" formControlName="reference" />
+    </div>
+    <div class="form-group">
+      <label for="name">Nom :</label>
+      <input type="text" id="name" formControlName="name" />
+    </div>
+
+    <div class="form-group">
+      <label for="price">Prix :</label>
+      <div class="price">
+        <input type="number" id="price" formControlName="price" />
+        <span>€ Hors Taxe</span>
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="description">Description : (facultatif)</label>
+      <textarea
+        type="text"
+        id="description"
+        formControlName="description"
+      ></textarea>
+    </div>
+    <div class="add-product-btn">
+      <app-btn title="Annuler" theme="cancel" routerLink="/products" />
+      <app-btn *ngIf="isLoading$ | async; else notLoading" theme="loading" />
+      <ng-template #notLoading>
+        <app-btn title="Enregistrer" theme="submit" />
+      </ng-template>
+    </div>
+  </form>
+</div>

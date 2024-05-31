@@ -1,0 +1,38 @@
+
+<p class="total">{{filteredProducts.length}} / {{products.length}} produits trouvés</p>
+
+<div class="product-list">
+  <table mat-table [dataSource]="filteredProducts" class="mat-elevation-z8">
+    <ng-container matColumnDef="ref">
+      <th mat-header-cell *matHeaderCellDef class="ref">Ref.</th>
+      <td mat-cell *matCellDef="let product" class="ref">{{ product.ref || "-" }}</td>
+    </ng-container>
+    <ng-container matColumnDef="name">
+      <th mat-header-cell *matHeaderCellDef>Nom</th>
+      <td mat-cell *matCellDef="let product">{{ product.name }}</td>
+    </ng-container>
+    <ng-container matColumnDef="price">
+      <th mat-header-cell *matHeaderCellDef>Prix</th>
+      <td mat-cell *matCellDef="let product">
+        {{ product.price | currency : "EUR" }}
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="description">
+      <th mat-header-cell *matHeaderCellDef class="description">Description</th>
+      <td mat-cell *matCellDef="let product" class="description">
+        {{ product.description || "-" }}
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="delete">
+      <th mat-header-cell *matHeaderCellDef class="delete">Supprimer</th>
+      <td mat-cell *matCellDef="let product" class="delete">
+        <img src="/icons/delete.png" alt="supprimer" class="delete-btn" (click)="deleteProduct(product.id)" />
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+  </table>
+  <P *ngIf="filteredProducts.length == 0" class="not-found">Aucun produits trouvés</P>
+</div>

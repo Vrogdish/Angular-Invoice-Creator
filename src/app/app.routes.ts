@@ -6,6 +6,9 @@ import { authGuard } from './core/auth/guard/auth.guard';
 import { ResetComponent } from './core/auth/pages/reset/reset.component';
 import { ProfileComponent } from './features/profile/profile.component';
 import { ProfileFormComponent } from './features/profile/components/profile-form/profile-form.component';
+import { ProductsComponent } from './features/products/products.component';
+import { ProductFormComponent } from './features/products/components/product-form/product-form.component';
+import { CustomersComponent } from './features/customers/customers.component';
 
 export const routes: Routes = [
   {
@@ -34,6 +37,18 @@ export const routes: Routes = [
     path: 'reset',
     component: ResetComponent,
   },
+  {
+    path: 'products',
+    component: ProductsComponent
+  },
+  {
+    path: 'products/add',
+    component: ProductFormComponent
+  },
+  {
+    path : 'customers',
+    component: CustomersComponent
+  }
   // {
   //   path: '**',
   //   redirectTo: '',

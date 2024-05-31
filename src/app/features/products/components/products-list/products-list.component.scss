@@ -1,0 +1,31 @@
+
+.total {
+  text-align: center;
+  margin: 20px 0;
+}
+
+.description , .ref {
+  @media (max-width: 768px) {
+    display: none;
+    
+  }
+}
+
+.delete {
+  text-align: center;
+
+  .delete-btn {
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+  }
+}
+.not-found {
+  text-align: center;
+  margin: 20px 0;
+}
+
+.dialog-btn {
+  display: flex;
+  justify-content: space-between;
+}

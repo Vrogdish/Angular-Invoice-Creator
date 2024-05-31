@@ -52,6 +52,11 @@ export class MenuComponent implements OnInit {
       link: '/customers',
     },
     {
+      title: 'Paramètres',
+      icons: '/icons/setting.png',
+      link: '/settings',
+    },
+    {
       title: 'Aide et contact',
       icons: '/icons/help.png',
       link: '/help',

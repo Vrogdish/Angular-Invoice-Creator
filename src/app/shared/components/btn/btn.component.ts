@@ -10,7 +10,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 })
 export class BtnComponent implements OnInit{
   @Input() title: string = 'Button';
-  @Input() icon!: string;
+  @Input() iconUrl!: string;
   @Input() theme:
     | 'primary'
     | 'secondary'

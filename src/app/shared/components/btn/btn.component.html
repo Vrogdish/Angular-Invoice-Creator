@@ -1,2 +1,11 @@
-
-<button (click)="handleclick()" [ngClass]="theme" type="{{typeVariant}}" [disabled]="isDisabled" >{{title}}</button>
+<button
+  (click)="handleclick()"
+  [ngClass]="theme"
+  type="{{ typeVariant }}"
+  [disabled]="isDisabled"
+>
+  <div class="content">
+    <img *ngIf="iconUrl" [src]="iconUrl" alt="icone {{ title }}" />
+    <span> {{ title }}</span>
+  </div>
+</button>

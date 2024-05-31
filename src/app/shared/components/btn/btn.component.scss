@@ -2,6 +2,9 @@
 
 button {
   color: $color-text-light;
+  display: flex;
+  align-items: center;
+  gap: 30px;
   border: none;
   padding: 10px 20px;
   border-radius: 5px;
@@ -9,6 +12,18 @@ button {
   transition: background-color 0.3s;
   display: block;
   width: 100%;
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px; 
+  .content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    width: 100%;
+  }
+  img {
+    width: 25px;
+    height: 25px;
+  }
 }
 
 .primary,

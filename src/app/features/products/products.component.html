@@ -1,0 +1,16 @@
+<div class="products">
+  <h1>Liste de mes produits</h1>
+<app-search-bar (search)="onSearch($event)"/>
+  <div class="btn">
+    <app-btn
+      title="nouveau produit"
+      theme="secondary"
+      iconUrl="/icons/add.png"
+      routerLink="/products/add"
+    />
+  </div>
+  
+  <div *ngIf="products$ | async as products">
+    <app-products-list [products]="products" [searchQuery]="searchQuery"></app-products-list>
+  </div>
+</div>
