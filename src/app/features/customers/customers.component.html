@@ -1,1 +1,16 @@
-<p>customers works!</p>
+<div class="customers">
+    <h1>Liste des clients</h1>
+    <app-search-bar (search)="onSearch($event)"/>
+    <div class="btn">
+      <app-btn
+        title="nouveau client"
+        theme="secondary"
+        iconUrl="/icons/add.png"
+        routerLink="/customers/add"
+      />
+    </div>
+    
+    <div *ngIf="customers$ | async as customers">
+        <app-customers-list [customers]="customers" [searchQuery]="searchQuery"/>
+    </div>
+  </div>

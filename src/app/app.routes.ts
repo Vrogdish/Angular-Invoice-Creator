@@ -48,9 +48,9 @@ export const routes: Routes = [
   {
     path : 'customers',
     component: CustomersComponent
-  }
-  // {
-  //   path: '**',
-  //   redirectTo: '',
-  // },
+  },
+  {
+    path: '**',
+    redirectTo: '',
+  },
 ];
