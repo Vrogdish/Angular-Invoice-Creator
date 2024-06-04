@@ -7,6 +7,7 @@ import { Customer } from './models/customer.model';
 import { AuthService } from '../../core/auth/services/auth.service';
 import { CommonModule } from '@angular/common';
 import { CustomersListComponent } from './components/customers-list/customers-list.component';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-customers',
@@ -18,6 +19,7 @@ import { CustomersListComponent } from './components/customers-list/customers-li
     BtnComponent,
     CommonModule,
     CustomersListComponent,
+    RouterLink
   ],
 })
 export class CustomersComponent implements OnInit {

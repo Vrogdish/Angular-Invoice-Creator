@@ -4,7 +4,10 @@ import { BehaviorSubject } from 'rxjs';
 import { FormGroup } from '@angular/forms';
 import {
   Firestore,
+  addDoc,
   collection,
+  deleteDoc,
+  doc,
   getDocs,
   query,
   where,
@@ -34,13 +37,27 @@ export class CustomersService {
       this.customers$.next(customers);
     } catch (error) {
       console.error(error);
-      this.errorMessages$.next("Couldn't load customers. Please try again.");
+      this.errorMessages$.next("Impossible de charger les clients. Veuillez réessayer.");
     }
     this.isLoading$.next(false);
   }
 
   async addCustomer(uid: string, customer: FormGroup<CustomerForm>) {
-    // Add a new customer
+    this.isLoading$.next(true);
+    this.errorMessages$.next(null);
+    try {
+      const collectionRef = collection(this.firestore, 'customers');
+      await addDoc(collectionRef, {
+        ...customer.value,
+        uid,
+      });
+      this.loadCustomers(uid);
+    } catch (error) {
+      console.error(error);
+      this.errorMessages$.next("Impossible d'ajouter le client. Veuillez réessayer.");
+    }
+
+    this.isLoading$.next(false);
   }
 
   async updateCustomer(id: string, customer: FormGroup<CustomerForm>) {
@@ -48,6 +65,16 @@ export class CustomersService {
   }
 
   async deleteCustomer(id: string, uid: string) {
-    console.log('Delete customer with id:', id ,'anduid:', uid);
+    this.isLoading$.next(true);
+    this.errorMessages$.next(null);
+    try {
+      const collectionRef = collection(this.firestore, 'customers');
+      await deleteDoc(doc(collectionRef, id));
+      this.loadCustomers(uid);
+    } catch (error) {
+      console.error(error);
+      this.errorMessages$.next("impossible de supprimer le client. Veuillez réessayer.");
+    }
+    
   }
 }

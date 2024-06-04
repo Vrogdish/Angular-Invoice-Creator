@@ -9,6 +9,8 @@ import { ProfileFormComponent } from './features/profile/components/profile-form
 import { ProductsComponent } from './features/products/products.component';
 import { ProductFormComponent } from './features/products/components/product-form/product-form.component';
 import { CustomersComponent } from './features/customers/customers.component';
+import { CustomerFormComponent } from './features/customers/components/customer-form/customer-form.component';
+import { InvoiceComponent } from './features/invoice/invoice.component';
 
 export const routes: Routes = [
   {
@@ -48,6 +50,14 @@ export const routes: Routes = [
   {
     path : 'customers',
     component: CustomersComponent
+  },
+  {
+    path: 'customers/add',
+    component: CustomerFormComponent
+  },
+  {
+    path: 'invoice',
+    component: InvoiceComponent
   },
   {
     path: '**',

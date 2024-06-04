@@ -35,7 +35,7 @@ h1 {
 input[type = "text"], input[type = "email"], input[type = "password"], input[type = "number"]{
   font-size: 1rem;
   padding: 10px;
-  margin: 10px 0;
+  // margin: 10px 0;
   border: 1px solid $color-border;
   border-radius: 5px;
   width: 100%;
@@ -44,7 +44,7 @@ input[type = "text"], input[type = "email"], input[type = "password"], input[typ
 textarea {
   font-size: 1rem;
   padding: 10px;
-  margin: 10px 0;
+  // margin: 10px 0;
   border: 1px solid $color-border;
   border-radius: 5px;
   width: 100%;
@@ -61,3 +61,5 @@ textarea {
   margin: 20px 0;
   border-bottom: 1px solid $color-border;
 }
+
+

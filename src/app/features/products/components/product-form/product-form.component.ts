@@ -27,15 +27,32 @@ export class ProductFormComponent {
     description: new FormControl('', Validators.required),
   });
   isLoading$ = this.product.isLoading$;
+  errorMessages!: string;
 
-  constructor(private product: ProductsService, private auth: AuthService, private route : Router) {}
+  constructor(
+    private product: ProductsService,
+    private auth: AuthService,
+    private route: Router
+  ) {}
 
   onSubmit() {
+    if (this.productForm.invalid) {
+      this.errorMessages = 'Veuillez remplir tous les champs obligatoires.';
+      return;
+    }
+
     this.auth.authState$.subscribe((user) => {
       if (user) {
         this.product.addProduct(user.uid, this.productForm);
-        this.route.navigate(['/products']);
       }
+
+      this.product.errorMessages$.subscribe((error) => {
+        if (error) {
+          this.errorMessages = error;
+        } else {
+          this.route.navigate(['/products']);
+        }
+      });
     });
   }
 }

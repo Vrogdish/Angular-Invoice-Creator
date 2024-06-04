@@ -15,10 +15,17 @@
     justify-content: center;
     gap: 10px;
     margin: 20px auto;
+    > * {
+      flex: 1;
+    }
   }
   h2 {
     margin-top: 40px;
   }
+}
+
+input {
+  margin: 10px 0;
 }
 
 .civility {
@@ -31,4 +38,14 @@
         align-items: center;
         gap: 5px;
     }
+}
+
+.error-message {
+    color: red;
+    text-align: center;
+ 
+}
+
+.is-invalid {
+    border: 1px solid red;
 }

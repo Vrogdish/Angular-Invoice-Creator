@@ -38,7 +38,7 @@ export class ProfileService {
       });
     } catch (error) {
       console.error(error);
-      this.errorMessages$.next("Couldn't load profile. Please try again.");
+      this.errorMessages$.next("Impossible de charger le profil. Veuillez réessayer.");
     }
     this.isLoading$.next(false);
   }
@@ -61,7 +61,7 @@ export class ProfileService {
       });
     } catch (error) {
       console.error(error);
-      this.errorMessages$.next("Couldn't update profile. Please try again.");
+      this.errorMessages$.next("Impossible de mettre à jour le profil. Veuillez réessayer.");
     }
     this.isLoading$.next(false);
   }
@@ -85,7 +85,7 @@ export class ProfileService {
       await this.loadProfile(uid);
     } catch (error) {
       console.error(error);
-      this.errorMessages$.next("Couldn't create profile. Please try again.");
+      this.errorMessages$.next("Impossible de créer le profil. Veuillez réessayer.");
     }
     this.isLoading$.next(false);
   }

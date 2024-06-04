@@ -9,13 +9,14 @@ import { UserProfile, UserProfileForm } from '../../models/userProfile.model';
 import { ProfileService } from '../../services/profile.service';
 import { BtnComponent } from '../../../../shared/components/btn/btn.component';
 import { Router, RouterLink } from '@angular/router';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-profile-form',
   standalone: true,
   templateUrl: './profile-form.component.html',
   styleUrl: './profile-form.component.scss',
-  imports: [ReactiveFormsModule, BtnComponent, RouterLink],
+  imports: [ReactiveFormsModule, BtnComponent, RouterLink, CommonModule],
 })
 export class ProfileFormComponent implements OnInit {
   profileForm: FormGroup<UserProfileForm> = new FormGroup<UserProfileForm>({
@@ -23,13 +24,15 @@ export class ProfileFormComponent implements OnInit {
     lastname: new FormControl('', Validators.required),
     civility: new FormControl('', Validators.required),
     company: new FormControl(''),
-    address: new FormControl(''),
+    address: new FormControl('', Validators.required),
     city: new FormControl(''),
     postalCode: new FormControl(''),
     phoneNumber: new FormControl(''),
   });
 
   userProfile!: UserProfile;
+  isLoading$ = this.profile.isLoading$;
+  errorMessages!: string;
 
   ngOnInit() {
     this.profile.profile$.subscribe((profile) => {
@@ -40,11 +43,23 @@ export class ProfileFormComponent implements OnInit {
     });
   }
 
-  constructor(private profile: ProfileService, private router : Router) {}
+  constructor(private profile: ProfileService, private router: Router) {}
 
   async onSubmit() {
+    if (this.profileForm.invalid) {
+      this.errorMessages = 'Veuillez remplir tous les champs obligatoires.';
+      return;
+    }
+    
     await this.profile.updateProfile(this.userProfile.id, this.profileForm);
     await this.profile.loadProfile(this.userProfile.uid);
-    this.router.navigate(['profile']);
+
+   this.profile.errorMessages$.subscribe((error) => {
+     if (error) {
+       this.errorMessages = error;
+     } else {
+       this.router.navigate(['/profile']);
+     }
+   });
   }
 }

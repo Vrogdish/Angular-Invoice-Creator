@@ -1,1 +1,51 @@
-<p>customer-form works!</p>
+<div class="add-customer">
+  <h1>Création d&apos;un nouveau client</h1>
+  <form [formGroup]="customerForm" (ngSubmit)="onSubmit()">
+    <div class="civility">
+      <label for="male">M.</label>
+      <input type="radio" id="male" value="M" formControlName="civility" />
+      <label for="female">Mme</label>
+      <input type="radio" id="female" value="Mme" formControlName="civility" />
+    </div>
+    <div class="form-group">
+      <label for="firstname">Nom :</label>
+      <input type="text" id="firstname" formControlName="firstname" />
+    </div>
+    <div class="form-group">
+      <label for="lastname">Prénom :</label>
+      <input type="text" id="lastname" formControlName="lastname" />
+    </div>
+    <div class="form-group">
+      <label for="email">Email :</label>
+      <input type="email" id="email" formControlName="email" />
+    </div>
+    <div class="form-group">
+      <label for="company">Entreprise :</label>
+      <input type="text" id="company" formControlName="company" />
+    </div>
+    <div class="form-group">
+      <label for="phone">Téléphone :</label>
+      <input type="text" id="phone" formControlName="phone" />
+    </div>
+    <div class="form-group">
+      <label for="address">Adresse :</label>
+      <input type="text" id="address" formControlName="address" />
+    </div>
+    <div class="form-group">
+      <label for="postalCode">Code postale :</label>
+      <input type="text" id="postalCode" formControlName="postalCode" />
+    </div>
+    <div class="form-group">
+      <label for="locality">Ville :</label>
+      <input type="text" id="locality" formControlName="locality" />
+    </div>
+    <div class="add-customer-btn">
+      <app-btn title="Annuler" theme="cancel" routerLink="/customers" />
+      <app-btn *ngIf="isLoading$ | async; else notLoading" theme="loading" />
+      <ng-template #notLoading>
+        <app-btn title="Enregistrer" theme="submit" />
+      </ng-template>
+    </div>
+  </form>
+  <p class="error-message" *ngIf="errorMessages">{{ errorMessages }}</p>
+</div>

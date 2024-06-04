@@ -1,0 +1,16 @@
+.search {
+    position: relative;
+    max-width: 600px;
+    margin: auto;
+    img {
+      width: 30px;
+      height: 30px;
+      position: absolute;
+      right: 10px;
+      top: 50%;
+      transform: translateY(-50%);
+    }
+    input {
+      padding-right: 50px;
+    }
+  }

@@ -1,0 +1,77 @@
+<h2>Liste des produits à ajouter à votre facture</h2>
+<div *ngIf="products$ | async as products">
+  <ng-select [(ngModel)]="selectedProduct" placeholder="Rechercher un produit">
+    @for (product of products; track product.id) {
+    <ng-option [value]="product">{{ product.name }}</ng-option>
+    }
+  </ng-select>
+  <div class="quantity">
+    <div>
+    <p>Quantité :</p>
+    <input type="number" [defaultValue]="1" [(ngModel)]="quantity" /></div>
+
+    <app-btn
+      title="Ajouter"
+      iconUrl="/icons/add.png"
+      theme="secondary"
+      (onClick)="addProduct()"
+    />
+  </div>
+</div>
+
+<div class="product-list" *ngIf="invoice$ | async as invoice">
+  <div class="product-list">
+    <table
+      mat-table
+      [dataSource]="invoice.productsList"
+      class="mat-elevation-z8"
+    >
+      <ng-container matColumnDef="ref">
+        <th mat-header-cell *matHeaderCellDef class="ref">Ref.</th>
+        <td mat-cell *matCellDef="let product" class="ref">
+          {{ product.product.ref || "-" }}
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef>Nom</th>
+        <td mat-cell *matCellDef="let product">{{ product.product.name }}</td>
+      </ng-container>
+      <ng-container matColumnDef="price">
+        <th mat-header-cell *matHeaderCellDef class="price">Prix</th>
+        <td mat-cell *matCellDef="let product" class="price">
+          {{ product.product.price | currency : "EUR" }}
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="quantity">
+        <th mat-header-cell *matHeaderCellDef class="table-quantity">
+          Quantité
+        </th>
+        <td mat-cell *matCellDef="let product" class="table-quantity">
+          <div class="content">
+            <img src="/icons/minus.png" alt="moins" (click)="decrementQuantity(product.product.id)" />
+            <span>{{ product.quantity }}</span>
+            <img src="/icons/plus.png" alt="plus" (click)="incrementQuantity(product.product.id)" />
+          </div>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="delete">
+        <th mat-header-cell *matHeaderCellDef class="delete">Supprimer</th>
+        <td mat-cell *matCellDef="let product" class="delete">
+          <img
+            src="/icons/delete.png"
+            alt="supprimer"
+            class="delete-btn"
+            (click)="removeProduct(product.product.id)"
+          />
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+    </table>
+    <P *ngIf="invoice.productsList.length == 0" class="not-found"
+      >Aucun produit ajouté</P
+    >
+  </div>
+</div>

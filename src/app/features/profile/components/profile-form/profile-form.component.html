@@ -4,42 +4,73 @@
   <form [formGroup]="profileForm" (ngSubmit)="onSubmit()">
     <div class="civility">
       <label for="male">M.</label>
-      <input type="radio" id="male" value="M"  formControlName="civility"/>
+      <input type="radio" id="male" value="M" formControlName="civility" />
       <label for="female">Mme</label>
-      <input type="radio" id="female" value="Mme"  formControlName="civility"/>
+      <input type="radio" id="female" value="Mme" formControlName="civility" />
     </div>
-    
+
     <div class="form-group">
       <label for="firstname">Prénom :</label>
-      <input type="text" id="firstname" formControlName="firstname" />
+      <input
+        type="text"
+        id="firstname"
+        formControlName="firstname"
+        [ngClass]="{ 'is-invalid': profileForm.get('firstname')?.invalid }"
+      />
     </div>
     <div class="form-group">
       <label for="lastname">Nom :</label>
-      <input type="text" id="lastname" formControlName="lastname" />
+      <input
+        type="text"
+        id="lastname"
+        formControlName="lastname"
+        [ngClass]="{ 'is-invalid': profileForm.get('lastname')?.invalid }"
+      />
     </div>
     <div class="form-group">
-      <label for="company">Entreprise :</label>
+      <label for="company">Entreprise : (facultatif)</label>
       <input type="text" id="company" formControlName="company" />
     </div>
     <div class="form-group">
       <label for="address">Adresse :</label>
-      <input type="text" id="address" formControlName="address" />
+      <input
+        type="text"
+        id="address"
+        formControlName="address"
+        [ngClass]="{ 'is-invalid': profileForm.get('address')?.invalid }"
+      />
     </div>
     <div class="form-group">
       <label for="postalCode">Code postal :</label>
-      <input type="text" id="postalCode" formControlName="postalCode" />
+      <input
+        type="text"
+        id="postalCode"
+        formControlName="postalCode"
+        [ngClass]="{ 'is-invalid': profileForm.get('postalCode')?.invalid }"
+      />
     </div>
     <div class="form-group">
       <label for="city">Ville :</label>
-      <input type="text" id="city" formControlName="city" />
+      <input
+        type="text"
+        id="city"
+        formControlName="city"
+        [ngClass]="{ 'is-invalid': profileForm.get('city')?.invalid }"
+      />
     </div>
     <div class="form-group">
-      <label for="phoneNumber">Téléphone :</label>
+      <label for="phoneNumber">Téléphone : (facultatif)</label>
       <input type="text" id="phoneNumber" formControlName="phoneNumber" />
     </div>
     <div class="profile-edit-btn">
       <app-btn title="Annuler" theme="cancel" routerLink="/profile" />
-      <app-btn title="Enregistrer" theme="submit"  />
+      <app-btn *ngIf="isLoading$ | async; else submit" theme="loading" />
+      <ng-template #submit>
+        <app-btn title="Enregistrer" theme="submit" />
+      </ng-template>
     </div>
   </form>
+  <p class="error-message" *ngIf="errorMessages">
+    {{ errorMessages }}
+  </p>
 </div>
