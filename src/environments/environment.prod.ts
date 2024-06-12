@@ -1,7 +1,7 @@
 export const environment = {
   production: true,
   firebase: {
-    apiKey: process.env['API_KEY'],
+    apiKey: 'AIzaSyDMj1iCvTwQJn8SIWHdz3tNqA7vHjaXKSs',
     authDomain: 'invoices-manager-f3507.firebaseapp.com',
     projectId: 'invoices-manager-f3507',
     storageBucket: 'invoices-manager-f3507.appspot.com',

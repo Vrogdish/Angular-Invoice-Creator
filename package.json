@@ -3,6 +3,7 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
+    "postinstall": "node config.js",
     "start": "ng serve",
     "build": "ng build --prod",
     "watch": "ng build --watch --configuration development",
