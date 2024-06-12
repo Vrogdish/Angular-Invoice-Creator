@@ -25,6 +25,8 @@ export class InvoiceService {
     productsList: [],
   });
 
+  errorMessage$: BehaviorSubject<string> = new BehaviorSubject<string>('');
+
   setCustomer(customer: Customer): void {
     this.invoice$.next({ ...this.invoice$.value, customer });
   }
@@ -49,6 +51,11 @@ export class InvoiceService {
   }
 
   addProduct(product: Product, quantity: number): void {
+    this.errorMessage$.next('');
+    if (this.invoice$.value.productsList.some((p) => p.product.id === product.id)) {
+      this.errorMessage$.next('Product déjà ajouté à la facture');
+      return;
+    }
     this.invoice$.next({
       ...this.invoice$.value,
       productsList: [
@@ -89,5 +96,13 @@ export class InvoiceService {
         return product;
       }),
     });
+  }
+
+  getTotalHT(): number {
+    const total = this.invoice$.value.productsList.reduce(
+      (acc, product) => acc + product.product.price * product.quantity,
+      0
+    );
+    return total;
   }
 }

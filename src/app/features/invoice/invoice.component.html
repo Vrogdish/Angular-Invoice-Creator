@@ -4,7 +4,7 @@
   <div class="customer" *ngIf="step === 1">
     <app-select-customer />
     <div class="customer-btn" *ngIf="invoice$ | async as invoice">
-      <app-btn theme="cancel" title="Annuler" />
+      <app-btn theme="cancel" title="Annuler" routerLink="/"/>
       <app-btn
         (onClick)="setStep(2)"
         theme="primary"
@@ -23,13 +23,21 @@
       <app-btn theme="cancel" title="Précédent" (onClick)="setStep(1)"/>
       <app-btn
         
+        (onClick)="setStep(3)"
         theme="primary"
         title="Créer la facture"
         *ngIf="invoice.customer?.firstname; else disable"
       />
       <ng-template #disable>
-        <app-btn theme="disabled" title="Créer la facture" />
+        <app-btn theme="disabled" title="Créer la facture"  />
       </ng-template>
     </div>
   </div>
+
+  <div class="preview" *ngIf="step === 3">
+    <app-pdf-preview />
+    <div class="customer-btn">
+      <app-btn theme="cancel" title="Précédent" (onClick)="setStep(2)"/>
+      <app-btn theme="primary" title="Télécharger" (onClick)="downloadPdf()" />
+    </div>
 </div>

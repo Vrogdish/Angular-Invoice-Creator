@@ -11,6 +11,7 @@ import { ProductFormComponent } from './features/products/components/product-for
 import { CustomersComponent } from './features/customers/customers.component';
 import { CustomerFormComponent } from './features/customers/components/customer-form/customer-form.component';
 import { InvoiceComponent } from './features/invoice/invoice.component';
+import { PdfPreviewComponent } from './features/invoice/components/pdf-preview/pdf-preview.component';
 
 export const routes: Routes = [
   {
@@ -58,6 +59,11 @@ export const routes: Routes = [
   {
     path: 'invoice',
     component: InvoiceComponent
+  },
+
+  {
+    path: 'invoice/preview',
+    component: PdfPreviewComponent
   },
   {
     path: '**',

@@ -30,6 +30,7 @@ export class SelectProductsComponent implements OnInit {
     'delete',
   ];
   quantity = 1;
+  errorMessage$ = this.invoiceService.errorMessage$;
 
   constructor(
     private productsService: ProductsService,

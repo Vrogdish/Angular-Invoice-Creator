@@ -6,6 +6,7 @@ import { Observable } from 'rxjs';
 import { User } from 'firebase/auth';
 import { CommonModule } from '@angular/common';
 import { AvatarComponent } from '../../../shared/components/avatar/avatar.component';
+import { ProfileService } from '../../../features/profile/services/profile.service';
 
 @Component({
   selector: 'app-header',
@@ -16,8 +17,14 @@ import { AvatarComponent } from '../../../shared/components/avatar/avatar.compon
 })
 export class HeaderComponent implements OnInit {
   user$!: Observable<User | null>;
-  constructor(private auth: AuthService) {}
+  constructor(private auth: AuthService, private ProfileService : ProfileService) {}
   ngOnInit() {
     this.user$ = this.auth.authState$;
+    this.user$.subscribe((user) => {
+      if (user) {
+        this.ProfileService.loadProfile(user.uid);
+      }
+    });
+
   }
 }

@@ -7,8 +7,9 @@
   </ng-select>
   <div class="quantity">
     <div>
-    <p>Quantité :</p>
-    <input type="number" [defaultValue]="1" [(ngModel)]="quantity" /></div>
+      <p>Quantité :</p>
+      <input type="number" [defaultValue]="1" [(ngModel)]="quantity" />
+    </div>
 
     <app-btn
       title="Ajouter"
@@ -17,6 +18,11 @@
       (onClick)="addProduct()"
     />
   </div>
+</div>
+<div class="error">
+  <p *ngIf="errorMessage$ | async as errorMessage" >
+    {{ errorMessage }}
+  </p>
 </div>
 
 <div class="product-list" *ngIf="invoice$ | async as invoice">
@@ -48,9 +54,17 @@
         </th>
         <td mat-cell *matCellDef="let product" class="table-quantity">
           <div class="content">
-            <img src="/icons/minus.png" alt="moins" (click)="decrementQuantity(product.product.id)" />
+            <img
+              src="/icons/minus.png"
+              alt="moins"
+              (click)="decrementQuantity(product.product.id)"
+            />
             <span>{{ product.quantity }}</span>
-            <img src="/icons/plus.png" alt="plus" (click)="incrementQuantity(product.product.id)" />
+            <img
+              src="/icons/plus.png"
+              alt="plus"
+              (click)="incrementQuantity(product.product.id)"
+            />
           </div>
         </td>
       </ng-container>
