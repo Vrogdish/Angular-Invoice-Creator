@@ -7,13 +7,14 @@ import { User } from 'firebase/auth';
 import { CommonModule } from '@angular/common';
 import { AvatarComponent } from '../../../shared/components/avatar/avatar.component';
 import { ProfileService } from '../../../features/profile/services/profile.service';
+import { DesktopNavbarComponent } from '../desktop-navbar/desktop-navbar.component';
 
 @Component({
   selector: 'app-header',
   standalone: true,
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss',
-  imports: [BurgerComponent, AvatarComponent, RouterLink, CommonModule],
+  imports: [BurgerComponent, AvatarComponent, RouterLink, CommonModule, DesktopNavbarComponent],
 })
 export class HeaderComponent implements OnInit {
   user$!: Observable<User | null>;

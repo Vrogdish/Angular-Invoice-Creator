@@ -24,3 +24,15 @@ header {
 .avatar {
     cursor: pointer;
 }
+
+.mobile {
+    @media (min-width: 768px){
+        display: none;
+    }
+}
+
+.desktop {
+    @media (max-width: 768px){
+        display: none;
+    }
+}

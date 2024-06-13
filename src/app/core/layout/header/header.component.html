@@ -1,9 +1,15 @@
 <header>
-  <app-burger />
-  <p class="title">Gestion de factures</p>
+  <div class="mobile">
+    <app-burger />
+  </div>
+  <a class="title" routerLink="/">Gestion de factures</a>
 
-  <div *ngIf="user$ | async as user; else login" routerLink="profile" class="avatar">
-    <app-avatar [user]="user" size="small"/>
+  <div
+    *ngIf="user$ | async as user; else login"
+    routerLink="profile"
+    class="avatar"
+  >
+    <app-avatar [user]="user" size="small" />
   </div>
 
   <ng-template #login>
@@ -15,3 +21,6 @@
     />
   </ng-template>
 </header>
+<div class="desktop">
+  <app-desktop-navbar />
+</div>
