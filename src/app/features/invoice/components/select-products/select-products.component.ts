@@ -7,7 +7,7 @@ import { NgSelectModule } from '@ng-select/ng-select';
 import { FormsModule } from '@angular/forms';
 import { AuthService } from '../../../../core/auth/services/auth.service';
 import { BtnComponent } from "../../../../shared/components/btn/btn.component";
-import { Invoice } from '../../models/invoice.model';
+import { Invoice, InvoiceForm } from '../../models/invoice.model';
 import { InvoiceService } from '../../services/invoice.service';
 import { MatTableModule } from '@angular/material/table';
 
@@ -20,7 +20,7 @@ import { MatTableModule } from '@angular/material/table';
 })
 export class SelectProductsComponent implements OnInit {
   products$!: BehaviorSubject<Product[] | null>;
-  invoice$!: BehaviorSubject<Invoice >;
+  invoice$!: BehaviorSubject<InvoiceForm >;
   selectedProduct!: Product | null;
   displayedColumns: string[] = [
     'ref',

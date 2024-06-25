@@ -1,15 +1,12 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit} from '@angular/core';
 import { InvoiceService } from './services/invoice.service';
 import { BehaviorSubject } from 'rxjs';
+import {  Invoice} from './models/invoice.model';
+import { SearchBarComponent } from "../../shared/components/search-bar/search-bar.component";
+import { BtnComponent } from "../../shared/components/btn/btn.component";
 import { CommonModule } from '@angular/common';
-import { BtnComponent } from '../../shared/components/btn/btn.component';
-import { SelectCustomerComponent } from './components/select-customer/select-customer.component';
-import { Invoice } from './models/invoice.model';
-import { SelectProductsComponent } from './components/select-products/select-products.component';
-import { RouterLink } from '@angular/router';
-import { PdfPreviewComponent } from "./components/pdf-preview/pdf-preview.component";
-
-
+import { InvoicesListComponent } from "./components/invoices-list/invoices-list.component";
+import { AuthService } from '../../core/auth/services/auth.service';
 
 @Component({
     selector: 'app-invoice',
@@ -17,30 +14,28 @@ import { PdfPreviewComponent } from "./components/pdf-preview/pdf-preview.compon
     templateUrl: './invoice.component.html',
     styleUrl: './invoice.component.scss',
     imports: [
-        CommonModule,
+        SearchBarComponent,
         BtnComponent,
-        SelectCustomerComponent,
-        SelectProductsComponent,
-        RouterLink,
-        PdfPreviewComponent
+        CommonModule,
+        InvoicesListComponent
     ]
 })
-export class InvoiceComponent implements OnInit {
-  @ViewChild(PdfPreviewComponent) pdfPreviewComponent!: PdfPreviewComponent;
-  invoice$!: BehaviorSubject<Invoice>;
-  step: number = 1;
+export class InvoiceComponent implements OnInit{
+  invoices$!: BehaviorSubject<Invoice[]>;
+  searchQuery: string = '';
 
-  constructor(private invoiceService: InvoiceService) {}
+  constructor(private invoiceService: InvoiceService, private auth : AuthService) {}
 
   ngOnInit(): void {
-    this.invoice$ = this.invoiceService.invoice$;
+    this.auth.authState$.subscribe((user) => {
+      if (user) {
+        this.invoiceService.loadInvoices(user.uid);
+      }
+    })
+    this.invoices$ = this.invoiceService.invoices$;
   }
 
-  setStep(step: number): void {
-    this.step = step;
-  }
-
-  downloadPdf(): void {
-    this.pdfPreviewComponent.downloadPdf();
+  onSearch(query: string) {
+    this.searchQuery = query;
   }
 }

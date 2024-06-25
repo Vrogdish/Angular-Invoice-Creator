@@ -7,7 +7,8 @@ import { CommonModule } from '@angular/common';
 import { AuthService } from '../../../../core/auth/services/auth.service';
 import { CustomersService } from '../../../customers/services/customers.service';
 import { InvoiceService } from '../../services/invoice.service';
-import { Invoice } from '../../models/invoice.model';
+import { Invoice, InvoiceForm } from '../../models/invoice.model';
+import { ProfileService } from '../../../profile/services/profile.service';
 
 @Component({
   selector: 'app-select-customer',
@@ -19,10 +20,11 @@ import { Invoice } from '../../models/invoice.model';
 export class SelectCustomerComponent implements OnInit {
   customers$!: BehaviorSubject<Customer[] | null>;
   selectedCustomer: Customer | null = null;
-  invoice$!: BehaviorSubject<Invoice >;
+  invoice$!: BehaviorSubject<InvoiceForm>;
 
   constructor(
     private auth: AuthService,
+    private profileService: ProfileService,
     private customersService: CustomersService,
     private invoiceService: InvoiceService
   ) {}
@@ -31,6 +33,12 @@ export class SelectCustomerComponent implements OnInit {
     this.auth.authState$.subscribe((user) => {
       if (user) {
         this.customersService.loadCustomers(user.uid);
+        this.profileService.loadProfile(user.uid);
+        this.profileService.profile$.subscribe((profile) => {
+          if (profile) {
+            this.invoiceService.initInvoice(profile);
+          }
+        });
       }
     });
     this.customers$ = this.customersService.customers$;

@@ -1,9 +1,10 @@
 import { FormControl } from '@angular/forms';
+import { CivilityEnum } from '../../../shared/models/civility.model';
 
 export interface Customer {
   id: string;
   uid: string;
-  civility: string;
+  civility: CivilityEnum;
   firstname: string;
   lastname: string;
   email: string;
@@ -11,7 +12,8 @@ export interface Customer {
   phone: string;
   address: string;
   postalCode: string;
-  locality: string;
+  city: string;
+  country: string;
 }
 
 export interface CustomerForm {
@@ -23,5 +25,6 @@ export interface CustomerForm {
   phone: FormControl<string | null>;
   address: FormControl<string | null>;
   postalCode: FormControl<string | null>;
-  locality: FormControl<string | null>;
+  city: FormControl<string | null>;
+  country: FormControl<string | null>;
 }

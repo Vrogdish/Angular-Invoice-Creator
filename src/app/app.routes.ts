@@ -12,6 +12,8 @@ import { CustomersComponent } from './features/customers/customers.component';
 import { CustomerFormComponent } from './features/customers/components/customer-form/customer-form.component';
 import { InvoiceComponent } from './features/invoice/invoice.component';
 import { PdfPreviewComponent } from './features/invoice/components/pdf-preview/pdf-preview.component';
+import { SettingsComponent } from './features/settings/settings.component';
+import { InvoiceCreatorComponent } from './features/invoice/components/invoice-creator/invoice-creator.component';
 
 export const routes: Routes = [
   {
@@ -60,10 +62,18 @@ export const routes: Routes = [
     path: 'invoice',
     component: InvoiceComponent
   },
+  {
+    path: 'invoice/create',
+    component: InvoiceCreatorComponent
+  },
 
   {
     path: 'invoice/preview',
     component: PdfPreviewComponent
+  },
+  {
+    path: 'settings',
+    component: SettingsComponent
   },
   {
     path: '**',

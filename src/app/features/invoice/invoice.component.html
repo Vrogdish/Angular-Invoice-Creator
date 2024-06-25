@@ -1,43 +1,16 @@
-<div class="invoice">
-  <h1>Création de factures</h1>
-
-  <div class="customer" *ngIf="step === 1">
-    <app-select-customer />
-    <div class="customer-btn" *ngIf="invoice$ | async as invoice">
-      <app-btn theme="cancel" title="Annuler" routerLink="/"/>
-      <app-btn
-        (onClick)="setStep(2)"
-        theme="primary"
-        title="Suivant"
-        *ngIf="invoice.customer?.firstname; else disable"
-      />
-      <ng-template #disable>
-        <app-btn theme="disabled" title="Suivant" />
-      </ng-template>
-    </div>
+<div class="invoices">
+  <h1>Liste de mes factures</h1>
+<app-search-bar (search)="onSearch($event)"/>
+  <div class="btn">
+    <app-btn
+      title="nouvelle facture"
+      theme="secondary"
+      iconUrl="/icons/add.png"
+      routerLink="/invoice/create"
+    />
   </div>
-
-  <div class="products" *ngIf="step === 2">
-    <app-select-products />
-    <div class="customer-btn" *ngIf="invoice$ | async as invoice">
-      <app-btn theme="cancel" title="Précédent" (onClick)="setStep(1)"/>
-      <app-btn
-        
-        (onClick)="setStep(3)"
-        theme="primary"
-        title="Créer la facture"
-        *ngIf="invoice.customer?.firstname; else disable"
-      />
-      <ng-template #disable>
-        <app-btn theme="disabled" title="Créer la facture"  />
-      </ng-template>
-    </div>
+  
+  <div *ngIf="invoices$ | async as invoices">
+    <app-invoices-list [invoices]="invoices" [searchQuery]="searchQuery" />
   </div>
-
-  <div class="preview" *ngIf="step === 3">
-    <app-pdf-preview />
-    <div class="customer-btn">
-      <app-btn theme="cancel" title="Précédent" (onClick)="setStep(2)"/>
-      <app-btn theme="primary" title="Télécharger" (onClick)="downloadPdf()" />
-    </div>
 </div>

@@ -1,8 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { InvoiceService } from '../../services/invoice.service';
-import { Invoice } from '../../models/invoice.model';
-import { ProfileService } from '../../../profile/services/profile.service';
-import { UserProfile } from '../../../profile/models/userProfile.model';
+import { Invoice, InvoiceForm } from '../../models/invoice.model';
 import { NgxExtendedPdfViewerModule } from 'ngx-extended-pdf-viewer';
 import pdfMake from 'pdfmake/build/pdfmake';
 import pdfFonts from 'pdfmake/build/vfs_fonts';
@@ -24,33 +22,23 @@ import { BtnComponent } from '../../../../shared/components/btn/btn.component';
   ],
 })
 export class PdfPreviewComponent implements OnInit {
-  invoice!: Invoice;
-  profile!: UserProfile | null;
+  invoice!: InvoiceForm;
   pdfSrc!: any;
-  tauxTVA: number = 0.2;
   totalHT!: number;
   totalTva!: number;
   totalTTC!: number;
-  todaysDate = new Date();
 
-  constructor(
-    private invoiceService: InvoiceService,
-    private profileService: ProfileService
-  ) {}
+  constructor(private invoiceService: InvoiceService) {}
 
   ngOnInit() {
     pdfMake.vfs = pdfFonts.pdfMake.vfs;
     this.invoiceService.invoice$.subscribe((invoice) => {
       this.invoice = invoice;
     });
-    this.profileService.profile$.subscribe((profile) => {
-      this.profile = profile;
-
-      this.totalHT = this.invoiceService.getTotalHT();
-      this.totalTva = this.totalHT * this.tauxTVA;
-      this.totalTTC = this.totalHT + this.totalTva;
-      this.updatePdfSrc();
-    });
+    this.totalHT = this.invoiceService.getTotalHT();
+    this.totalTva = this.totalHT * this.invoice.tva;
+    this.totalTTC = this.totalHT + this.totalTva;
+    this.updatePdfSrc();
   }
 
   downloadPdf() {
@@ -59,7 +47,7 @@ export class PdfPreviewComponent implements OnInit {
   }
 
   updatePdfSrc() {
-    if (!this.invoice || !this.profile) {
+    if (!this.invoice) {
       return;
     }
     const documentDefinition = this.getDocDefinition();
@@ -73,6 +61,7 @@ export class PdfPreviewComponent implements OnInit {
     return {
       content: [
         { text: 'Facture', style: 'header' },
+        { text: 'N° ' + this.invoice.num, margin: [0, 0, 0, 30] },
         {
           columns: [{ text: 'Vendeur : ' }, { text: 'Client: ' }],
           style: 'adressTitle',
@@ -82,19 +71,19 @@ export class PdfPreviewComponent implements OnInit {
           columns: [
             {
               text:
-                this.profile?.company +
+                this.invoice.vendor.company +
                 '\n' +
-                this.profile?.civility +
+                this.invoice.vendor.civility +
                 ' ' +
-                this.profile?.firstname +
+                this.invoice.vendor.firstname +
                 ' ' +
-                this.profile?.lastname +
+                this.invoice.vendor.lastname +
                 '\n' +
-                this.profile?.address +
+                this.invoice.vendor.address +
                 '\n' +
-                this.profile?.postalCode +
+                this.invoice.vendor.postalCode +
                 ' ' +
-                this.profile?.city,
+                this.invoice.vendor.city,
             },
             {
               text:
@@ -110,7 +99,7 @@ export class PdfPreviewComponent implements OnInit {
                 '\n' +
                 this.invoice.customer?.postalCode +
                 ' ' +
-                this.invoice.customer?.locality,
+                this.invoice.customer?.city,
             },
           ],
           style: 'adress',
@@ -118,7 +107,8 @@ export class PdfPreviewComponent implements OnInit {
         },
 
         {
-          text: 'Date de facturation : ' + this.todaysDate.toLocaleDateString(),
+          text:
+            'Date de facturation : ' + this.invoice.date.toLocaleDateString(),
           margin: [0, 0, 0, 30],
         },
 
@@ -147,11 +137,13 @@ export class PdfPreviewComponent implements OnInit {
 
         {
           text:
-            'Total HT: ' +
+            'Total HT : ' +
             this.totalHT.toFixed(2) +
-            ' €\nTVA (20.00%): ' +
+            ' €\nTVA ' +
+            (this.invoice.tva * 100).toFixed(2) +
+            '% : ' +
             this.totalTva.toFixed(2) +
-            ' €\nTotal TTC: ' +
+            ' €\nTotal TTC : ' +
             this.totalTTC.toFixed(2) +
             ' €',
           alignment: 'right',
@@ -167,13 +159,13 @@ export class PdfPreviewComponent implements OnInit {
             {
               text:
                 'Société : ' +
-                this.profile?.company +
+                this.invoice.vendor.company +
                 '  -  ' +
                 'Téléphone : ' +
-                this.profile?.phoneNumber +
+                this.invoice.vendor.phone +
                 '  -  ' +
                 'Email : ' +
-                this.profile?.email,
+                this.invoice.vendor.email,
               style: 'footer',
             },
           ],

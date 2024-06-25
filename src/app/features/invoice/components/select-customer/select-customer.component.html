@@ -18,31 +18,31 @@
     <div class="card-item">
       <img src="/icons/user.png" alt="nom" />
       <p>
-        {{ invoice.customer?.civility }} {{ invoice.customer?.firstname }}
-        {{ invoice.customer?.lastname || "-" }}
+        {{ invoice.customer.civility }} {{ invoice.customer.firstname }}
+        {{ invoice.customer.lastname || "-" }}
       </p>
     </div>
     <div class="card-item">
       <img src="/icons/corporate.png" alt="société" />
-      <p>{{ invoice.customer?.company || "-" }}</p>
+      <p>{{ invoice.customer.company || "-" }}</p>
     </div>
     <div class="card-item">
       <img src="/icons/home.png" alt="adresse" />
       <div>
         <p>
-          {{ invoice.customer?.address || "-" }}
+          {{ invoice.customer.address || "-" }}
         </p>
         <p>
-          {{ invoice.customer?.postalCode }} {{ invoice.customer?.locality }}
+          {{ invoice.customer.postalCode }} {{ invoice.customer.city }}
         </p>
       </div>
     </div>
     <div class="card-item">
       <img src="/icons/phone.png" alt="téléphone" />
-      <p>{{ invoice.customer?.phone || "-" }}</p>
+      <p>{{ invoice.customer.phone || "-" }}</p>
     </div>
     <div class="card-item">
       <img src="/icons/email.png" alt="email" />
-      <p>{{ invoice.customer?.email || "-" }}</p>
+      <p>{{ invoice.customer.email || "-" }}</p>
     </div>
   </div>

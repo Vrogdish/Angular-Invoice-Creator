@@ -37,7 +37,7 @@ export class MenuComponent implements OnInit {
     },
 
     {
-      title: 'Créer une nouvelle facture',
+      title: 'Mes factures',
       icons: '/icons/invoice.png',
       link: '/invoice',
     },

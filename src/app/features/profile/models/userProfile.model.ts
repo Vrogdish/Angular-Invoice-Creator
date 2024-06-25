@@ -14,9 +14,9 @@ export interface UserProfile {
   city: string;
   postalCode: string;
   country: string;
-  phoneNumber?: string;
+  phone?: string;
   createdAt: Date;
-  updatedAt: Date;
+  updatedAt?: Date;
 }
 
 export interface UserProfileForm {
