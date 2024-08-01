@@ -13,10 +13,10 @@ import { BehaviorSubject } from 'rxjs';
   providedIn: 'root',
 })
 export class AuthService {
-  private auth = inject(Auth);
+  // private auth = inject(Auth);
   private authState = new BehaviorSubject<User | null>(null);
 
-  constructor() {
+  constructor(private auth: Auth) {
     onAuthStateChanged(this.auth, (user) => {
       this.authState.next(user);
     });

@@ -1,19 +1,28 @@
 import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { Invoice } from '../../models/invoice.model';
 import { InvoiceService } from '../../services/invoice.service';
-import { MatDialog, MatDialogActions, MatDialogClose, MatDialogContent, MatDialogModule, MatDialogRef, MatDialogTitle } from '@angular/material/dialog';
+import {
+  MatDialog,
+  MatDialogActions,
+  MatDialogClose,
+  MatDialogContent,
+  MatDialogModule,
+  MatDialogRef,
+  MatDialogTitle,
+} from '@angular/material/dialog';
 import { AuthService } from '../../../../core/auth/services/auth.service';
 import { MatButtonModule } from '@angular/material/button';
 import { BtnComponent } from '../../../../shared/components/btn/btn.component';
-import {  MatTableModule } from '@angular/material/table';
+import { MatTableModule } from '@angular/material/table';
 import { CommonModule } from '@angular/common';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-invoices-list',
   standalone: true,
-  imports: [MatTableModule, CommonModule, MatDialogModule],
+  imports: [MatTableModule, CommonModule, MatDialogModule, RouterLink],
   templateUrl: './invoices-list.component.html',
-  styleUrl: './invoices-list.component.scss'
+  styleUrl: './invoices-list.component.scss',
 })
 export class InvoicesListComponent implements OnChanges {
   @Input() invoices: Invoice[] = [];
@@ -21,14 +30,17 @@ export class InvoicesListComponent implements OnChanges {
   filteredInvoices: Invoice[] = [];
   displayedColumns: string[] = [
     'number',
+    'date',
     'customer',
     'produits',
-    'total',
     'delete',
   ];
 
-
-  constructor(private dialog: MatDialog, private invoiceService: InvoiceService, private auth : AuthService) {}
+  constructor(
+    private dialog: MatDialog,
+    private invoiceService: InvoiceService,
+    private auth: AuthService
+  ) {}
 
   ngOnChanges(changes: SimpleChanges) {
     if (changes['invoices'] || changes['searchQuery']) {
@@ -37,8 +49,15 @@ export class InvoicesListComponent implements OnChanges {
   }
 
   private filterInvoices() {
-    this.filteredInvoices = this.invoices.filter((invoice) =>
-      invoice.customer.lastname.toLowerCase().includes(this.searchQuery.toLowerCase())
+    this.filteredInvoices = this.invoices.filter(
+      (invoice) =>
+        invoice.customer.lastname
+          .toLowerCase()
+          .includes(this.searchQuery.toLowerCase()) ||
+        invoice.customer.firstname
+          .toLowerCase()
+          .includes(this.searchQuery.toLowerCase()) ||
+        invoice.num.toString().includes(this.searchQuery)
     );
   }
 
@@ -75,9 +94,7 @@ export class InvoicesListComponent implements OnChanges {
   ],
 })
 export class Dialog {
-  constructor(
-    public dialogRef: MatDialogRef<Dialog>,
-  ) {}
+  constructor(public dialogRef: MatDialogRef<Dialog>) {}
 
   onConfirm(): void {
     this.dialogRef.close('confirm');

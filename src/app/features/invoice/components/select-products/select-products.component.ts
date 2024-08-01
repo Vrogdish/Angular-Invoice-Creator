@@ -54,6 +54,7 @@ export class SelectProductsComponent implements OnInit {
     }
     this.invoiceService.addProduct(this.selectedProduct, this.quantity);
     this.selectedProduct = null;
+    this.quantity = 1;
   }
 
   removeProduct(id  : string): void {

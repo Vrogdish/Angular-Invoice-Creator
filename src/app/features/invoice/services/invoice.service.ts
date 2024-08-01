@@ -10,6 +10,9 @@ import {
   getDocs,
   query,
   where,
+  Timestamp,
+  deleteDoc,
+  doc,
 } from '@angular/fire/firestore';
 import { UserProfile } from '../../profile/models/userProfile.model';
 import { Invoice, InvoiceForm } from '../models/invoice.model';
@@ -21,7 +24,7 @@ export class InvoiceService {
   invoice$: BehaviorSubject<InvoiceForm> = new BehaviorSubject<InvoiceForm>({
     uid: '',
     num: 0,
-    date: new Date(),
+    createdAt: new Date(),
     vendor: {
       civility: CivilityEnum.male,
       firstname: '',
@@ -51,7 +54,7 @@ export class InvoiceService {
   });
 
   errorMessage$: BehaviorSubject<string> = new BehaviorSubject<string>('');
-  invoices$ : BehaviorSubject<Invoice[]> = new BehaviorSubject<Invoice[]>([]);
+  invoices$: BehaviorSubject<Invoice[]> = new BehaviorSubject<Invoice[]>([]);
   isLoading$ = new BehaviorSubject<boolean>(false);
 
   firestore = inject(Firestore);
@@ -77,7 +80,7 @@ export class InvoiceService {
   }
 
   private setDate(): void {
-    this.invoice$.next({ ...this.invoice$.value, date: new Date() });
+    this.invoice$.next({ ...this.invoice$.value, createdAt: new Date() });
   }
 
   private async setInvoiceNum(uid: string) {
@@ -200,12 +203,16 @@ export class InvoiceService {
       const querySnapshot = await getDocs(q);
       const invoices: Invoice[] = [];
       querySnapshot.forEach((doc) => {
-        invoices.push({ ...doc.data(), id: doc.id } as Invoice);
+        const data = doc.data() as Invoice;
+        if (data.createdAt instanceof Timestamp) {
+          data.createdAt = data.createdAt.toDate();
+        }
+        invoices.push({ ...data, id: doc.id });
       });
       this.invoices$.next(invoices);
     } catch (error) {
       console.error(error);
-      this.errorMessage$.next("Couldn't load invoices. Please try again.");
+      this.errorMessage$.next("Impossible de charger les factures. Veuillez réessayer.");
     }
   }
 
@@ -214,18 +221,32 @@ export class InvoiceService {
     this.errorMessage$.next('');
     try {
       const collectionRef = collection(this.firestore, 'invoices');
-      await addDoc(collectionRef, invoice);
-      this.loadInvoices(invoice.uid);
+      await addDoc(collectionRef, {
+        ...invoice,
+        createdAt: Timestamp.fromDate(invoice.createdAt),
+      });
+      await this.loadInvoices(invoice.uid);
     } catch (error) {
       console.error(error);
-      this.errorMessage$.next("Couldn't create invoice. Please try again.");
+      this.errorMessage$.next("Impossible de créer la facture. Veuillez réessayer.");
     } finally {
       this.isLoading$.next(false);
     }
   }
 
-  deleteInvoice(id: string, uid: string) {
-    console.log('delete invoice', id, uid);
+  async deleteInvoice(id: string, uid: string) {
+    this.isLoading$.next(true);
+    this.errorMessage$.next('');
+    try {
+      const collectionRef = collection(this.firestore, 'invoices');
+      await deleteDoc(doc(collectionRef, id));
+      this.loadInvoices(uid);
+      
+    } catch (error) {
+      console.error(error);
+      this.errorMessage$.next("Impossible de supprimer la facture. Veuillez réessayer.");
+    } finally {
+      this.isLoading$.next(false);
+    }
   }
-    
 }

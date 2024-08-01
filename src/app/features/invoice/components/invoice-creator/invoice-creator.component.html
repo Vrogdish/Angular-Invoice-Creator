@@ -1,10 +1,10 @@
-<div class="invoice">
+<div class="invoice" *ngIf="invoice$ | async as invoice">
     <h1>Création de factures</h1>
   
     <div class="customer" *ngIf="step === 1">
       <app-select-customer />
-      <div class="customer-btn" *ngIf="invoice$ | async as invoice">
-        <app-btn theme="cancel" title="Annuler" routerLink="/"/>
+      <div class="customer-btn" >
+        <app-btn theme="cancel" title="Annuler" routerLink="/invoice"/>
         <app-btn
           (onClick)="setStep(2)"
           theme="primary"
@@ -19,7 +19,7 @@
   
     <div class="products" *ngIf="step === 2">
       <app-select-products />
-      <div class="customer-btn" *ngIf="invoice$ | async as invoice">
+      <div class="customer-btn"> 
         <app-btn theme="cancel" title="Précédent" (onClick)="setStep(1)"/>
         <app-btn
           
@@ -34,14 +34,14 @@
       </div>
     </div>
   
-    <div class="preview" *ngIf="step === 3">
-      <app-pdf-preview />
+    <div class="preview" *ngIf="step === 3" >
+      <app-pdf-preview [invoice]="invoice "/>
       <div class="customer-btn">
         <app-btn theme="cancel" title="Précédent" (onClick)="setStep(2)"/>
-        <app-btn theme="primary" title="Télécharger" (onClick)="downloadPdf()" />
+        <!-- <app-btn theme="primary" title="Télécharger" (onClick)="downloadPdf()" /> -->
         <app-btn theme="primary" title="Créer" (onClick)="createInvoice()" />
   
-  
+
       </div>
   </div>
   

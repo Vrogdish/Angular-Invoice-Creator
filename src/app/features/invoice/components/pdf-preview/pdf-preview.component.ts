@@ -1,5 +1,4 @@
-import { Component, OnInit } from '@angular/core';
-import { InvoiceService } from '../../services/invoice.service';
+import { Component, Input, OnInit } from '@angular/core';
 import { Invoice, InvoiceForm } from '../../models/invoice.model';
 import { NgxExtendedPdfViewerModule } from 'ngx-extended-pdf-viewer';
 import pdfMake from 'pdfmake/build/pdfmake';
@@ -7,7 +6,6 @@ import pdfFonts from 'pdfmake/build/vfs_fonts';
 import { TDocumentDefinitions } from 'pdfmake/interfaces';
 import { CommonModule } from '@angular/common';
 import { PdfViewerModule } from 'ng2-pdf-viewer';
-import { BtnComponent } from '../../../../shared/components/btn/btn.component';
 
 @Component({
   selector: 'app-pdf-preview',
@@ -18,24 +16,23 @@ import { BtnComponent } from '../../../../shared/components/btn/btn.component';
     NgxExtendedPdfViewerModule,
     CommonModule,
     PdfViewerModule,
-    BtnComponent,
   ],
 })
 export class PdfPreviewComponent implements OnInit {
-  invoice!: InvoiceForm;
+  @Input({required:true}) invoice!: InvoiceForm | Invoice;
   pdfSrc!: any;
   totalHT!: number;
   totalTva!: number;
   totalTTC!: number;
 
-  constructor(private invoiceService: InvoiceService) {}
 
   ngOnInit() {
     pdfMake.vfs = pdfFonts.pdfMake.vfs;
-    this.invoiceService.invoice$.subscribe((invoice) => {
-      this.invoice = invoice;
-    });
-    this.totalHT = this.invoiceService.getTotalHT();
+
+    this.totalHT = this.invoice.productsList.reduce(
+      (acc, product) => acc + product.product.price * product.quantity,
+      0
+    );
     this.totalTva = this.totalHT * this.invoice.tva;
     this.totalTTC = this.totalHT + this.totalTva;
     this.updatePdfSrc();
@@ -44,6 +41,11 @@ export class PdfPreviewComponent implements OnInit {
   downloadPdf() {
     const documentDefinition = this.getDocDefinition();
     pdfMake.createPdf(documentDefinition).download();
+  }
+
+  openPdf() {
+    const documentDefinition = this.getDocDefinition();
+    pdfMake.createPdf(documentDefinition).open();
   }
 
   updatePdfSrc() {
@@ -108,7 +110,7 @@ export class PdfPreviewComponent implements OnInit {
 
         {
           text:
-            'Date de facturation : ' + this.invoice.date.toLocaleDateString(),
+            'Date de facturation : ' + this.invoice.createdAt.toLocaleDateString(),
           margin: [0, 0, 0, 30],
         },
 

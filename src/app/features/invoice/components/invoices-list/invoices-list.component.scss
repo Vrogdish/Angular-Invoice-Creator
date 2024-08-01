@@ -1,13 +1,23 @@
 
-  
+@import "../../../../shared/styles/colors.scss" ;
+
+.total {
+  text-align: center;
+  margin: 20px 0;
+}
   .delete {
     text-align: center;
   
     .delete-btn {
-      width: 20px;
-      height: 20px;
+      width: 16px;
+      height: 16px;
       cursor: pointer;
     }
+  }
+
+  .trash {
+    width: 20px;
+    height: 20px;
   }
   .not-found {
     text-align: center;
@@ -17,4 +27,19 @@
   .dialog-btn {
     display: flex;
     justify-content: space-between;
+  }
+
+  .produits {
+    @media (max-width: 768px) {
+      display: none;
+      
+    }
+  }
+ 
+  .row {
+       cursor: pointer;
+    transition: all 0.3s;
+    &:hover {
+      background-color: lighten($color:$color-btn-secondary, $amount: 10) ;
+    } 
   }

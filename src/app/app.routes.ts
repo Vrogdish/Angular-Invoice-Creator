@@ -14,6 +14,8 @@ import { InvoiceComponent } from './features/invoice/invoice.component';
 import { PdfPreviewComponent } from './features/invoice/components/pdf-preview/pdf-preview.component';
 import { SettingsComponent } from './features/settings/settings.component';
 import { InvoiceCreatorComponent } from './features/invoice/components/invoice-creator/invoice-creator.component';
+import { InvoiceDetailComponent } from './features/invoice/components/invoice-detail/invoice-detail.component';
+import { DeliveryComponent } from './features/delivery/delivery.component';
 
 export const routes: Routes = [
   {
@@ -63,6 +65,10 @@ export const routes: Routes = [
     component: InvoiceComponent
   },
   {
+    path: 'invoice/:id',
+    component: InvoiceDetailComponent
+  },
+  {
     path: 'invoice/create',
     component: InvoiceCreatorComponent
   },
@@ -70,6 +76,10 @@ export const routes: Routes = [
   {
     path: 'invoice/preview',
     component: PdfPreviewComponent
+  },
+  {
+    path: 'delivery',
+    component: DeliveryComponent
   },
   {
     path: 'settings',

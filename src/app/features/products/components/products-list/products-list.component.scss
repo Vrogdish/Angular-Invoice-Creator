@@ -15,8 +15,8 @@
   text-align: center;
 
   .delete-btn {
-    width: 20px;
-    height: 20px;
+    width: 16px;
+    height: 16px;
     cursor: pointer;
   }
 }
@@ -28,4 +28,9 @@
 .dialog-btn {
   display: flex;
   justify-content: space-between;
+}
+
+.trash {
+  width: 20px;
+  height: 20px;
 }

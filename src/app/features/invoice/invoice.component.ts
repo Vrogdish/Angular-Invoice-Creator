@@ -7,6 +7,7 @@ import { BtnComponent } from "../../shared/components/btn/btn.component";
 import { CommonModule } from '@angular/common';
 import { InvoicesListComponent } from "./components/invoices-list/invoices-list.component";
 import { AuthService } from '../../core/auth/services/auth.service';
+import { RouterLink } from '@angular/router';
 
 @Component({
     selector: 'app-invoice',
@@ -17,7 +18,8 @@ import { AuthService } from '../../core/auth/services/auth.service';
         SearchBarComponent,
         BtnComponent,
         CommonModule,
-        InvoicesListComponent
+        InvoicesListComponent,
+        RouterLink
     ]
 })
 export class InvoiceComponent implements OnInit{

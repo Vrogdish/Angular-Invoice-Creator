@@ -2,7 +2,26 @@
 
 footer {
     background-color: $color-secondary;
-    height: 80px;
-    padding: 20px;
+    padding: 40px 20px;
     color: $color-text-light;
+}
+
+.container {
+    display: flex;
+    justify-content: space-between;
+    max-width: 1440px;
+    margin: auto;
+}
+
+.footer-section div {
+    margin-bottom: 20px;
+}
+
+.copyright {
+    font-size: 12px;
+    margin-top: 90px;
+}
+
+input, textarea {
+    margin-bottom: 10px;
 }

@@ -11,6 +11,7 @@ import {
   where,
   doc,
   addDoc,
+  Timestamp
 } from '@angular/fire/firestore';
 import { FormGroup } from '@angular/forms';
 
@@ -32,9 +33,15 @@ export class ProfileService {
       const q = query(collectionRef, where('uid', '==', uid));
       const querySnapshot = await getDocs(q);
       querySnapshot.forEach((doc) => {
-        this.profile$.next(doc.data() as UserProfile);
+        const data = doc.data() as UserProfile;
         const id = doc.id;
-        this.profile$.next({ ...doc.data(), id } as UserProfile);
+        if (data.createdAt instanceof Timestamp) {
+          data.createdAt = data.createdAt.toDate();
+        }
+        if (data.updatedAt instanceof Timestamp) {
+          data.updatedAt = data.updatedAt.toDate();
+        }
+        this.profile$.next({ ...data, id } );
       });
     } catch (error) {
       console.error(error);
@@ -57,7 +64,7 @@ export class ProfileService {
         city: profileForm.get('city')?.value,
         postalCode: profileForm.get('postalCode')?.value,
         phoneNumber: profileForm.get('phoneNumber')?.value,
-        updatedAt: Date.now(),
+        updatedAt: Timestamp.fromDate(new Date()),
       });
     } catch (error) {
       console.error(error);
@@ -80,7 +87,7 @@ export class ProfileService {
         firstname: firstname,
         lastname: lastname,
         email: email,
-        createdAt: Date.now(),
+        createdAt: Timestamp.fromDate(new Date()),
       });
       await this.loadProfile(uid);
     } catch (error) {

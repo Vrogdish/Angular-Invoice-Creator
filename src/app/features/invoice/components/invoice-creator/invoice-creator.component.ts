@@ -1,6 +1,6 @@
 import { CommonModule } from "@angular/common";
 import { Component, ViewChild } from "@angular/core";
-import { RouterLink } from "@angular/router";
+import { Router, RouterLink } from "@angular/router";
 import { BehaviorSubject } from "rxjs";
 import { BtnComponent } from "../../../../shared/components/btn/btn.component";
 import { InvoiceForm } from "../../models/invoice.model";
@@ -27,7 +27,7 @@ export class InvoiceCreatorComponent {
   invoice$!: BehaviorSubject<InvoiceForm>;
   step: number = 1;
 
-  constructor(private invoiceService: InvoiceService) {}
+  constructor(private invoiceService: InvoiceService, private router:Router) {}
 
   ngOnInit(): void {
     this.invoice$ = this.invoiceService.invoice$;
@@ -42,9 +42,11 @@ export class InvoiceCreatorComponent {
     this.pdfPreviewComponent.downloadPdf();
   }
 
+
   createInvoice(): void {
     this.invoiceService.createInvoice(this.invoice$.value);
-    console.log(this.invoice$.value);
+    this.pdfPreviewComponent.openPdf();
+    this.router.navigate(['/invoice'])
     
   }
 }

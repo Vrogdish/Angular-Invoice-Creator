@@ -31,7 +31,7 @@ export interface InvoiceCustomerForm {
 export interface InvoiceForm {
   uid: string;
   num: number;
-  date : Date;
+  createdAt : Date;
   vendor : InvoiceVendorForm;
   customer: InvoiceCustomerForm;
   productsList: {

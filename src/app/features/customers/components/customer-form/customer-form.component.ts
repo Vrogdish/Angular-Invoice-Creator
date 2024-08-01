@@ -25,7 +25,7 @@ export class CustomerFormComponent {
     address: new FormControl('', Validators.required),
     postalCode: new FormControl('', Validators.required),
     city: new FormControl('', Validators.required),
-    country: new FormControl('', Validators.required)
+    country: new FormControl('France', Validators.required)
   });
   isLoading$ = this.customersService.isLoading$;
   errorMessages!: string;

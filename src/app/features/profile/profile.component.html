@@ -29,7 +29,7 @@
       <p>{{ profile.phone || '-' }}</p>
     </div>
     <div class="separator"></div>
-    <p>inscrit depuis le {{ profile.createdAt | date : "dd/mm/yyyy" }}</p>
+    <p>inscrit depuis le {{ profile.createdAt | date : "dd/MM/yyyy" }}</p>
   </div>
   <div class="profile-btn">
     <app-btn title="Modifier" theme="primary" routerLink="/profile/edit" />
