@@ -26,3 +26,24 @@ h2{
     height: 30px;
   }
 }
+
+.delivery {
+  p {
+    margin: 20px 0;
+  }
+  .checkbox {
+    margin: 40px 0;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    font-weight: 700;
+  }
+}
+
+input {
+  margin: 10px 0;
+}
+
+.delivery-btn {
+  margin: 20px 0;
+}

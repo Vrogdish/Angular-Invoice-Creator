@@ -28,11 +28,22 @@ export interface InvoiceCustomerForm {
   country: string;
 }
 
+export interface DeliveryAddress {
+  address: string;
+  postalCode: string;
+  city: string;
+  country: string;
+}
+
 export interface InvoiceForm {
   uid: string;
   num: number;
-  createdAt : Date;
-  vendor : InvoiceVendorForm;
+  createdAt: Date;
+  delivery?: {
+    withDelivery?: boolean;
+    deliveryAddress?: DeliveryAddress;
+  };
+  vendor: InvoiceVendorForm;
   customer: InvoiceCustomerForm;
   productsList: {
     product: Product;
@@ -42,5 +53,5 @@ export interface InvoiceForm {
 }
 
 export interface Invoice extends InvoiceForm {
-  id : string;
+  id: string;
 }

@@ -32,11 +32,10 @@ export class MenuComponent implements OnInit {
   onlineMenu = [
  
     {
-      title: 'Mes Bons de livraison',
-      icons: '/icons/delivery.png',
-      link: '/delivery',
+      title: 'Accueil',
+      icons: '/icons/home.png',
+      link: '',
     },
-
     {
       title: 'Mes factures',
       icons: '/icons/invoice.png',

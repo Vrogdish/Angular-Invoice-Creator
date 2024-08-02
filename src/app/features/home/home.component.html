@@ -12,7 +12,7 @@
   <div class="cta">
     <app-btn *ngIf="!user else Auth " title="Se connecter / S'inscrire" theme="secondary" routerLink="/signin" />
     <ng-template #Auth>
-      <app-btn title="Créer une facture" theme="secondary" routerLink="/invoice" />
+      <app-btn title="Créer une facture" theme="secondary" routerLink="/invoice/create" />
     </ng-template>
   </div>
 </div>

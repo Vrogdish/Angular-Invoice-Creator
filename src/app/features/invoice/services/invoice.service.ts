@@ -15,7 +15,7 @@ import {
   doc,
 } from '@angular/fire/firestore';
 import { UserProfile } from '../../profile/models/userProfile.model';
-import { Invoice, InvoiceForm } from '../models/invoice.model';
+import { DeliveryAddress, Invoice, InvoiceForm } from '../models/invoice.model';
 
 @Injectable({
   providedIn: 'root',
@@ -25,6 +25,15 @@ export class InvoiceService {
     uid: '',
     num: 0,
     createdAt: new Date(),
+    delivery: {
+      withDelivery: false,
+      deliveryAddress: {
+        address: '',
+        postalCode: '',
+        city: '',
+        country: '',
+      },
+    },
     vendor: {
       civility: CivilityEnum.male,
       firstname: '',
@@ -133,6 +142,17 @@ export class InvoiceService {
         postalCode: '',
         country: '',
       },
+    });
+  }
+
+  setDelivery(withDelivery: boolean): void {
+    this.invoice$.next({ ...this.invoice$.value, delivery: { withDelivery } });
+  }
+
+  setDeliveryAddress(deliveryAddress: DeliveryAddress): void {
+    this.invoice$.next({
+      ...this.invoice$.value,
+      delivery: { ...this.invoice$.value.delivery, deliveryAddress },
     });
   }
 

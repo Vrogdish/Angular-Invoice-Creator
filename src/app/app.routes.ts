@@ -15,7 +15,6 @@ import { PdfPreviewComponent } from './features/invoice/components/pdf-preview/p
 import { SettingsComponent } from './features/settings/settings.component';
 import { InvoiceCreatorComponent } from './features/invoice/components/invoice-creator/invoice-creator.component';
 import { InvoiceDetailComponent } from './features/invoice/components/invoice-detail/invoice-detail.component';
-import { DeliveryComponent } from './features/delivery/delivery.component';
 
 export const routes: Routes = [
   {
@@ -46,44 +45,50 @@ export const routes: Routes = [
   },
   {
     path: 'products',
-    component: ProductsComponent
+    component: ProductsComponent,
+    canActivate: [authGuard],
+
   },
   {
     path: 'products/add',
-    component: ProductFormComponent
+    component: ProductFormComponent,
+    canActivate: [authGuard],
   },
   {
     path : 'customers',
-    component: CustomersComponent
+    component: CustomersComponent,
+    canActivate: [authGuard],
   },
   {
     path: 'customers/add',
-    component: CustomerFormComponent
+    component: CustomerFormComponent,
+    canActivate: [authGuard], 
   },
   {
     path: 'invoice',
-    component: InvoiceComponent
+    component: InvoiceComponent,
+    canActivate : [authGuard],
   },
   {
-    path: 'invoice/:id',
-    component: InvoiceDetailComponent
+    path: 'invoice/detail/:id',
+    component: InvoiceDetailComponent,
+    canActivate: [authGuard],
   },
   {
     path: 'invoice/create',
-    component: InvoiceCreatorComponent
+    component: InvoiceCreatorComponent,
+    canActivate: [authGuard],
   },
 
   {
     path: 'invoice/preview',
-    component: PdfPreviewComponent
-  },
-  {
-    path: 'delivery',
-    component: DeliveryComponent
+    component: PdfPreviewComponent,
+    canActivate: [authGuard],
   },
   {
     path: 'settings',
-    component: SettingsComponent
+    component: SettingsComponent,
+    canActivate: [authGuard],
   },
   {
     path: '**',

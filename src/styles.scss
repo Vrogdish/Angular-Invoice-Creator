@@ -32,13 +32,18 @@ h1 {
   font-size: 1.3rem;
 }
 
-input[type = "text"], input[type = "email"], input[type = "password"], input[type = "number"]{
+input[type = "text"], input[type = "email"], input[type = "password"], input[type = "number"] {
   font-size: 1rem;
   padding: 10px;
   // margin: 10px 0;
   border: 1px solid $color-border;
   border-radius: 5px;
   width: 100%;
+}
+
+input[type = "checkbox"] {
+  width:16px;
+  height:16px;
 }
 
 textarea {

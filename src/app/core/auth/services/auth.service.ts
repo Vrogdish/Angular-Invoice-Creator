@@ -1,4 +1,4 @@
-import { Injectable, inject } from '@angular/core';
+import { Injectable, OnInit, inject } from '@angular/core';
 import {
   Auth,
   signInWithEmailAndPassword,
@@ -13,7 +13,6 @@ import { BehaviorSubject } from 'rxjs';
   providedIn: 'root',
 })
 export class AuthService {
-  // private auth = inject(Auth);
   private authState = new BehaviorSubject<User | null>(null);
 
   constructor(private auth: Auth) {
