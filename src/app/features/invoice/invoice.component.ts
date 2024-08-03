@@ -26,6 +26,7 @@ export class InvoiceComponent implements OnInit, OnDestroy {
   invoices$!: BehaviorSubject<Invoice[]>;
   searchQuery: string = '';
   subscription : Subscription = new Subscription();
+  
 
   constructor(private invoiceService: InvoiceService, private auth : AuthService) {}
 

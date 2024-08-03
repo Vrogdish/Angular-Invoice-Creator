@@ -13,6 +13,7 @@ import {
   Timestamp,
   deleteDoc,
   doc,
+  getDoc,
 } from '@angular/fire/firestore';
 import { UserProfile } from '../../profile/models/userProfile.model';
 import { DeliveryAddress, Invoice, InvoiceForm } from '../models/invoice.model';
@@ -232,9 +233,36 @@ export class InvoiceService {
       this.invoices$.next(invoices);
     } catch (error) {
       console.error(error);
-      this.errorMessage$.next("Impossible de charger les factures. Veuillez réessayer.");
+      this.errorMessage$.next(
+        'Impossible de charger les factures. Veuillez réessayer.'
+      );
     }
   }
+
+  async getInvoiceById(id: string)  {
+    this.isLoading$.next(true);
+    this.errorMessage$.next('');
+    try {
+      const collectionRef = collection(this.firestore, 'invoices');
+      const docRef = doc(collectionRef, id);
+      const docSnap = await getDoc(docRef);
+      const data = docSnap.data() as Invoice;
+      
+      if (data.createdAt instanceof Timestamp) {
+        data.createdAt = data.createdAt.toDate();
+      }
+
+      return data;
+    } catch (error) {
+      console.error(error);
+      this.errorMessage$.next("Impossible de charger la facture. Veuillez réessayer.");
+      return null;
+    } finally {
+      this.isLoading$.next(false);
+    }
+  }
+
+ 
 
   async createInvoice(invoice: InvoiceForm) {
     this.isLoading$.next(true);
@@ -248,7 +276,9 @@ export class InvoiceService {
       await this.loadInvoices(invoice.uid);
     } catch (error) {
       console.error(error);
-      this.errorMessage$.next("Impossible de créer la facture. Veuillez réessayer.");
+      this.errorMessage$.next(
+        'Impossible de créer la facture. Veuillez réessayer.'
+      );
     } finally {
       this.isLoading$.next(false);
     }
@@ -261,10 +291,11 @@ export class InvoiceService {
       const collectionRef = collection(this.firestore, 'invoices');
       await deleteDoc(doc(collectionRef, id));
       this.loadInvoices(uid);
-      
     } catch (error) {
       console.error(error);
-      this.errorMessage$.next("Impossible de supprimer la facture. Veuillez réessayer.");
+      this.errorMessage$.next(
+        'Impossible de supprimer la facture. Veuillez réessayer.'
+      );
     } finally {
       this.isLoading$.next(false);
     }

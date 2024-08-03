@@ -1,1 +1,28 @@
-<p>invoice-detail works!</p>
+<div *ngIf="!isLoading">
+  <div *ngIf="invoice" class="detail">
+    <div class="title">
+      <h2>Facture n° {{ invoice.num }}</h2>
+
+      <app-btn
+        title="Retour à la liste"
+        theme="primary"
+        routerLink="/invoice"
+      ></app-btn>
+    </div>
+    <p>du {{ invoice.createdAt | date : "dd/MM/yyyy" }}</p>
+    <app-pdf-preview [invoice]="invoice"></app-pdf-preview>
+    <div class="preview-btn">
+      <app-btn title="Ouvrir le fichier" theme="secondary" (onClick)="openInvoicePdf()"></app-btn>
+    </div>
+    <div *ngIf="invoice.delivery?.withDelivery">
+      <h2>Bon de livraison associé :</h2>
+      <app-pdf-delivery-preview [invoice]="invoice"></app-pdf-delivery-preview>
+      <div class="preview-btn">
+        <app-btn title="Ouvrir le fichier" theme="secondary" (onClick)="openDeliveryPdf()" ></app-btn>
+      </div>
+    </div>
+  </div>
+</div>
+<div *ngIf="isLoading">
+  <app-loader></app-loader>
+</div>

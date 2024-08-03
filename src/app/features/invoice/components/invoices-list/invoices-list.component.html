@@ -10,7 +10,7 @@
         mat-cell
         *matCellDef="let invoice"
         class="number"
-        [routerLink]="['/invoice', invoice.id]"
+        [routerLink]="['/invoice/detail', invoice.id]"
       >
         {{ invoice.num || "-" }}
       </td>
@@ -21,7 +21,7 @@
         mat-cell
         *matCellDef="let invoice"
         class="date"
-        [routerLink]="['/invoice', invoice.id]"
+        [routerLink]="['/invoice/detail', invoice.id]"
       >
         {{ (invoice.createdAt | date : "dd/MM/yyyy") || "-" }}
       </td>
@@ -31,7 +31,7 @@
       <td
         mat-cell
         *matCellDef="let invoice"
-        [routerLink]="['/invoice', invoice.id]"
+        [routerLink]="['/invoice/detail', invoice.id]"
       >
         {{ invoice.customer.civility }} {{ invoice.customer.firstname }}
         {{ invoice.customer.lastname }}
@@ -43,7 +43,7 @@
         mat-cell
         *matCellDef="let invoice"
         class="produits"
-        [routerLink]="['/invoice', invoice.id]"
+        [routerLink]="['/invoice/detail', invoice.id]"
       >
         {{ invoice.productsList.length }}
       </td>
