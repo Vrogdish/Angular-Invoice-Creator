@@ -8,7 +8,6 @@ import { AuthService } from '../../core/auth/services/auth.service';
 import { CommonModule } from '@angular/common';
 import { CustomersListComponent } from './components/customers-list/customers-list.component';
 import { RouterLink } from '@angular/router';
-import { User } from 'firebase/auth';
 import { LoaderComponent } from "../../shared/components/loader/loader.component";
 
 @Component({
@@ -29,9 +28,9 @@ export class CustomersComponent implements OnInit, OnDestroy {
   customers$: BehaviorSubject<Customer[] | null> = new BehaviorSubject<
     Customer[] | null
   >(null);
-  searchQuery: string = '';
+  searchQuery= '';
   subscription: Subscription = new Subscription();
-  isLoading: boolean = true;
+  isLoading = true;
 
   constructor(
     private customersService: CustomersService,

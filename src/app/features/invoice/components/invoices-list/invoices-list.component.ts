@@ -26,7 +26,7 @@ import { RouterLink } from '@angular/router';
 })
 export class InvoicesListComponent implements OnChanges {
   @Input() invoices: Invoice[] = [];
-  @Input() searchQuery: string = '';
+  @Input() searchQuery = '';
   filteredInvoices: Invoice[] = [];
   displayedColumns: string[] = [
     'number',

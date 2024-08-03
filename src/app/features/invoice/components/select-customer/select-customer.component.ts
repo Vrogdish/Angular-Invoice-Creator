@@ -88,6 +88,8 @@ export class SelectCustomerComponent implements OnInit, OnDestroy {
   }
 
   setDeliveryAddress(event: Event): void {
+    console.log('setDeliveryAddress', event);
+    
         }
 
 }

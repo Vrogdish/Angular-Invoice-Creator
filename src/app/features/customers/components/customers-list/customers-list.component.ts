@@ -25,7 +25,7 @@ import { CommonModule } from '@angular/common';
 })
 export class CustomersListComponent {
   @Input() customers: Customer[] = [];
-  @Input() searchQuery: string = '';
+  @Input() searchQuery = '';
   filteredCustomers: Customer[] = [];
   displayedColumns: string[] = ['name', 'email', 'adress', 'phone', 'delete'];
 

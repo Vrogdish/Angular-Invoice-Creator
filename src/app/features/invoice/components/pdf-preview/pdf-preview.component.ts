@@ -20,6 +20,7 @@ import { PdfViewerModule } from 'ng2-pdf-viewer';
 })
 export class PdfPreviewComponent implements OnInit {
   @Input({required:true}) invoice!: InvoiceForm | Invoice;
+  // eslint-disable-next-line  @typescript-eslint/no-explicit-any
   pdfSrc!: any;
   totalHT!: number;
   totalTva!: number;

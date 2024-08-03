@@ -28,9 +28,9 @@ export class ProductsComponent implements OnInit, OnDestroy {
   products$: BehaviorSubject<Product[] | null> = new BehaviorSubject<
     Product[] | null
   >(null);
-  searchQuery: string = '';
+  searchQuery = '';
   subscription: Subscription = new Subscription();
-  isLoading: boolean = true;
+  isLoading = true;
 
   constructor(
     private productService: ProductsService,

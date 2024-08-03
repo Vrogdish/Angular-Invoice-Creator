@@ -26,9 +26,9 @@ import { LoaderComponent } from "../../shared/components/loader/loader.component
 })
 export class InvoiceComponent implements OnInit, OnDestroy {
   invoices$!: BehaviorSubject<Invoice[]>;
-  searchQuery: string = '';
+  searchQuery = '';
   subscription : Subscription = new Subscription();
-  isLoading: boolean = true;
+  isLoading = true;
   
 
   constructor(private invoiceService: InvoiceService, private auth : AuthService) {}

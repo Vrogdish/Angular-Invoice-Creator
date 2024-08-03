@@ -34,5 +34,5 @@
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
     <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
   </table>
-  <P *ngIf="filteredProducts.length == 0" class="not-found">Aucun produits trouvés</P>
+  <P *ngIf="filteredProducts.length === 0" class="not-found">Aucun produits trouvés</P>
 </div>

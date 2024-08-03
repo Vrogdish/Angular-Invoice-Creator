@@ -7,7 +7,7 @@ import { NgSelectModule } from '@ng-select/ng-select';
 import { FormsModule } from '@angular/forms';
 import { AuthService } from '../../../../core/auth/services/auth.service';
 import { BtnComponent } from "../../../../shared/components/btn/btn.component";
-import { Invoice, InvoiceForm } from '../../models/invoice.model';
+import { InvoiceForm } from '../../models/invoice.model';
 import { InvoiceService } from '../../services/invoice.service';
 import { MatTableModule } from '@angular/material/table';
 

@@ -60,7 +60,10 @@ export class ProductsService {
     this.isLoading$.next(false);
   }
 
-  updateProduct(id: string, product: ProductForm) {}
+  updateProduct(id: string, product: ProductForm) {
+    console.log('updateProduct', id, product);
+    
+  }
 
   async deleteProduct(id: string , uid: string) {
     this.isLoading$.next(true);

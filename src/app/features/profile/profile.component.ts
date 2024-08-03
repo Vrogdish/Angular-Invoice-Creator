@@ -22,7 +22,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
   user!: User | null;
   userProfile$!: Observable<UserProfile | null>;
   subscription: Subscription = new Subscription();
-  isLoading: boolean = true;
+  isLoading = true;
 
   constructor(private profile: ProfileService, private auth: AuthService) {
     this.user$ = this.auth.authState$;

@@ -1,4 +1,4 @@
-import { Injectable, OnInit, inject } from '@angular/core';
+import { Injectable } from '@angular/core';
 import {
   Auth,
   signInWithEmailAndPassword,
@@ -21,15 +21,16 @@ export class AuthService {
     });
   }
 
- async signup(email: string, password: string) {
+  async signup(email: string, password: string) {
     try {
       const userCredential = await createUserWithEmailAndPassword(
         this.auth,
         email,
-        password)
-     return { data: userCredential.user };
-      
- } catch (error: any) {
+        password
+      );
+      return { data: userCredential.user };
+  // eslint-disable-next-line  @typescript-eslint/no-explicit-any
+    } catch (error: any) {
       console.error(error);
       return { error: error };
     }
@@ -44,6 +45,7 @@ export class AuthService {
       );
       console.log(userCredential);
       return { data: userCredential.user };
+      // eslint-disable-next-line  @typescript-eslint/no-explicit-any
     } catch (error: any) {
       console.error(error);
       return { error: error };
@@ -54,6 +56,7 @@ export class AuthService {
     try {
       await this.auth.signOut();
       console.log('sign out sucessful');
+      // eslint-disable-next-line  @typescript-eslint/no-explicit-any
     } catch (error: any) {
       console.error(error);
     }

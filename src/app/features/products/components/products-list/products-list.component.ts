@@ -25,7 +25,7 @@ import { AuthService } from '../../../../core/auth/services/auth.service';
 })
 export class ProductsListComponent implements OnChanges {
   @Input() products: Product[] = [];
-  @Input() searchQuery: string = '';
+  @Input() searchQuery = '';
   filteredProducts: Product[] = [];
   displayedColumns: string[] = [
     'ref',

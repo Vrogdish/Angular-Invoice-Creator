@@ -20,7 +20,6 @@ export class SelectAutocompleteComponent implements OnInit {
   filteredOptions!: Observable<{name : string, value : string}[]>;
   myControl = new FormControl();
 
-  constructor() {}
 
   ngOnInit() {
     this.filteredOptions = this.myControl.valueChanges

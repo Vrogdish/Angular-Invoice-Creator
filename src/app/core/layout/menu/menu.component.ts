@@ -14,7 +14,7 @@ import { User } from 'firebase/auth';
   imports: [CommonModule, RouterModule, BtnComponent],
 })
 export class MenuComponent implements OnInit {
-  @Output() close = new EventEmitter<void>();
+  @Output() handleClose = new EventEmitter<void>();
   user$!: Observable<User | null>;
 
   offlineMenu = [
@@ -70,6 +70,6 @@ export class MenuComponent implements OnInit {
   }
 
   closeMenu() {
-    this.close.emit();
+    this.handleClose.emit();
   }
 }

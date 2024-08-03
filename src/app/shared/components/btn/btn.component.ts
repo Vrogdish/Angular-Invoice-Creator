@@ -9,7 +9,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
   styleUrl: './btn.component.scss',
 })
 export class BtnComponent implements OnInit{
-  @Input() title: string = 'Button';
+  @Input() title = 'Button';
   @Input() iconUrl!: string;
   @Input() theme:
     | 'primary'
@@ -19,7 +19,7 @@ export class BtnComponent implements OnInit{
     | 'loading'
     | 'cancel'
     | 'alert' = 'primary';
-  @Output() onClick: EventEmitter<void> = new EventEmitter<void>();
+  @Output() HandleClick: EventEmitter<void> = new EventEmitter<void>();
   typeVariant: 'submit' | 'button' = 'button' ;
   isDisabled = false;
 
@@ -34,6 +34,6 @@ export class BtnComponent implements OnInit{
   }
 
   handleclick() {
-    this.onClick.emit();
+    this.HandleClick.emit();
   }
 }

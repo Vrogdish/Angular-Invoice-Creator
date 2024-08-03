@@ -69,7 +69,6 @@ export class InvoiceService {
 
   firestore = inject(Firestore);
 
-  constructor() {}
 
   private setVendor(vendor: UserProfile): void {
     this.invoice$.next({

@@ -25,7 +25,7 @@ import { SelectProductsComponent } from "../select-products/select-products.comp
 export class InvoiceCreatorComponent {
   @ViewChild(PdfPreviewComponent) pdfPreviewComponent!: PdfPreviewComponent;
   invoice$!: BehaviorSubject<InvoiceForm>;
-  step: number = 1;
+  step = 1;
 
   constructor(private invoiceService: InvoiceService, private router:Router) {}
 

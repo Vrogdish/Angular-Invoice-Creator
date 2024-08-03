@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { InvoiceService } from '../../services/invoice.service';
 import { Invoice } from '../../models/invoice.model';
-import { BehaviorSubject, Subscription } from 'rxjs';
+import { Subscription } from 'rxjs';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { PdfPreviewComponent } from '../pdf-preview/pdf-preview.component';
 import { CommonModule } from '@angular/common';
@@ -23,7 +23,7 @@ export class InvoiceDetailComponent implements OnInit, OnDestroy {
   invoice!: Invoice | null;
   id!: string | null;
   subscription: Subscription = new Subscription();
-  isLoading: boolean = true;
+  isLoading = true;
 
   constructor(
     private invoiceService: InvoiceService,

@@ -16,6 +16,7 @@ import { TDocumentDefinitions } from 'pdfmake/interfaces';
 })
 export class PdfDeliveryPreviewComponent implements OnInit {
   @Input({required:true}) invoice!: InvoiceForm | Invoice;
+  // eslint-disable-next-line  @typescript-eslint/no-explicit-any
   pdfSrc!: any;
 
   ngOnInit() {

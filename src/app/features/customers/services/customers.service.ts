@@ -66,6 +66,8 @@ export class CustomersService {
 
   async updateCustomer(id: string, customer: FormGroup<CustomerForm>) {
     // Update a customer
+    console.log('updateCustomer', id, customer.value);
+    
   }
 
   async deleteCustomer(id: string, uid: string) {
