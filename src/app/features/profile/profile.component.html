@@ -1,38 +1,42 @@
 <div class="profile" *ngIf="userProfile$ | async as profile">
-  
-  <div class="profile-photo">
-    <app-avatar [user]="user" size="medium" />
-    <p>{{ profile.firstname }} {{ profile.lastname }}</p>
-  </div>
-  <div class="content">
-    <div class="item">
-      <img class="icon" src="/icons/corporate.png" alt="entreprise" />
-      <p>{{ profile.company || '-' }}</p>
+  <div *ngIf="!isLoading">
+    <div class="profile-photo">
+      <app-avatar [user]="user" size="medium" />
+      <p>{{ profile.firstname }} {{ profile.lastname }}</p>
     </div>
-    <div class="separator"></div>
-    <div class="item">
-      <img class="icon" src="/icons/email.png" alt="email" />
-      <p>{{ profile.email }}</p>
-    </div>
-    <div class="separator"></div>
-    <div class="item">
-      <img class="icon" src="/icons/home.png" alt="adresse" />
-      <div>
-        <p>{{ profile.address }}</p>
-        <p>{{ profile.postalCode }} {{ profile.city }}</p>
+    <div class="content">
+      <div class="item">
+        <img class="icon" src="/icons/corporate.png" alt="entreprise" />
+        <p>{{ profile.company || "-" }}</p>
       </div>
-    </div>
+      <div class="separator"></div>
+      <div class="item">
+        <img class="icon" src="/icons/email.png" alt="email" />
+        <p>{{ profile.email }}</p>
+      </div>
+      <div class="separator"></div>
+      <div class="item">
+        <img class="icon" src="/icons/home.png" alt="adresse" />
+        <div>
+          <p>{{ profile.address }}</p>
+          <p>{{ profile.postalCode }} {{ profile.city }}</p>
+        </div>
+      </div>
 
-    <div class="separator"></div>
-    <div class="item">
-      <img class="icon" src="/icons/phone.png" alt="téléphone" />
-      <p>{{ profile.phone || '-' }}</p>
+      <div class="separator"></div>
+      <div class="item">
+        <img class="icon" src="/icons/phone.png" alt="téléphone" />
+        <p>{{ profile.phone || "-" }}</p>
+      </div>
+      <div class="separator"></div>
+      <p>inscrit depuis le {{ profile.createdAt | date : "dd/MM/yyyy" }}</p>
     </div>
-    <div class="separator"></div>
-    <p>inscrit depuis le {{ profile.createdAt | date : "dd/MM/yyyy" }}</p>
+    <div class="profile-btn">
+      <app-btn title="Modifier" theme="primary" routerLink="/profile/edit" />
+      <app-btn title="Se déconnecter" theme="alert" (onClick)="signout()" />
+    </div>
   </div>
-  <div class="profile-btn">
-    <app-btn title="Modifier" theme="primary" routerLink="/profile/edit" />
-    <app-btn title="Se déconnecter" theme="alert" (onClick)="signout()" />
+  <div *ngIf="isLoading">
+    <app-loader></app-loader>
   </div>
 </div>

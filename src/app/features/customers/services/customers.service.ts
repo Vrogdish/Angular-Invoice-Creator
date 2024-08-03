@@ -37,7 +37,9 @@ export class CustomersService {
       this.customers$.next(customers);
     } catch (error) {
       console.error(error);
-      this.errorMessages$.next("Impossible de charger les clients. Veuillez réessayer.");
+      this.errorMessages$.next(
+        'Impossible de charger les clients. Veuillez réessayer.'
+      );
     }
     this.isLoading$.next(false);
   }
@@ -54,7 +56,9 @@ export class CustomersService {
       this.loadCustomers(uid);
     } catch (error) {
       console.error(error);
-      this.errorMessages$.next("Impossible d'ajouter le client. Veuillez réessayer.");
+      this.errorMessages$.next(
+        "Impossible d'ajouter le client. Veuillez réessayer."
+      );
     }
 
     this.isLoading$.next(false);
@@ -73,8 +77,11 @@ export class CustomersService {
       this.loadCustomers(uid);
     } catch (error) {
       console.error(error);
-      this.errorMessages$.next("impossible de supprimer le client. Veuillez réessayer.");
+      this.errorMessages$.next(
+        'impossible de supprimer le client. Veuillez réessayer.'
+      );
+    } finally {
+      this.isLoading$.next(false);
     }
-    
   }
 }

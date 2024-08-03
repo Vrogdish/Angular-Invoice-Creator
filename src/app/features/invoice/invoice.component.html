@@ -1,6 +1,6 @@
 <div class="invoices">
   <h1>Liste de mes factures</h1>
-<app-search-bar (search)="onSearch($event)"/>
+  <app-search-bar (search)="onSearch($event)" />
   <div class="btn">
     <app-btn
       title="Nouvelle facture"
@@ -9,8 +9,13 @@
       routerLink="/invoice/create"
     />
   </div>
-  
+
   <div *ngIf="invoices$ | async as invoices">
-    <app-invoices-list [invoices]="invoices" [searchQuery]="searchQuery" />
+    <div *ngIf="!isLoading">
+      <app-invoices-list [invoices]="invoices" [searchQuery]="searchQuery" />
+    </div>
+    <div *ngIf="isLoading">
+      <app-loader></app-loader>
+    </div>
   </div>
 </div>

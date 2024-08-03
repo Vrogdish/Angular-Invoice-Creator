@@ -1,6 +1,6 @@
 <div class="products">
   <h1>Liste de mes produits</h1>
-<app-search-bar (search)="onSearch($event)"/>
+  <app-search-bar (search)="onSearch($event)" />
   <div class="btn">
     <app-btn
       title="nouveau produit"
@@ -9,8 +9,16 @@
       routerLink="/products/add"
     />
   </div>
-  
+
   <div *ngIf="products$ | async as products">
-    <app-products-list [products]="products" [searchQuery]="searchQuery"></app-products-list>
+    <div *ngIf="!isLoading">
+      <app-products-list
+        [products]="products"
+        [searchQuery]="searchQuery"
+      ></app-products-list>
+    </div>
+    <div *ngIf="isLoading">
+      <app-loader></app-loader>
+    </div>
   </div>
 </div>

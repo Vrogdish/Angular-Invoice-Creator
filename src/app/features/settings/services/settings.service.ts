@@ -14,7 +14,7 @@ export class SettingsService {
     this.settings$.next(settings);
   }
 
-  loadSettings(): void {}
+  loadSettings(uid : string): void {}
 
   updateSettings(settings: Settings): void {
     this.settings$.next(settings);

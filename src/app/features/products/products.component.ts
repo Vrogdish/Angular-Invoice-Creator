@@ -8,6 +8,7 @@ import { BtnComponent } from '../../shared/components/btn/btn.component';
 import { ProductsListComponent } from './components/products-list/products-list.component';
 import { SearchBarComponent } from '../../shared/components/search-bar/search-bar.component';
 import { RouterLink } from '@angular/router';
+import { LoaderComponent } from "../../shared/components/loader/loader.component";
 
 @Component({
   selector: 'app-products',
@@ -20,7 +21,8 @@ import { RouterLink } from '@angular/router';
     ProductsListComponent,
     SearchBarComponent,
     RouterLink,
-  ],
+    LoaderComponent
+],
 })
 export class ProductsComponent implements OnInit, OnDestroy {
   products$: BehaviorSubject<Product[] | null> = new BehaviorSubject<
@@ -28,6 +30,7 @@ export class ProductsComponent implements OnInit, OnDestroy {
   >(null);
   searchQuery: string = '';
   subscription: Subscription = new Subscription();
+  isLoading: boolean = true;
 
   constructor(
     private productService: ProductsService,
@@ -35,9 +38,14 @@ export class ProductsComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit() {
+    // this.subscription.add(
+    //   this.auth.authState$.subscribe((user) => {
+    //     this.productService.loadProducts(user?.uid!);
+    //   })
+    // );
     this.subscription.add(
-      this.auth.authState$.subscribe((user) => {
-        this.productService.loadProducts(user?.uid!);
+      this.productService.isLoading$.subscribe((isLoading) => {
+        this.isLoading = isLoading;
       })
     );
     this.products$ = this.productService.products$;

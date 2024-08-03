@@ -1,4 +1,4 @@
-<div class="customers">
+<div *ngIf="!isLoading"  class="customers">
     <h1>Liste des clients</h1>
     <app-search-bar (search)="onSearch($event)"/>
     <div class="btn">
@@ -13,4 +13,8 @@
     <div *ngIf="customers$ | async as customers">
         <app-customers-list [customers]="customers" [searchQuery]="searchQuery"/>
     </div>
+  </div>
+
+  <div *ngIf="isLoading">
+    <app-loader></app-loader>
   </div>

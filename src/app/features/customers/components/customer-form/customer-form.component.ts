@@ -5,12 +5,12 @@ import { BtnComponent } from '../../../../shared/components/btn/btn.component';
 import { CustomerForm } from '../../models/customer.model';
 import { CustomersService } from '../../services/customers.service';
 import { AuthService } from '../../../../core/auth/services/auth.service';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-customer-form',
   standalone: true,
-  imports: [ReactiveFormsModule, CommonModule, BtnComponent],
+  imports: [ReactiveFormsModule, CommonModule, BtnComponent, RouterLink],
   templateUrl: './customer-form.component.html',
   styleUrl: './customer-form.component.scss'
 })

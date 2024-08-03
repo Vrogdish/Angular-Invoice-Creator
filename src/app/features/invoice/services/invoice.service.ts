@@ -236,10 +236,12 @@ export class InvoiceService {
       this.errorMessage$.next(
         'Impossible de charger les factures. Veuillez réessayer.'
       );
+    } finally {
+      this.isLoading$.next(false);
     }
   }
 
-  async getInvoiceById(id: string)  {
+  async getInvoiceById(id: string) {
     this.isLoading$.next(true);
     this.errorMessage$.next('');
     try {
@@ -247,7 +249,7 @@ export class InvoiceService {
       const docRef = doc(collectionRef, id);
       const docSnap = await getDoc(docRef);
       const data = docSnap.data() as Invoice;
-      
+
       if (data.createdAt instanceof Timestamp) {
         data.createdAt = data.createdAt.toDate();
       }
@@ -255,14 +257,14 @@ export class InvoiceService {
       return data;
     } catch (error) {
       console.error(error);
-      this.errorMessage$.next("Impossible de charger la facture. Veuillez réessayer.");
+      this.errorMessage$.next(
+        'Impossible de charger la facture. Veuillez réessayer.'
+      );
       return null;
     } finally {
       this.isLoading$.next(false);
     }
   }
-
- 
 
   async createInvoice(invoice: InvoiceForm) {
     this.isLoading$.next(true);
