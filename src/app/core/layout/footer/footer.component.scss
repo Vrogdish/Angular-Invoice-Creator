@@ -12,6 +12,11 @@ footer {
     justify-content: space-between;
     max-width: 1440px;
     margin: auto;
+    @media (max-width: 768px) {
+        flex-direction: column;
+        gap: 40px;
+        
+    }
 }
 
 .footer-section div {
@@ -20,7 +25,8 @@ footer {
 
 .copyright {
     font-size: 12px;
-    margin-top: 90px;
+    margin-top: 20px;
+   
 }
 
 input, textarea {
