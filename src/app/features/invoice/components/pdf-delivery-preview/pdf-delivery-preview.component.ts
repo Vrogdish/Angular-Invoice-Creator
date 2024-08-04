@@ -97,7 +97,7 @@ export class PdfDeliveryPreviewComponent implements OnInit {
 
         {
           text:
-            'Date de facturation : ' + this.invoice.createdAt.toLocaleDateString(),
+            'Date de création du bon : ' + this.invoice.createdAt.toLocaleDateString(),
           margin: [0, 0, 0, 30],
         },
 
@@ -108,16 +108,16 @@ export class PdfDeliveryPreviewComponent implements OnInit {
               [
                 'Ref',
                 'Article',
-                'Prix unitaire HT',
+                
                 'Quantité',
-                'Prix total HT',
+                
               ],
               ...this.invoice.productsList.map((product) => [
                 product.product.reference,
                 product.product.name,
-                product.product.price.toFixed(2) + ' €',
+             
                 product.quantity,
-                (product.product.price * product.quantity).toFixed(2) + ' €',
+              
               ]),
             ],
           },
@@ -125,9 +125,7 @@ export class PdfDeliveryPreviewComponent implements OnInit {
         },
 
         
-        {
-          text: 'Merci de votre confiance',
-        },
+    
       ],
       footer: () => {
         return {
