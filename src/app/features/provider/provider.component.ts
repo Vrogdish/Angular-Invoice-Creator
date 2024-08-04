@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { AuthService } from '../../core/auth/services/auth.service';
 import { Subscription } from 'rxjs';
 import { CustomersService } from '../customers/services/customers.service';
@@ -14,7 +14,7 @@ import { SettingsService } from '../settings/services/settings.service';
   templateUrl: './provider.component.html',
   styleUrl: './provider.component.scss',
 })
-export class ProviderComponent implements OnInit {
+export class ProviderComponent implements OnInit, OnDestroy {
   subscription: Subscription = new Subscription();
 
   constructor(

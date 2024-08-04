@@ -3,6 +3,6 @@
   <p>Êtes-vous sûr de vouloir supprimer ce client ?</p>
 </mat-dialog-content>
 <mat-dialog-actions class="dialog-btn">
-  <app-btn title="Non" theme="cancel" (onClick)="onCancel()" />
-  <app-btn title="Oui" (onClick)="onConfirm()" />
+  <app-btn title="Non" theme="cancel" (handleClick)="onCancel()" />
+  <app-btn title="Oui" (handleClick)="onConfirm()" />
 </mat-dialog-actions>

@@ -19,7 +19,7 @@ export class BtnComponent implements OnInit{
     | 'loading'
     | 'cancel'
     | 'alert' = 'primary';
-  @Output() HandleClick: EventEmitter<void> = new EventEmitter<void>();
+  @Output() handleClick: EventEmitter<void> = new EventEmitter<void>();
   typeVariant: 'submit' | 'button' = 'button' ;
   isDisabled = false;
 
@@ -34,6 +34,6 @@ export class BtnComponent implements OnInit{
   }
 
   handleclick() {
-    this.HandleClick.emit();
+    this.handleClick.emit();
   }
 }

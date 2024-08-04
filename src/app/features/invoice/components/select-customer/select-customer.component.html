@@ -65,8 +65,8 @@
         <input type="text" id="locality" [defaultValue]="invoice.customer.city" [disabled]="!deliveryEditMode" />
       </div>
       <div class="delivery-btn">
-      <app-btn *ngIf="!deliveryEditMode" title="Modifier l'adresse de livraison" theme="secondary" (onClick)="setDeliveryEditMode(true)"></app-btn>
-      <app-btn *ngIf="deliveryEditMode" title="Sauvegarder les changement" (onClick)="setDeliveryEditMode(false)"></app-btn>
+      <app-btn *ngIf="!deliveryEditMode" title="Modifier l'adresse de livraison" theme="secondary" (handleClick)="setDeliveryEditMode(true)"></app-btn>
+      <app-btn *ngIf="deliveryEditMode" title="Sauvegarder les changement" (handleClick)="setDeliveryEditMode(false)"></app-btn>
 </div>
     </form>
   </div>

@@ -6,41 +6,67 @@
   <table mat-table [dataSource]="filteredCustomers" class="mat-elevation-z8">
     <ng-container matColumnDef="name">
       <th mat-header-cell *matHeaderCellDef>Nom</th>
-      <td mat-cell *matCellDef="let customer">
+      <td
+        mat-cell
+        *matCellDef="let customer"
+        [routerLink]="['/customers/detail', customer.id]"
+      >
         {{ customer.civility }} {{ customer.firstname }} {{ customer.lastname }}
       </td>
     </ng-container>
     <ng-container matColumnDef="email">
       <th mat-header-cell *matHeaderCellDef class="email">Email</th>
-      <td mat-cell *matCellDef="let customer" class="email">{{ customer.email }}</td>
+      <td
+        mat-cell
+        *matCellDef="let customer"
+        class="email"
+        [routerLink]="['/customers/detail', customer.id]"
+      >
+        {{ customer.email }}
+      </td>
     </ng-container>
-    <ng-container matColumnDef="adress">
+    <ng-container matColumnDef="address">
       <th mat-header-cell *matHeaderCellDef class="address">Adresse</th>
-      <td mat-cell *matCellDef="let customer" class="address">
+      <td
+        mat-cell
+        *matCellDef="let customer"
+        class="address"
+        [routerLink]="['/customers/detail', customer.id]"
+      >
         <p>{{ customer.address }}</p>
-        <p>{{ customer.postalCode }} {{ customer.locality }}</p>
+        <p>{{ customer.postalCode }} {{ customer.city }}</p>
       </td>
     </ng-container>
 
     <ng-container matColumnDef="phone">
       <th mat-header-cell *matHeaderCellDef class="phone">Téléphone</th>
-      <td mat-cell *matCellDef="let customer" class="phone">{{ customer.phone }}</td>
+      <td
+        mat-cell
+        *matCellDef="let customer"
+        class="phone"
+        [routerLink]="['/customers/detail', customer.id]"
+      >
+        {{ customer.phone }}
+      </td>
     </ng-container>
     <ng-container matColumnDef="delete">
-      <th mat-header-cell *matHeaderCellDef class="delete"><img src="/icons/trash.png" alt="corbeille" class="trash"></th>
+      <th mat-header-cell *matHeaderCellDef class="delete">
+        <img src="/icons/trash.png" alt="corbeille" class="trash" />
+      </th>
       <td mat-cell *matCellDef="let customer" class="delete">
+        <button (click)="deleteCustomer(customer.id)">
         <img
           src="/icons/delete.png"
           alt="supprimer"
           class="delete-btn"
-          (click)="deleteCustomer(customer.id)"
-        />
+          
+        /></button>
       </td>
     </ng-container>
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
     <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
   </table>
-  <P *ngIf="filteredCustomers.length === 0" class="not-found"
-    >Aucun clients trouvés</P
+  <p *ngIf="filteredCustomers.length === 0" class="not-found"
+    >Aucun clients trouvés</p
   >
 </div>

@@ -1,5 +1,6 @@
 <div class="add-customer">
-  <h1>Création d&apos;un nouveau client</h1>
+  <h1 *ngIf="!editMode">Création d&apos;un nouveau client</h1>
+  <h1 *ngIf="editMode">Modification du client {{ customer?.firstname }} {{ customer?.lastname }}</h1>
   <form [formGroup]="customerForm" (ngSubmit)="onSubmit()">
     <div class="civility">
       <label for="male">M.</label>

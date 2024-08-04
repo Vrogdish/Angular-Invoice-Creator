@@ -6,7 +6,7 @@
     <div class="customer-btn">
       <app-btn theme="cancel" title="Annuler" routerLink="/invoice" />
       <app-btn
-        (onClick)="setStep(2)"
+        (handleClick)="setStep(2)"
         theme="primary"
         title="Suivant"
         *ngIf="invoice.customer?.firstname; else disable"
@@ -20,9 +20,9 @@
   <div class="products" *ngIf="step === 2">
     <app-select-products />
     <div class="customer-btn">
-      <app-btn theme="cancel" title="Précédent" (onClick)="setStep(1)" />
+      <app-btn theme="cancel" title="Précédent" (handleClick)="setStep(1)" />
       <app-btn
-        (onClick)="setStep(3)"
+        (handleClick)="setStep(3)"
         theme="primary"
         title="Prévisualiser"
         *ngIf="invoice.productsList.length > 0; else disable"
@@ -36,8 +36,8 @@
   <div class="preview" *ngIf="step === 3">
     <app-pdf-preview [invoice]="invoice" />
     <div class="customer-btn">
-      <app-btn theme="cancel" title="Précédent" (onClick)="setStep(2)" />
-      <app-btn theme="primary" title="Créer" (onClick)="createInvoice()" />
+      <app-btn theme="cancel" title="Précédent" (handleClick)="setStep(2)" />
+      <app-btn theme="primary" title="Créer" (handleClick)="createInvoice()" />
     </div>
   </div>
 </div>

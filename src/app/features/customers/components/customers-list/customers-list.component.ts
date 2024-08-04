@@ -1,4 +1,4 @@
-import { Component, Input, SimpleChanges } from '@angular/core';
+import { Component, Input, SimpleChanges, OnChanges } from '@angular/core';
 import { Customer } from '../../models/customer.model';
 import {
   MatDialog,
@@ -15,19 +15,48 @@ import { BtnComponent } from '../../../../shared/components/btn/btn.component';
 import { AuthService } from '../../../../core/auth/services/auth.service';
 import { MatTableModule } from '@angular/material/table';
 import { CommonModule } from '@angular/common';
+import { RouterLink } from '@angular/router';
+
+@Component({
+  selector: 'app-dialog',
+  templateUrl: 'dialog-customers.component.html',
+  styleUrl: './customers-list.component.scss',
+  standalone: true,
+  imports: [
+    MatButtonModule,
+    MatDialogActions,
+    MatDialogClose,
+    MatDialogTitle,
+    MatDialogContent,
+    BtnComponent,
+  ],
+})
+export class DialogCustomerComponent {
+  constructor(public dialogRef: MatDialogRef<DialogCustomerComponent>) {}
+
+  onConfirm(): void {
+    this.dialogRef.close('confirm');
+    
+  }
+
+  onCancel(): void {
+    this.dialogRef.close('cancel');
+  }
+}
+
 
 @Component({
   selector: 'app-customers-list',
   standalone: true,
-  imports: [MatTableModule, CommonModule, MatDialogModule],
+  imports: [MatTableModule, CommonModule, MatDialogModule,RouterLink, DialogCustomerComponent],
   templateUrl: './customers-list.component.html',
   styleUrl: './customers-list.component.scss',
 })
-export class CustomersListComponent {
+export class CustomersListComponent implements OnChanges {
   @Input() customers: Customer[] = [];
   @Input() searchQuery = '';
   filteredCustomers: Customer[] = [];
-  displayedColumns: string[] = ['name', 'email', 'adress', 'phone', 'delete'];
+  displayedColumns: string[] = ['name', 'email', 'address', 'phone', 'delete'];
 
   constructor(
     private dialog: MatDialog,
@@ -52,7 +81,7 @@ export class CustomersListComponent {
   }
 
   deleteCustomer(id: string) {
-    const dialogRef = this.dialog.open(DialogCustomer, {
+    const dialogRef = this.dialog.open(DialogCustomerComponent, {
       width: '350px',
       enterAnimationDuration: '100ms',
       exitAnimationDuration: '100ms',
@@ -69,28 +98,3 @@ export class CustomersListComponent {
   }
 }
 
-@Component({
-  selector: 'dialog',
-  templateUrl: 'dialog-customers.component.html',
-  styleUrl: './customers-list.component.scss',
-  standalone: true,
-  imports: [
-    MatButtonModule,
-    MatDialogActions,
-    MatDialogClose,
-    MatDialogTitle,
-    MatDialogContent,
-    BtnComponent,
-  ],
-})
-export class DialogCustomer {
-  constructor(public dialogRef: MatDialogRef<DialogCustomer>) {}
-
-  onConfirm(): void {
-    this.dialogRef.close('confirm');
-  }
-
-  onCancel(): void {
-    this.dialogRef.close('cancel');
-  }
-}

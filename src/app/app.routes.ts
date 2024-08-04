@@ -15,6 +15,7 @@ import { PdfPreviewComponent } from './features/invoice/components/pdf-preview/p
 import { SettingsComponent } from './features/settings/settings.component';
 import { InvoiceCreatorComponent } from './features/invoice/components/invoice-creator/invoice-creator.component';
 import { InvoiceDetailComponent } from './features/invoice/components/invoice-detail/invoice-detail.component';
+import { CustomerDetailComponent } from './features/customers/components/customer-detail/customer-detail.component';
 
 export const routes: Routes = [
   {
@@ -50,7 +51,7 @@ export const routes: Routes = [
 
   },
   {
-    path: 'products/add',
+    path: 'products/create',
     component: ProductFormComponent,
     canActivate: [authGuard],
   },
@@ -60,9 +61,14 @@ export const routes: Routes = [
     canActivate: [authGuard],
   },
   {
-    path: 'customers/add',
+    path: 'customers/create',
     component: CustomerFormComponent,
     canActivate: [authGuard], 
+  },
+  {
+    path: 'customers/detail/:id',
+    component : CustomerDetailComponent,
+    canActivate: [authGuard],
   },
   {
     path: 'invoice',

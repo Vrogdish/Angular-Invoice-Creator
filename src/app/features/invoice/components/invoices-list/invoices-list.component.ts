@@ -14,13 +14,46 @@ import { AuthService } from '../../../../core/auth/services/auth.service';
 import { MatButtonModule } from '@angular/material/button';
 import { BtnComponent } from '../../../../shared/components/btn/btn.component';
 import { MatTableModule } from '@angular/material/table';
-import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
+import { CommonModule } from '@angular/common';
+
+@Component({
+  selector: 'app-dialog',
+  templateUrl: 'dialog.component.html',
+  styleUrl: './invoices-list.component.scss',
+  standalone: true,
+  imports: [
+    MatButtonModule,
+    MatDialogActions,
+    MatDialogClose,
+    MatDialogTitle,
+    MatDialogContent,
+    BtnComponent,
+    CommonModule,
+  ],
+})
+export class DialogComponent {
+  constructor(public dialogRef: MatDialogRef<DialogComponent>) {}
+
+  onConfirm(): void {
+    this.dialogRef.close('confirm');
+  }
+
+  onCancel(): void {
+    this.dialogRef.close('cancel');
+  }
+}
 
 @Component({
   selector: 'app-invoices-list',
   standalone: true,
-  imports: [MatTableModule, CommonModule, MatDialogModule, RouterLink],
+  imports: [
+    MatTableModule,
+    MatDialogModule,
+    RouterLink,
+    DialogComponent,
+    CommonModule,
+  ],
   templateUrl: './invoices-list.component.html',
   styleUrl: './invoices-list.component.scss',
 })
@@ -62,7 +95,7 @@ export class InvoicesListComponent implements OnChanges {
   }
 
   deleteInvoice(id: string) {
-    const dialogRef = this.dialog.open(Dialog, {
+    const dialogRef = this.dialog.open(DialogComponent, {
       width: '350px',
       enterAnimationDuration: '100ms',
       exitAnimationDuration: '100ms',
@@ -76,31 +109,5 @@ export class InvoicesListComponent implements OnChanges {
         });
       }
     });
-  }
-}
-
-@Component({
-  selector: 'dialog',
-  templateUrl: 'dialog.component.html',
-  styleUrl: './invoices-list.component.scss',
-  standalone: true,
-  imports: [
-    MatButtonModule,
-    MatDialogActions,
-    MatDialogClose,
-    MatDialogTitle,
-    MatDialogContent,
-    BtnComponent,
-  ],
-})
-export class Dialog {
-  constructor(public dialogRef: MatDialogRef<Dialog>) {}
-
-  onConfirm(): void {
-    this.dialogRef.close('confirm');
-  }
-
-  onCancel(): void {
-    this.dialogRef.close('cancel');
   }
 }

@@ -10,6 +10,7 @@ import {
   doc,
   getDocs,
   query,
+  updateDoc,
   where,
 } from '@angular/fire/firestore';
 
@@ -64,9 +65,29 @@ export class CustomersService {
     this.isLoading$.next(false);
   }
 
-  async updateCustomer(id: string, customer: FormGroup<CustomerForm>) {
-    // Update a customer
-    console.log('updateCustomer', id, customer.value);
+  async updateCustomer(uid : string, id: string, customer: FormGroup<CustomerForm>) {
+    this.isLoading$.next(true);
+    this.errorMessages$.next(null);
+    try {
+      const collectionRef = doc(this.firestore, 'customers', id);
+      await updateDoc(collectionRef, {
+        civility: customer.get('civility')?.value,
+        firstname: customer.get('firstname')?.value,
+        lastname: customer.get('lastname')?.value,
+        email: customer.get('email')?.value,
+        company: customer.get('company')?.value,
+        phone : customer.get('phone')?.value,
+        address: customer.get('address')?.value,
+        postalCode: customer.get('postalCode')?.value,
+        city: customer.get('city')?.value,
+        country: customer.get('country')?.value,
+      });
+      this.loadCustomers(uid);
+    } catch (error) {
+      console.error(error);
+      this.errorMessages$.next("Impossible de mettre à jour le client. Veuillez réessayer.");
+    }
+    this.isLoading$.next(false);
     
   }
 
@@ -85,5 +106,13 @@ export class CustomersService {
     } finally {
       this.isLoading$.next(false);
     }
+  }
+
+  getCustomerById(id: string): Customer | null {
+    const customers = this.customers$.value;
+    if (!customers) {
+      return null;
+    }
+    return customers.find((customer) => customer.id === id) || null;
   }
 }

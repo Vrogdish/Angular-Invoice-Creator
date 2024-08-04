@@ -33,7 +33,7 @@
     </div>
     <div class="profile-btn">
       <app-btn title="Modifier" theme="primary" routerLink="/profile/edit" />
-      <app-btn title="Se déconnecter" theme="alert" (onClick)="signout()" />
+      <app-btn title="Se déconnecter" theme="alert" (handleClick)="signout()" />
     </div>
   </div>
   <div *ngIf="isLoading">

@@ -1,5 +1,5 @@
 import { CommonModule } from "@angular/common";
-import { Component, ViewChild } from "@angular/core";
+import { Component, ViewChild, OnInit } from "@angular/core";
 import { Router, RouterLink } from "@angular/router";
 import { BehaviorSubject } from "rxjs";
 import { BtnComponent } from "../../../../shared/components/btn/btn.component";
@@ -22,7 +22,7 @@ import { SelectProductsComponent } from "../select-products/select-products.comp
   templateUrl: './invoice-creator.component.html',
   styleUrl: './invoice-creator.component.scss'
 })
-export class InvoiceCreatorComponent {
+export class InvoiceCreatorComponent implements OnInit {
   @ViewChild(PdfPreviewComponent) pdfPreviewComponent!: PdfPreviewComponent;
   invoice$!: BehaviorSubject<InvoiceForm>;
   step = 1;

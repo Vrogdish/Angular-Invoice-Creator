@@ -50,7 +50,7 @@ export class ProductsListComponent implements OnChanges {
   }
 
   deleteProduct(id: string) {
-    const dialogRef = this.dialog.open(Dialog, {
+    const dialogRef = this.dialog.open(DialogComponent, {
       width: '350px',
       enterAnimationDuration: '100ms',
       exitAnimationDuration: '100ms',
@@ -68,7 +68,7 @@ export class ProductsListComponent implements OnChanges {
 }
 
 @Component({
-  selector: 'dialog',
+  selector: 'app-dialog',
   templateUrl: 'dialog.component.html',
   styleUrl: './products-list.component.scss',
   standalone: true,
@@ -81,9 +81,9 @@ export class ProductsListComponent implements OnChanges {
     BtnComponent,
   ],
 })
-export class Dialog {
+export class DialogComponent {
   constructor(
-    public dialogRef: MatDialogRef<Dialog>,
+    public dialogRef: MatDialogRef<DialogComponent>,
   ) {}
 
   onConfirm(): void {

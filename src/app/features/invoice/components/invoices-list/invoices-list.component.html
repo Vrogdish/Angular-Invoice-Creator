@@ -54,12 +54,9 @@
         <img src="/icons/trash.png" alt="supprimer" class="trash" />
       </th>
       <td mat-cell *matCellDef="let invoice" class="delete">
-        <img
-          src="/icons/delete.png"
-          alt="supprimer"
-          class="delete-btn"
-          (click)="deleteInvoice(invoice.id)"
-        />
+        <button (click)="deleteInvoice(invoice.id)">
+          <img src="/icons/delete.png" alt="supprimer" class="delete-btn" />
+        </button>
       </td>
     </ng-container>
 
@@ -70,7 +67,7 @@
       class="row"
     ></tr>
   </table>
-  <P *ngIf="filteredInvoices.length === 0" class="not-found"
-    >Aucun produits trouvés</P
+  <p *ngIf="filteredInvoices.length === 0" class="not-found"
+    >Aucun produits trouvés</p
   >
 </div>
