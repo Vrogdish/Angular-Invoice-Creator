@@ -77,10 +77,11 @@ export class ProductFormComponent implements OnInit {
       this.productService.errorMessages$.subscribe((error) => {
         if (error) {
           this.errorMessages = error;
-        } else {
-          this.router.navigate(['/products']);
         }
       });
     });
+    if (!this.errorMessages) {
+      this.router.navigate(['/products']);
+    }
   }
 }
