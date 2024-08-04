@@ -1,4 +1,4 @@
-import { Injectable, inject } from '@angular/core';
+import { Injectable} from '@angular/core';
 import { Customer, CustomerForm } from '../models/customer.model';
 import { BehaviorSubject } from 'rxjs';
 import { FormGroup } from '@angular/forms';
@@ -22,7 +22,8 @@ export class CustomersService {
   isLoading$ = new BehaviorSubject<boolean>(false);
   errorMessages$ = new BehaviorSubject<string | null>(null);
 
-  firestore = inject(Firestore);
+  constructor(private firestore:Firestore) {}
+
 
   async loadCustomers(uid: string) {
     this.isLoading$.next(true);

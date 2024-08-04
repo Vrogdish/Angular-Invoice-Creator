@@ -32,3 +32,8 @@ export interface UserProfileForm {
   country?: FormControl<string | null>;
   phoneNumber?: FormControl<string | null>;
 }
+
+export interface SignUpForm extends UserProfileForm {
+  password: FormControl<string | null>;
+  confirmPassword: FormControl<string | null>;
+}

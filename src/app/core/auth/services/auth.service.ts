@@ -28,6 +28,7 @@ export class AuthService {
         email,
         password
       );
+      
       return { data: userCredential.user };
   // eslint-disable-next-line  @typescript-eslint/no-explicit-any
     } catch (error: any) {
@@ -55,7 +56,6 @@ export class AuthService {
   async logout() {
     try {
       await this.auth.signOut();
-      console.log('sign out sucessful');
       // eslint-disable-next-line  @typescript-eslint/no-explicit-any
     } catch (error: any) {
       console.error(error);

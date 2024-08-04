@@ -10,6 +10,7 @@ import { AuthService } from '../../services/auth.service';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { ProfileService } from '../../../../features/profile/services/profile.service';
+import { SignUpForm } from '../../../../features/profile/models/userProfile.model';
 
 @Component({
   selector: 'app-sign-up',
@@ -19,9 +20,13 @@ import { ProfileService } from '../../../../features/profile/services/profile.se
   imports: [ReactiveFormsModule, BtnComponent, CommonModule],
 })
 export class SignUpComponent {
-  signupForm = new FormGroup({
+  signupForm = new FormGroup<SignUpForm>({
+    civility: new FormControl('M', Validators.required),
     firstname: new FormControl('', Validators.required),
     lastname: new FormControl('', Validators.required),
+    address: new FormControl('', Validators.required),
+    postalCode: new FormControl('', Validators.required),
+    city: new FormControl('', Validators.required),
     email: new FormControl('', Validators.required),
     password: new FormControl('', Validators.required),
     confirmPassword: new FormControl('', Validators.required),
@@ -46,13 +51,16 @@ export class SignUpComponent {
     const email = this.signupForm.get('email')?.value;
     const firstname = this.signupForm.get('firstname')?.value;
     const lastname = this.signupForm.get('lastname')?.value;
+    const address = this.signupForm.get('address')?.value;
+    const postalCode = this.signupForm.get('postalCode')?.value;
+    const city = this.signupForm.get('city')?.value;
 
     if (password !== confirmPassword) {
       this.errorMessage = 'Les mots de passe ne correspondent pas';
       return;
     }
 
-    if (!email || !password || !confirmPassword || !firstname || !lastname) {
+    if (!email || !password || !confirmPassword || !firstname || !lastname || !address || !postalCode || !city) {
       this.errorMessage = 'Veuillez remplir tous les champs';
       return;
     }
@@ -63,14 +71,11 @@ export class SignUpComponent {
     try {
       const user = await this.auth.signup(email, password);
       if (user.data) {
+           
         await this.profile.createProfile(
-          user.data.uid,
-          firstname,
-          lastname,
-          email
+          user.data.uid, this.signupForm
         );
-        alert('Inscription réussie');
-        this.router.navigate(['profile/edit']);
+        this.router.navigate(['profile']);
       } else {
         this.errorMessage = 'Erreur inconnue, veuillez réessayer';
       }

@@ -49,7 +49,6 @@ export const routes: Routes = [
     path: 'products',
     component: ProductsComponent,
     canActivate: [authGuard],
-
   },
   {
     path: 'products/create',
@@ -62,28 +61,23 @@ export const routes: Routes = [
     canActivate: [authGuard],
   },
   {
-    path : 'customers',
+    path: 'customers',
     component: CustomersComponent,
     canActivate: [authGuard],
   },
   {
     path: 'customers/create',
     component: CustomerFormComponent,
-    canActivate: [authGuard], 
+    canActivate: [authGuard],
   },
   {
     path: 'customers/detail/:id',
-    component : CustomerDetailComponent,
+    component: CustomerDetailComponent,
     canActivate: [authGuard],
   },
   {
     path: 'invoice',
     component: InvoiceComponent,
-    canActivate : [authGuard],
-  },
-  {
-    path: 'invoice/detail/:id',
-    component: InvoiceDetailComponent,
     canActivate: [authGuard],
   },
   {
@@ -91,7 +85,11 @@ export const routes: Routes = [
     component: InvoiceCreatorComponent,
     canActivate: [authGuard],
   },
-
+  {
+    path: 'invoice/detail/:id',
+    component: InvoiceDetailComponent,
+    canActivate: [authGuard],
+  },
   {
     path: 'invoice/preview',
     component: PdfPreviewComponent,

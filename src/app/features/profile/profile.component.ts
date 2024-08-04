@@ -7,7 +7,7 @@ import { UserProfile } from './models/userProfile.model';
 import { Observable, Subscription } from 'rxjs';
 import { CommonModule } from '@angular/common';
 import { AvatarComponent } from '../../shared/components/avatar/avatar.component';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { LoaderComponent } from "../../shared/components/loader/loader.component";
 
 @Component({
@@ -24,7 +24,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
   subscription: Subscription = new Subscription();
   isLoading = true;
 
-  constructor(private profile: ProfileService, private auth: AuthService) {
+  constructor(private profile: ProfileService, private auth: AuthService, private router : Router) {
     this.user$ = this.auth.authState$;
     this.userProfile$ = this.profile.profile$;
   }
@@ -51,5 +51,6 @@ export class ProfileComponent implements OnInit, OnDestroy {
 
   signout() {
     this.auth.logout();
+    this.router.navigate(['/signin']);
   }
 }

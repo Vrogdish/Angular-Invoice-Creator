@@ -1,6 +1,6 @@
 import { Injectable, inject } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
-import { UserProfile, UserProfileForm } from '../models/userProfile.model';
+import { SignUpForm, UserProfile, UserProfileForm } from '../models/userProfile.model';
 import {
   Firestore,
   collection,
@@ -72,20 +72,43 @@ export class ProfileService {
     this.isLoading$.next(false);
   }
 
-  async createProfile(
-    uid: string,
-    firstname: string,
-    lastname: string,
-    email: string
-  ) {
+  // async createProfile(
+  //   uid: string,
+  //   firstname: string,
+  //   lastname: string,
+  //   email: string
+  // ) {
+  //   this.isLoading$.next(true);
+  //   this.errorMessages$.next(null);
+  //   try {
+  //     await addDoc(collection(this.firestore, 'userProfile'), {
+  //       uid: uid,
+  //       firstname: firstname,
+  //       lastname: lastname,
+  //       email: email,
+  //       createdAt: Timestamp.fromDate(new Date()),
+  //     });
+  //     await this.loadProfile(uid);
+  //   } catch (error) {
+  //     console.error(error);
+  //     this.errorMessages$.next("Impossible de créer le profil. Veuillez réessayer.");
+  //   }
+  //   this.isLoading$.next(false);
+  // }
+
+  async createProfile( uid : string, signupForm: FormGroup<SignUpForm>) {
     this.isLoading$.next(true);
     this.errorMessages$.next(null);
     try {
       await addDoc(collection(this.firestore, 'userProfile'), {
         uid: uid,
-        firstname: firstname,
-        lastname: lastname,
-        email: email,
+        civility: signupForm.get('civility')?.value,
+        firstname: signupForm.get('firstname')?.value,
+        lastname: signupForm.get('lastname')?.value,
+        email: signupForm.get('email')?.value,
+        address: signupForm.get('address')?.value,
+        postalCode: signupForm.get('postalCode')?.value,
+        city: signupForm.get('city')?.value,
         createdAt: Timestamp.fromDate(new Date()),
       });
       await this.loadProfile(uid);
