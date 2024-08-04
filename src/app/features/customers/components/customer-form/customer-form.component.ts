@@ -79,10 +79,11 @@ export class CustomerFormComponent implements OnInit {
       this.customersService.errorMessages$.subscribe((error) => {
         if (error) {
           this.errorMessages = error;
-        } else {
-          this.router.navigate(['/customers']);
         }
       });
+      if (!this.errorMessages) {
+        this.router.navigate(['/customers']);
+      }
     });
   }
 }

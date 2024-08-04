@@ -58,9 +58,10 @@ export class ProfileFormComponent implements OnInit {
    this.profile.errorMessages$.subscribe((error) => {
      if (error) {
        this.errorMessages = error;
-     } else {
-       this.router.navigate(['/profile']);
-     }
+     } 
    });
+    if (!this.errorMessages) {
+      this.router.navigate(['/profile']);}
+
   }
 }
