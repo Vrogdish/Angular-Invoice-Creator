@@ -10,6 +10,7 @@ import {
   query,
   where,
   doc,
+  updateDoc,
 } from '@angular/fire/firestore';
 import { FormGroup } from '@angular/forms';
 
@@ -60,12 +61,27 @@ export class ProductsService {
     this.isLoading$.next(false);
   }
 
-  updateProduct(id: string, product: ProductForm) {
-    console.log('updateProduct', id, product);
-    
+  async updateProduct(uid : string ,id: string, product: FormGroup<ProductForm>) {
+    this.isLoading$.next(true);
+    this.errorMessages$.next(null);
+    try {
+      const collectionRef = doc(this.firestore, 'products', id);
+      await updateDoc(collectionRef, {
+        name: product.get('name')?.value,
+        description: product.get('description')?.value,
+        price: product.get('price')?.value,
+        reference: product.get('reference')?.value,
+      })
+      this.loadProducts(uid);
+    } catch (error) {
+      console.error(error);
+      this.errorMessages$.next("Impossible de mettre à jour le produit. Veuillez réessayer.");
+    }
+    this.isLoading$.next(false);
+
   }
 
-  async deleteProduct(id: string , uid: string) {
+  async deleteProduct(id: string, uid: string) {
     this.isLoading$.next(true);
     this.errorMessages$.next(null);
     try {
@@ -75,5 +91,14 @@ export class ProductsService {
       console.error(error);
       this.errorMessages$.next("Couldn't delete product. Please try again.");
     }
+    this.isLoading$.next(false);
+  }
+
+  getProductById(id: string) {
+    const products = this.products$.value;
+    if (!products) {
+      return null;
+    }
+    return products.find((product) => product.id === id) || null;
   }
 }

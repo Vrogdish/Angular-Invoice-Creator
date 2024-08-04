@@ -1,13 +1,13 @@
-import { Component } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import {
   FormControl,
   FormGroup,
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { ProductForm } from '../../models/product.model';
+import { Product, ProductForm } from '../../models/product.model';
 import { BtnComponent } from '../../../../shared/components/btn/btn.component';
-import { Router, RouterLink } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { ProductsService } from '../../services/products.service';
 import { AuthService } from '../../../../core/auth/services/auth.service';
 import { CommonModule } from '@angular/common';
@@ -19,38 +19,66 @@ import { CommonModule } from '@angular/common';
   styleUrl: './product-form.component.scss',
   imports: [ReactiveFormsModule, BtnComponent, RouterLink, CommonModule],
 })
-export class ProductFormComponent {
+export class ProductFormComponent implements OnInit {
+  @Input() product!: Product | null;
   productForm: FormGroup<ProductForm> = new FormGroup<ProductForm>({
-    reference: new FormControl('', Validators.required),
+    reference: new FormControl(''),
     name: new FormControl('', Validators.required),
     price: new FormControl('', Validators.required),
-    description: new FormControl('', Validators.required),
+    description: new FormControl(''),
   });
-  isLoading$ = this.product.isLoading$;
+  isLoading$ = this.productService.isLoading$;
   errorMessages!: string;
+  editMode = false;
 
   constructor(
-    private product: ProductsService,
+    private productService: ProductsService,
     private auth: AuthService,
-    private route: Router
+    private router: Router,
+    private activatedRoute: ActivatedRoute
   ) {}
 
-  onSubmit() {
+  ngOnInit(): void {
+    this.activatedRoute.url.subscribe((url) => {
+      if (url[1].path === 'detail') {
+        this.editMode = true;
+        if (this.product) {
+          this.productForm.patchValue({
+            ...this.product,
+            price: this.product.price.toString(),
+          });
+        }
+      } else {
+        this.editMode = false;
+      }
+    });
+  }
+
+  onSubmit(): void {
     if (this.productForm.invalid) {
       this.errorMessages = 'Veuillez remplir tous les champs obligatoires.';
       return;
+    } else {
+      this.errorMessages = '';
     }
 
     this.auth.authState$.subscribe((user) => {
       if (user) {
-        this.product.addProduct(user.uid, this.productForm);
+        if (this.editMode && this.product) {
+          this.productService.updateProduct(
+            user.uid,
+            this.product.id,
+            this.productForm
+          );
+        } else {
+          this.productService.addProduct(user.uid, this.productForm);
+        }
       }
-
-      this.product.errorMessages$.subscribe((error) => {
+      this.productService.errorMessages$.subscribe((error) => {
         if (error) {
           this.errorMessages = error;
         } else {
-          this.route.navigate(['/products']);
+          this.router.navigate(['/products']);
         }
       });
     });

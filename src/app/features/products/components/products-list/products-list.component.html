@@ -6,23 +6,23 @@
   <table mat-table [dataSource]="filteredProducts" class="mat-elevation-z8">
     <ng-container matColumnDef="ref">
       <th mat-header-cell *matHeaderCellDef class="ref">Ref.</th>
-      <td mat-cell *matCellDef="let product" class="ref">
-        {{ product.ref || "-" }}
+      <td mat-cell *matCellDef="let product" class="ref" [routerLink]="['/products/detail', product.id]">
+        {{ product.reference || "-" }}
       </td>
     </ng-container>
     <ng-container matColumnDef="name">
       <th mat-header-cell *matHeaderCellDef>Nom</th>
-      <td mat-cell *matCellDef="let product">{{ product.name }}</td>
+      <td mat-cell *matCellDef="let product" [routerLink]="['/products/detail', product.id]">{{ product.name }}</td>
     </ng-container>
     <ng-container matColumnDef="price">
       <th mat-header-cell *matHeaderCellDef>Prix</th>
-      <td mat-cell *matCellDef="let product">
+      <td mat-cell *matCellDef="let product" [routerLink]="['/products/detail', product.id]">
         {{ product.price | currency : "EUR" }}
       </td>
     </ng-container>
     <ng-container matColumnDef="description">
       <th mat-header-cell *matHeaderCellDef class="description">Description</th>
-      <td mat-cell *matCellDef="let product" class="description">
+      <td mat-cell *matCellDef="let product" class="description" [routerLink]="['/products/detail', product.id]">
         {{ product.description || "-" }}
       </td>
     </ng-container>

@@ -16,6 +16,7 @@ import { SettingsComponent } from './features/settings/settings.component';
 import { InvoiceCreatorComponent } from './features/invoice/components/invoice-creator/invoice-creator.component';
 import { InvoiceDetailComponent } from './features/invoice/components/invoice-detail/invoice-detail.component';
 import { CustomerDetailComponent } from './features/customers/components/customer-detail/customer-detail.component';
+import { ProductDetailComponent } from './features/products/components/product-detail/product-detail.component';
 
 export const routes: Routes = [
   {
@@ -53,6 +54,11 @@ export const routes: Routes = [
   {
     path: 'products/create',
     component: ProductFormComponent,
+    canActivate: [authGuard],
+  },
+  {
+    path: 'products/detail/:id',
+    component: ProductDetailComponent,
     canActivate: [authGuard],
   },
   {

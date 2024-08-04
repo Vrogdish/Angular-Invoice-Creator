@@ -15,11 +15,12 @@ import {
 import { MatButtonModule } from '@angular/material/button';
 import { BtnComponent } from '../../../../shared/components/btn/btn.component';
 import { AuthService } from '../../../../core/auth/services/auth.service';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-products-list',
   standalone: true,
-  imports: [MatTableModule, CommonModule, MatDialogModule],
+  imports: [MatTableModule, CommonModule, MatDialogModule, RouterLink],
   templateUrl: './products-list.component.html',
   styleUrl: './products-list.component.scss',
 })
@@ -35,7 +36,11 @@ export class ProductsListComponent implements OnChanges {
     'delete',
   ];
 
-  constructor(private dialog: MatDialog, private product: ProductsService, private auth : AuthService) {}
+  constructor(
+    private dialog: MatDialog,
+    private product: ProductsService,
+    private auth: AuthService
+  ) {}
 
   ngOnChanges(changes: SimpleChanges) {
     if (changes['products'] || changes['searchQuery']) {
@@ -82,9 +87,7 @@ export class ProductsListComponent implements OnChanges {
   ],
 })
 export class DialogComponent {
-  constructor(
-    public dialogRef: MatDialogRef<DialogComponent>,
-  ) {}
+  constructor(public dialogRef: MatDialogRef<DialogComponent>) {}
 
   onConfirm(): void {
     this.dialogRef.close('confirm');
