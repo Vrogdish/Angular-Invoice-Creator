@@ -21,9 +21,7 @@ export const environment = {
 
 fs.mkdirSync(targetDir, { recursive: true });
 
-console.log('Environment:', environment);
-console.log('Target Path:', targetPath);
-console.log('Environment Configuration:', envConfigFile);
+
 
 fs.writeFile(targetPath, envConfigFile, function (err) {
   if (err) {

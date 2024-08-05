@@ -146,7 +146,12 @@ export class InvoiceService {
   }
 
   setDelivery(withDelivery: boolean): void {
-    this.invoice$.next({ ...this.invoice$.value, delivery: { withDelivery } });
+    this.invoice$.next({ ...this.invoice$.value, delivery: { withDelivery : withDelivery, deliveryAddress : {
+      address: '',
+      postalCode: '',
+      city: '',
+      country: '',
+    } } });
   }
 
   setDeliveryAddress(deliveryAddress: DeliveryAddress): void {
@@ -229,6 +234,7 @@ export class InvoiceService {
         }
         invoices.push({ ...data, id: doc.id });
       });
+      invoices.sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime());
       this.invoices$.next(invoices);
     } catch (error) {
       console.error(error);

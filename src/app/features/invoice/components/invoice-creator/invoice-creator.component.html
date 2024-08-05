@@ -34,6 +34,9 @@
   </div>
 
   <div class="preview" *ngIf="step === 3">
+    <div class="delivery" *ngIf="invoice.delivery.withDelivery">
+      <app-pdf-delivery-preview [invoice]="invoice" />
+    </div>
     <app-pdf-preview [invoice]="invoice" />
     <div class="customer-btn">
       <app-btn theme="cancel" title="Précédent" (handleClick)="setStep(2)" />

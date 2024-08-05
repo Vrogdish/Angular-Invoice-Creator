@@ -49,7 +49,7 @@ export class ProfileService {
     this.isLoading$.next(false);
   }
 
-  async updateProfile(id: string, profileForm: FormGroup<UserProfileForm>) {
+  async updateProfile(uid: string, id: string, profileForm: FormGroup<UserProfileForm>) {
     this.isLoading$.next(true);
     this.errorMessages$.next(null);
     try {
@@ -62,9 +62,10 @@ export class ProfileService {
         address: profileForm.get('address')?.value,
         city: profileForm.get('city')?.value,
         postalCode: profileForm.get('postalCode')?.value,
-        phoneNumber: profileForm.get('phoneNumber')?.value,
+        phone: profileForm.get('phone')?.value,
         updatedAt: Timestamp.fromDate(new Date()),
       });
+      await this.loadProfile(uid);
     } catch (error) {
       console.error(error);
       this.errorMessages$.next("Impossible de mettre à jour le profil. Veuillez réessayer.");
@@ -105,10 +106,13 @@ export class ProfileService {
         civility: signupForm.get('civility')?.value,
         firstname: signupForm.get('firstname')?.value,
         lastname: signupForm.get('lastname')?.value,
+        company : signupForm.get('company')?.value,
         email: signupForm.get('email')?.value,
+        phone : signupForm.get('phone')?.value,
         address: signupForm.get('address')?.value,
         postalCode: signupForm.get('postalCode')?.value,
         city: signupForm.get('city')?.value,
+        country: signupForm.get('country')?.value,
         createdAt: Timestamp.fromDate(new Date()),
       });
       await this.loadProfile(uid);

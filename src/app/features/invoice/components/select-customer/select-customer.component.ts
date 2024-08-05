@@ -87,9 +87,9 @@ export class SelectCustomerComponent implements OnInit, OnDestroy {
     this.deliveryEditMode = value;
   }
 
-  setDeliveryAddress(event: Event): void {
-    console.log('setDeliveryAddress', event);
+  // setDeliveryAddress(event: Event): void {
+  //   console.log('setDeliveryAddress', event);
     
-        }
+  //       }
 
 }

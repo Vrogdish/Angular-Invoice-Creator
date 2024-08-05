@@ -50,7 +50,6 @@ export class InvoiceDetailComponent implements OnInit, OnDestroy {
   private async loadInvoice(): Promise<void> {
     if (this.id) {
       this.invoice = await this.invoiceService.getInvoiceById(this.id);
-      console.log(this.invoice);
       
     }
   }
@@ -61,6 +60,14 @@ export class InvoiceDetailComponent implements OnInit, OnDestroy {
 
   openDeliveryPdf(): void {
     this.PdfDeliveryPreviewComponent.openPdf();
+  }
+
+  downloadInvoicePdf(): void {
+    this.pdfPreviewComponent.downloadPdf();
+  }
+
+  downloadDeliveryPdf(): void {
+    this.PdfDeliveryPreviewComponent.downloadPdf();
   }
 
 }

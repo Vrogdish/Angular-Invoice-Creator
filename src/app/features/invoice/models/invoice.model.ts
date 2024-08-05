@@ -6,9 +6,8 @@ export interface InvoiceVendorForm {
   firstname: string;
   lastname: string;
   email: string;
-  company?: string;
-  imageUrl?: string;
-  phone?: string;
+  company: string;
+  phone: string;
   address: string;
   postalCode: string;
   city: string;
@@ -20,8 +19,8 @@ export interface InvoiceCustomerForm {
   firstname: string;
   lastname: string;
   email: string;
-  company?: string;
-  phone?: string;
+  company: string;
+  phone: string;
   address: string;
   postalCode: string;
   city: string;
@@ -39,9 +38,9 @@ export interface InvoiceForm {
   uid: string;
   num: number;
   createdAt: Date;
-  delivery?: {
-    withDelivery?: boolean;
-    deliveryAddress?: DeliveryAddress;
+  delivery: {
+    withDelivery: boolean;
+    deliveryAddress: DeliveryAddress;
   };
   vendor: InvoiceVendorForm;
   customer: InvoiceCustomerForm;

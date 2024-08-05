@@ -27,7 +27,6 @@ export class SelectAutocompleteComponent implements OnInit {
         startWith(''),
         map(value => this._filter(value))
       );
- console.log(this.options);
   }
 
   private _filter(value: string): {name : string, value : string}[] {

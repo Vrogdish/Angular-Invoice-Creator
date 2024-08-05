@@ -12,26 +12,21 @@ import { PdfViewerModule } from 'ng2-pdf-viewer';
   standalone: true,
   templateUrl: './pdf-preview.component.html',
   styleUrl: './pdf-preview.component.scss',
-  imports: [
-    NgxExtendedPdfViewerModule,
-    CommonModule,
-    PdfViewerModule,
-  ],
+  imports: [NgxExtendedPdfViewerModule, CommonModule, PdfViewerModule],
 })
 export class PdfPreviewComponent implements OnInit {
-  @Input({required:true}) invoice!: InvoiceForm | Invoice;
+  @Input({ required: true }) invoice!: InvoiceForm | Invoice;
   // eslint-disable-next-line  @typescript-eslint/no-explicit-any
   pdfSrc!: any;
   totalHT!: number;
   totalTva!: number;
   totalTTC!: number;
 
-
   ngOnInit() {
     pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
     this.totalHT = this.invoice.productsList.reduce(
-      (acc, product) => acc + product.product.price * product.quantity,
+      (acc, product) => acc + +product.product.price * +product.quantity,
       0
     );
     this.totalTva = this.totalHT * this.invoice.tva;
@@ -111,7 +106,8 @@ export class PdfPreviewComponent implements OnInit {
 
         {
           text:
-            'Date de facturation : ' + this.invoice.createdAt.toLocaleDateString(),
+            'Date de facturation : ' +
+            this.invoice.createdAt.toLocaleDateString(),
           margin: [0, 0, 0, 30],
         },
 
@@ -129,9 +125,9 @@ export class PdfPreviewComponent implements OnInit {
               ...this.invoice.productsList.map((product) => [
                 product.product.reference,
                 product.product.name,
-                product.product.price.toFixed(2) + ' €',
-                product.quantity,
-                (product.product.price * product.quantity).toFixed(2) + ' €',
+                +product.product.price.toFixed(2) + ' €',
+                +product.quantity,
+                (+product.product.price * +product.quantity).toFixed(2) + ' €',
               ]),
             ],
           },
@@ -161,14 +157,16 @@ export class PdfPreviewComponent implements OnInit {
           columns: [
             {
               text:
-                'Société : ' +
-                this.invoice.vendor.company +
+                (this.invoice.vendor.company
+                  ? 'Société : ' + this.invoice.vendor.company
+                  : this.invoice.vendor.lastname.toUpperCase() +
+                    ' ' +
+                    this.invoice.vendor.firstname) +
                 '  -  ' +
-                'Téléphone : ' +
-                this.invoice.vendor.phone +
-                '  -  ' +
-                'Email : ' +
-                this.invoice.vendor.email,
+                (this.invoice.vendor.phone &&
+                  'Téléphone : ' + this.invoice.vendor.phone + " - ") +
+                (this.invoice.vendor.email &&
+                  'Email : ' + this.invoice.vendor.email),
               style: 'footer',
             },
           ],

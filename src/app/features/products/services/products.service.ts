@@ -13,6 +13,7 @@ import {
   updateDoc,
 } from '@angular/fire/firestore';
 import { FormGroup } from '@angular/forms';
+import { numericConverter } from '../../../shared/utils/NumericConverter';
 
 @Injectable({
   providedIn: 'root',
@@ -50,7 +51,8 @@ export class ProductsService {
       const collectionRef = collection(this.firestore, 'products');
       await addDoc(collectionRef, {
         ...product.value,
-        uid,
+        price: numericConverter(product.get('price')?.value),
+        uid
       });
       this.loadProducts(uid);
     } catch (error) {
@@ -66,10 +68,11 @@ export class ProductsService {
     this.errorMessages$.next(null);
     try {
       const collectionRef = doc(this.firestore, 'products', id);
+
       await updateDoc(collectionRef, {
         name: product.get('name')?.value,
         description: product.get('description')?.value,
-        price: product.get('price')?.value,
+        price: numericConverter(product.get('price')?.value),
         reference: product.get('reference')?.value,
       })
       this.loadProducts(uid);

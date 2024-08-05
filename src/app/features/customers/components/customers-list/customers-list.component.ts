@@ -18,7 +18,7 @@ import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 
 @Component({
-  selector: 'app-dialog',
+  selector: 'app-dialog-customers',
   templateUrl: 'dialog-customers.component.html',
   styleUrl: './customers-list.component.scss',
   standalone: true,
@@ -48,7 +48,7 @@ export class DialogCustomerComponent {
 @Component({
   selector: 'app-customers-list',
   standalone: true,
-  imports: [MatTableModule, CommonModule, MatDialogModule,RouterLink, DialogCustomerComponent],
+  imports: [MatTableModule, CommonModule, MatDialogModule,RouterLink],
   templateUrl: './customers-list.component.html',
   styleUrl: './customers-list.component.scss',
 })

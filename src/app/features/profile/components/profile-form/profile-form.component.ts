@@ -23,11 +23,12 @@ export class ProfileFormComponent implements OnInit {
     firstname: new FormControl('', Validators.required),
     lastname: new FormControl('', Validators.required),
     civility: new FormControl('', Validators.required),
+    email: new FormControl('', Validators.required),
     company: new FormControl(''),
     address: new FormControl('', Validators.required),
     city: new FormControl(''),
     postalCode: new FormControl(''),
-    phoneNumber: new FormControl(''),
+    phone: new FormControl(''),
     country: new FormControl('France', Validators.required),
   });
 
@@ -52,8 +53,7 @@ export class ProfileFormComponent implements OnInit {
       return;
     }
     
-    await this.profile.updateProfile(this.userProfile.id, this.profileForm);
-    await this.profile.loadProfile(this.userProfile.uid);
+    await this.profile.updateProfile(this.userProfile.uid,this.userProfile.id, this.profileForm);
 
    this.profile.errorMessages$.subscribe((error) => {
      if (error) {

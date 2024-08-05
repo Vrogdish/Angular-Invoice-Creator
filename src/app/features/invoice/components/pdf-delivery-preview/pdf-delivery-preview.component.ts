@@ -132,14 +132,16 @@ export class PdfDeliveryPreviewComponent implements OnInit {
           columns: [
             {
               text:
-                'Société : ' +
-                this.invoice.vendor.company +
+                (this.invoice.vendor.company
+                  ? 'Société : ' + this.invoice.vendor.company
+                  : this.invoice.vendor.lastname.toUpperCase() +
+                    ' ' +
+                    this.invoice.vendor.firstname) +
                 '  -  ' +
-                'Téléphone : ' +
-                this.invoice.vendor.phone +
-                '  -  ' +
-                'Email : ' +
-                this.invoice.vendor.email,
+                (this.invoice.vendor.phone &&
+                  'Téléphone : ' + this.invoice.vendor.phone + " - ") +
+                (this.invoice.vendor.email &&
+                  'Email : ' + this.invoice.vendor.email),
               style: 'footer',
             },
           ],

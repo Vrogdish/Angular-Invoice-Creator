@@ -19,7 +19,6 @@ export class ResetComponent {
   constructor(private auth: AuthService, private router: Router) {}
 
   onSubmit() {
-    console.log('submit', this.resetForm.value);
     this.auth.resetPassword(this.resetForm.value.email);
     alert('Un email vous a été envoyé pour réinitialiser votre mot de passe.');
     this.router.navigate(['/signin']);

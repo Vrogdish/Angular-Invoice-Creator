@@ -47,7 +47,7 @@
 <div class="delivery" *ngIf="invoice$ | async as invoice" >
   <div class="checkbox">
     <label for="delivery">Créer un bon de livraison :</label>
-    <input type="checkbox" id="delivery" (change)="setDelivery($event)" [defaultChecked]="invoice.delivery?.withDelivery" />
+    <input type="checkbox" id="delivery" (change)="setDelivery($event)" [defaultChecked]="invoice.delivery.withDelivery" />
   </div>
   <div class="delivery-adress" *ngIf="invoice.delivery?.withDelivery">
     <p>Adresse de livraison :</p>

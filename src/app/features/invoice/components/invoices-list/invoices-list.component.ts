@@ -18,7 +18,7 @@ import { RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
 
 @Component({
-  selector: 'app-dialog',
+  selector: 'app-dialog-invoices',
   templateUrl: 'dialog.component.html',
   styleUrl: './invoices-list.component.scss',
   standalone: true,

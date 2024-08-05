@@ -44,7 +44,6 @@ export class AuthService {
         email,
         password
       );
-      console.log(userCredential);
       return { data: userCredential.user };
       // eslint-disable-next-line  @typescript-eslint/no-explicit-any
     } catch (error: any) {

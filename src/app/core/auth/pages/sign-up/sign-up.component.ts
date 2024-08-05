@@ -27,7 +27,10 @@ export class SignUpComponent {
     address: new FormControl('', Validators.required),
     postalCode: new FormControl('', Validators.required),
     city: new FormControl('', Validators.required),
+    country: new FormControl('France', Validators.required),
     email: new FormControl('', Validators.required),
+    company: new FormControl(''),
+    phone: new FormControl(''),
     password: new FormControl('', Validators.required),
     confirmPassword: new FormControl('', Validators.required),
   });

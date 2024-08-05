@@ -18,26 +18,22 @@ import { LoaderComponent } from "../../shared/components/loader/loader.component
   imports: [BtnComponent, CommonModule, AvatarComponent, RouterLink, LoaderComponent],
 })
 export class ProfileComponent implements OnInit, OnDestroy {
-  user$!: Observable<User | null>;
   user!: User | null;
   userProfile$!: Observable<UserProfile | null>;
   subscription: Subscription = new Subscription();
   isLoading = true;
 
-  constructor(private profile: ProfileService, private auth: AuthService, private router : Router) {
-    this.user$ = this.auth.authState$;
-    this.userProfile$ = this.profile.profile$;
-  }
+  constructor(private profile: ProfileService, private auth: AuthService, private router : Router) {}   
+  
 
   ngOnInit() {
     this.subscription.add(
       this.auth.authState$.subscribe((user) => {
-        if (user) {
-          // this.profile.loadProfile(user.uid);
           this.user = user;
-        }
+       
       })
     );
+    this.userProfile$ = this.profile.profile$;
     this.subscription.add(
       this.profile.isLoading$.subscribe((isLoading) => {
         this.isLoading = isLoading;

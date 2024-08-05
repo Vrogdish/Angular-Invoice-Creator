@@ -8,13 +8,12 @@ export interface UserProfile {
   lastname: string;
   civility: CivilityEnum;
   email: string;
-  company?: string;
-  imageUrl?: string;
+  company: string;
   address: string;
   city: string;
   postalCode: string;
   country: string;
-  phone?: string;
+  phone: string;
   createdAt: Date;
   updatedAt?: Date;
 }
@@ -23,14 +22,13 @@ export interface UserProfileForm {
   firstname: FormControl<string | null>;
   lastname: FormControl<string | null>;
   civility: FormControl<string | null>;
-  email?: FormControl<string | null>;
-  company?: FormControl<string | null>;
-  imageUrl?: FormControl<string | null>;
+  email: FormControl<string | null>;
+  company: FormControl<string | null>;
   address: FormControl<string | null>;
   city: FormControl<string | null>;
   postalCode: FormControl<string | null>;
   country?: FormControl<string | null>;
-  phoneNumber?: FormControl<string | null>;
+  phone?: FormControl<string | null>;
 }
 
 export interface SignUpForm extends UserProfileForm {
