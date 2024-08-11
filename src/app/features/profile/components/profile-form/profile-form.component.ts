@@ -26,8 +26,8 @@ export class ProfileFormComponent implements OnInit {
     email: new FormControl('', Validators.required),
     company: new FormControl(''),
     address: new FormControl('', Validators.required),
-    city: new FormControl(''),
-    postalCode: new FormControl(''),
+    city: new FormControl('', Validators.required),
+    postalCode: new FormControl('', Validators.required),
     phone: new FormControl(''),
     country: new FormControl('France', Validators.required),
   });

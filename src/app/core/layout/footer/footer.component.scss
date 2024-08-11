@@ -19,8 +19,13 @@ footer {
     }
 }
 
-.footer-section div {
+.footer-section.links {
+    display: flex  ;
+    flex-direction: column;
+
+    a {
     margin-bottom: 20px;
+}
 }
 
 .copyright {

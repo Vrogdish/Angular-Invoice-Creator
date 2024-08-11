@@ -17,6 +17,9 @@ import { InvoiceCreatorComponent } from './features/invoice/components/invoice-c
 import { InvoiceDetailComponent } from './features/invoice/components/invoice-detail/invoice-detail.component';
 import { CustomerDetailComponent } from './features/customers/components/customer-detail/customer-detail.component';
 import { ProductDetailComponent } from './features/products/components/product-detail/product-detail.component';
+import { LegalNoticeComponent } from './features/legals/legal-notice/legal-notice.component';
+import { PrivacyPolicyComponent } from './features/legals/privacy-policy/privacy-policy.component';
+import { TermsOfServiceComponent } from './features/legals/terms-of-service/terms-of-service.component';
 
 export const routes: Routes = [
   {
@@ -99,6 +102,18 @@ export const routes: Routes = [
     path: 'settings',
     component: SettingsComponent,
     canActivate: [authGuard],
+  },
+  {
+    path : 'legal',
+    component: LegalNoticeComponent,
+  },
+  {
+    path : 'privacy',
+    component: PrivacyPolicyComponent,
+  },
+  {
+    path : 'terms',
+    component: TermsOfServiceComponent,
   },
   {
     path: '**',

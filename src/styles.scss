@@ -54,6 +54,10 @@ textarea {
   min-height: 100px;
 }
 
+.ng-invalid.ng-touched {
+  border-color: red;
+}
+
 .form-group {
   display: flex;
   flex-direction: column;
