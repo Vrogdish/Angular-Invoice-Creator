@@ -104,15 +104,15 @@ export const routes: Routes = [
     canActivate: [authGuard],
   },
   {
-    path : 'legal',
+    path: 'legal',
     component: LegalNoticeComponent,
   },
   {
-    path : 'privacy',
+    path: 'privacy',
     component: PrivacyPolicyComponent,
   },
   {
-    path : 'terms',
+    path: 'terms',
     component: TermsOfServiceComponent,
   },
   {

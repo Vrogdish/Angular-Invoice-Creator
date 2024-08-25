@@ -1,3 +1,6 @@
+@import "../../../../shared/styles/colors.scss" ;
+
+
 
 .total {
   text-align: center;
@@ -35,6 +38,10 @@
   height: 20px;
 }
 
-td {
+.row {
   cursor: pointer;
+transition: all 0.3s;
+&:hover {
+ background-color: lighten($color:$color-btn-secondary, $amount: 10) ;
+} 
 }

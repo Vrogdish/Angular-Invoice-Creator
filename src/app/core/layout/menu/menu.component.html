@@ -1,9 +1,10 @@
 <div *ngIf="user$ | async as user; else stdMenu">
-  <nav class="menu">
+  <nav class="menu ">
     <a
       *ngFor="let menu of onlineMenu"
       [routerLink]="menu.link"
       (click)="closeMenu()"
+      routerLinkActive='active'
     >
       <img src="{{ menu.icons }}" alt="{{ menu.title }}" />
       {{ menu.title }}
@@ -16,6 +17,7 @@
     <a
       *ngFor="let menu of offlineMenu"
       [routerLink]="menu.link"
+
       (click)="closeMenu()"
     >
       <img src="{{ menu.icons }}" alt="{{ menu.title }}" />

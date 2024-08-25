@@ -30,13 +30,7 @@ export class MenuComponent implements OnInit {
     },
   ];
   onlineMenu = [
- 
-    {
-      title: 'Accueil',
-      icons: '/icons/home.png',
-      link: '',
-    },
-    {
+     {
       title: 'Mes factures',
       icons: '/icons/invoice.png',
       link: '/invoice',
