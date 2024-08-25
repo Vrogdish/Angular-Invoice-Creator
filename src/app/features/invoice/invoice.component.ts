@@ -6,7 +6,6 @@ import { SearchBarComponent } from "../../shared/components/search-bar/search-ba
 import { BtnComponent } from "../../shared/components/btn/btn.component";
 import { CommonModule } from '@angular/common';
 import { InvoicesListComponent } from "./components/invoices-list/invoices-list.component";
-import { AuthService } from '../../core/auth/services/auth.service';
 import { RouterLink } from '@angular/router';
 import { LoaderComponent } from "../../shared/components/loader/loader.component";
 
@@ -31,15 +30,10 @@ export class InvoiceComponent implements OnInit, OnDestroy {
   isLoading = true;
   
 
-  constructor(private invoiceService: InvoiceService, private auth : AuthService) {}
+  constructor(private invoiceService: InvoiceService) {}
 
   ngOnInit(): void {
-    // this.subscription.add(this.auth.authState$.subscribe((user) => {
-    //   if (user) {
-    //     this.invoiceService.loadInvoices(user.uid);
-    //   }
-    // }))
-    this.subscription.add(this.invoiceService.isLoading$.subscribe((isLoading) => {
+     this.subscription.add(this.invoiceService.isLoading$.subscribe((isLoading) => {
       this.isLoading = isLoading;
     }
     ));

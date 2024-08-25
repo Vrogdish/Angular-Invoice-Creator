@@ -2,19 +2,27 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { BehaviorSubject, Subscription } from 'rxjs';
 import { Customer } from '../../../customers/models/customer.model';
-import { FormsModule } from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { AuthService } from '../../../../core/auth/services/auth.service';
 import { CustomersService } from '../../../customers/services/customers.service';
-import { InvoiceService } from '../../services/invoice.service';
 import { InvoiceForm } from '../../models/invoice.model';
 import { ProfileService } from '../../../profile/services/profile.service';
 import { BtnComponent } from '../../../../shared/components/btn/btn.component';
+import { DeliveryAddressFormComponent } from '../delivery-address-form/delivery-address-form.component';
+import { InvoiceCreatorService } from '../../services/invoice-creator.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-select-customer',
   standalone: true,
-  imports: [NgSelectModule, FormsModule, CommonModule, FormsModule,BtnComponent],
+  imports: [
+    NgSelectModule,
+    ReactiveFormsModule,
+    CommonModule,
+    BtnComponent,
+    DeliveryAddressFormComponent,
+  ],
   templateUrl: './select-customer.component.html',
   styleUrl: './select-customer.component.scss',
 })
@@ -29,7 +37,8 @@ export class SelectCustomerComponent implements OnInit, OnDestroy {
     private auth: AuthService,
     private profileService: ProfileService,
     private customersService: CustomersService,
-    private invoiceService: InvoiceService
+    private invoiceCreatorService: InvoiceCreatorService,
+    private router : Router
   ) {}
 
   ngOnInit(): void {
@@ -40,56 +49,58 @@ export class SelectCustomerComponent implements OnInit, OnDestroy {
           this.profileService.loadProfile(user.uid);
           this.profileService.profile$.subscribe((profile) => {
             if (profile) {
-              this.invoiceService.initInvoice(profile);
+              this.invoiceCreatorService.initInvoice(profile);
             }
           });
         }
       })
     );
     this.customers$ = this.customersService.customers$;
-    this.invoice$ = this.invoiceService.invoice$;
+    this.invoice$ = this.invoiceCreatorService.invoice$;
   }
 
- ngOnDestroy(): void {
-   this.subscription.unsubscribe();
- }
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
+  }
 
   setCustomer(event: Customer): void {
-    this.invoiceService.setCustomer(event);
+    this.invoiceCreatorService.setCustomer(event);
+    if (this.invoice$.value.delivery.withDelivery) {
+      this.invoiceCreatorService.updateDeliveryAddress({
+        address: event.address,
+        postalCode: event.postalCode,
+        city: event.city,
+        country: event.country,
+      });
+    }
   }
 
   resetCustomer(): void {
-    this.invoiceService.resetCustomer();
+    this.invoiceCreatorService.resetCustomer();
+    this.invoiceCreatorService.setDelivery(false);
   }
 
   setDelivery(event: Event): void {
     const inputElement = event.target as HTMLInputElement;
-    this.invoiceService.setDelivery(inputElement.checked);
+    this.invoiceCreatorService.setDelivery(inputElement.checked);
     if (inputElement.checked) {
-      this.invoiceService.setDeliveryAddress({
+      this.invoiceCreatorService.updateDeliveryAddress({
         address: this.invoice$.value.customer.address,
         postalCode: this.invoice$.value.customer.postalCode,
         city: this.invoice$.value.customer.city,
         country: this.invoice$.value.customer.country,
       });
-    } else {
-      this.invoiceService.setDeliveryAddress({
-        address: '',
-        postalCode: '',
-        city: '',
-        country: '',
-      });
     }
-    ;
   }
 
-  setDeliveryEditMode(value : boolean): void {
-    this.deliveryEditMode = value;
-  }
+next(){
+  this.invoiceCreatorService.setStep(2)
+}
 
-  // setDeliveryAddress(event: Event): void {
-  //   console.log('setDeliveryAddress', event);
-    
-  //       }
+previous(){
+  this.invoiceCreatorService.resetInvoice()
+  this.router.navigate(['/invoice'])
+}
+
 
 }

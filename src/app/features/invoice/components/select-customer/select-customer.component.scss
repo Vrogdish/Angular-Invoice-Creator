@@ -44,6 +44,13 @@ input {
   margin: 10px 0;
 }
 
-.delivery-btn {
-  margin: 20px 0;
+.customer-btn {
+  margin: 80px 0;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  > * {
+    flex: 1;
+  }
 }

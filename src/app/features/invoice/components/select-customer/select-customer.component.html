@@ -44,30 +44,29 @@
   </div>
 </div>
 
-<div class="delivery" *ngIf="invoice$ | async as invoice" >
+<div class="delivery" *ngIf="invoice$ | async as invoice">
   <div class="checkbox">
     <label for="delivery">Créer un bon de livraison :</label>
-    <input type="checkbox" id="delivery" (change)="setDelivery($event)" [defaultChecked]="invoice.delivery.withDelivery" />
+    <input
+      type="checkbox"
+      id="delivery"
+      (change)="setDelivery($event)"
+      [defaultChecked]="invoice.delivery.withDelivery"
+    />
   </div>
-  <div class="delivery-adress" *ngIf="invoice.delivery?.withDelivery">
-    <p>Adresse de livraison :</p>
-    <form action="" >
-      <div class="form-group">
-        <label for="address">Adresse :</label>
-        <input type="text" id="address" [defaultValue]="invoice.customer.address " [disabled]="!deliveryEditMode" />
-      </div>
-      <div class="form-group">
-        <label for="postalCode">Code postale :</label>
-        <input type="text" id="postalCode" [defaultValue]="invoice.customer.postalCode" [disabled]="!deliveryEditMode" />
-      </div>
-      <div class="form-group">
-        <label for="locality">Ville :</label>
-        <input type="text" id="locality" [defaultValue]="invoice.customer.city" [disabled]="!deliveryEditMode" />
-      </div>
-      <div class="delivery-btn">
-      <app-btn *ngIf="!deliveryEditMode" title="Modifier l'adresse de livraison" theme="secondary" (handleClick)="setDeliveryEditMode(true)"></app-btn>
-      <app-btn *ngIf="deliveryEditMode" title="Sauvegarder les changement" (handleClick)="setDeliveryEditMode(false)"></app-btn>
-</div>
-    </form>
+  <div class="delivery-adress" *ngIf="invoice.delivery.withDelivery">
+    <app-delivery-address-form></app-delivery-address-form>
+  </div>
+  <div class="customer-btn">
+    <app-btn theme="cancel" title="Annuler" (handleClick)="previous()" />
+    <app-btn
+      theme="primary"
+      title="Suivant"
+      (handleClick)="next()"
+      *ngIf="invoice.customer?.firstname; else disable"
+    />
+    <ng-template #disable>
+      <app-btn theme="disabled" title="Suivant" />
+    </ng-template>
   </div>
 </div>

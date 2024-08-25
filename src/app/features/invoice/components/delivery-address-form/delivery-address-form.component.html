@@ -1,0 +1,15 @@
+<p>Adresse de livraison :</p>
+<form [formGroup]="deliveryAddressForm">
+  <div class="form-group">
+    <label for="address">Adresse :</label>
+    <input type="text" id="address" formControlName="address" />
+  </div>
+  <div class="form-group">
+    <label for="postalCode">Code postale :</label>
+    <input type="text" id="postalCode" formControlName="postalCode" />
+  </div>
+  <div class="form-group">
+    <label for="locality">Ville :</label>
+    <input type="text" id="locality" formControlName="city" />
+  </div>
+</form>

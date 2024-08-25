@@ -1,3 +1,4 @@
+import { FormControl } from '@angular/forms';
 import { CivilityEnum } from '../../../shared/models/civility.model';
 import { Product } from '../../products/models/product.model';
 
@@ -32,6 +33,13 @@ export interface DeliveryAddress {
   postalCode: string;
   city: string;
   country: string;
+}
+
+export interface DeliveryAddressForm {
+  address: FormControl<string | null>;
+  postalCode: FormControl<string | null>;
+  city: FormControl<string | null>;
+  country: FormControl<string | null>;
 }
 
 export interface InvoiceForm {
