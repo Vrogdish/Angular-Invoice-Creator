@@ -19,7 +19,7 @@
             <app-btn title="Annuler" theme="cancel" routerLink="/" />
             <app-btn *ngIf="isLoading$ | async; else notLoading" theme="loading" />
             <ng-template #notLoading>
-              <app-btn title="Enregistrer" theme="submit" />
+              <app-btn title="Enregistrer" theme="disabled"  />
             </ng-template>
           </div>
         
