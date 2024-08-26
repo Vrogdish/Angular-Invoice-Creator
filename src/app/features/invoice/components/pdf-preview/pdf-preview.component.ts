@@ -59,7 +59,6 @@ export class PdfPreviewComponent implements OnInit {
     return {
       content: [
         { text: 'Facture', style: 'header' },
-        { text: 'N° ' + this.invoice.num, margin: [0, 0, 0, 30] },
         {
           columns: [{ text: 'Vendeur : ' }, { text: 'Client: ' }],
           style: 'adressTitle',
@@ -102,6 +101,9 @@ export class PdfPreviewComponent implements OnInit {
           ],
           style: 'adress',
           alignment: 'justify',
+        },
+        {
+          text : 'Numéro de facture : ' + this.invoice.num,
         },
 
         {
@@ -149,7 +151,7 @@ export class PdfPreviewComponent implements OnInit {
           margin: [0, 30, 0, 0],
         },
         {
-          text: 'Merci de votre confiance',
+          text: 'Merci de votre confiance.',
         },
       ],
       footer: () => {

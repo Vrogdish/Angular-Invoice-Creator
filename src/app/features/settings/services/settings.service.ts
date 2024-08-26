@@ -7,17 +7,21 @@ import { Settings } from '../models/settings.model';
 })
 export class SettingsService {
   settings$: BehaviorSubject<Settings> = new BehaviorSubject<Settings>({
-    tva: 0.2,
+    tva: 20,
+    showLogo: false,
+    showEmail: true,
+    uid: '',
   });
+  isLoading$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 
   createSettings(settings: Settings): void {
     this.settings$.next(settings);
   }
 
-  // loadSettings(uid : string): void {
-  //   console.log('loadSettings', uid);
+  loadSettings(uid : string): void {
+    console.log('loadSettings', uid);
     
-  // }
+}
 
   updateSettings(settings: Settings): void {
     this.settings$.next(settings);

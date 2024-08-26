@@ -50,7 +50,6 @@ export class PdfDeliveryPreviewComponent implements OnInit {
     return {
       content: [
         { text: 'Bon de livraison', style: 'header' },
-        { text: 'N° ' + this.invoice.num, margin: [0, 0, 0, 30] },
         {
           columns: [{ text: 'Vendeur : ' }, { text: 'Client: ' }],
           style: 'adressTitle',
@@ -84,15 +83,18 @@ export class PdfDeliveryPreviewComponent implements OnInit {
                 ' ' +
                 this.invoice.customer?.lastname +
                 '\n' +
-                this.invoice.customer?.address +
+                this.invoice.delivery.deliveryAddress.address +
                 '\n' +
-                this.invoice.customer?.postalCode +
+                this.invoice.delivery.deliveryAddress.postalCode +
                 ' ' +
-                this.invoice.customer?.city,
+                this.invoice.delivery.deliveryAddress.city,
             },
           ],
           style: 'adress',
           alignment: 'justify',
+        },
+        {
+          text: 'Numéro de facture associée : ' + this.invoice.num,
         },
 
         {

@@ -1,0 +1,32 @@
+.setting {
+  padding: 10px;
+  h1 {
+    margin: 20px 0 40px 0;
+    text-align: center;
+  }
+  &-btn {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin: 20px auto;
+    > * {
+      flex: 1;
+    }
+  }
+}
+form {
+  max-width: 400px;
+  margin: auto;
+}
+
+.setting-form {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin: 20px 0;
+  input[type="number"] {
+    width: 80px;
+  }
+}
+

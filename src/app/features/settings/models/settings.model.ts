@@ -1,3 +1,6 @@
 export interface Settings {
-    tva: number;    
+    tva: number;
+    showLogo: boolean;
+    showEmail: boolean;
+    uid : string; 
 }

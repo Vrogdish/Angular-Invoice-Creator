@@ -24,7 +24,7 @@ export class MenuComponent implements OnInit {
       link: '',
     },
     {
-      title: 'Aide et contact',
+      title: 'Aide et support',
       icons: '/icons/help.png',
       link: '/help',
     },
@@ -51,7 +51,7 @@ export class MenuComponent implements OnInit {
       link: '/settings',
     },
     {
-      title: 'Aide et contact',
+      title: 'Aide et support',
       icons: '/icons/help.png',
       link: '/help',
     }

@@ -20,6 +20,7 @@ import { ProductDetailComponent } from './features/products/components/product-d
 import { LegalNoticeComponent } from './features/legals/legal-notice/legal-notice.component';
 import { PrivacyPolicyComponent } from './features/legals/privacy-policy/privacy-policy.component';
 import { TermsOfServiceComponent } from './features/legals/terms-of-service/terms-of-service.component';
+import { HelpComponent } from './features/help/help.component';
 
 export const routes: Routes = [
   {
@@ -114,6 +115,10 @@ export const routes: Routes = [
   {
     path: 'terms',
     component: TermsOfServiceComponent,
+  },
+  {
+    path: 'help',
+    component: HelpComponent
   },
   {
     path: '**',
