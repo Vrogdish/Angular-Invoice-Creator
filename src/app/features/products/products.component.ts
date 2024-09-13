@@ -1,7 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Product } from './models/product.model';
 import { ProductsService } from './services/products.service';
-import { AuthService } from '../../core/auth/services/auth.service';
 import { CommonModule } from '@angular/common';
 import { BehaviorSubject, Subscription } from 'rxjs';
 import { BtnComponent } from '../../shared/components/btn/btn.component';
@@ -34,16 +33,10 @@ export class ProductsComponent implements OnInit, OnDestroy {
 
   constructor(
     private productService: ProductsService,
-    private auth: AuthService
   ) {}
 
   ngOnInit() {
-    // this.subscription.add(
-    //   this.auth.authState$.subscribe((user) => {
-    //     this.productService.loadProducts(user?.uid!);
-    //   })
-    // );
-    this.subscription.add(
+       this.subscription.add(
       this.productService.isLoading$.subscribe((isLoading) => {
         this.isLoading = isLoading;
       })

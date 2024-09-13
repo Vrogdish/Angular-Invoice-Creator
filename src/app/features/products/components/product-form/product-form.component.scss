@@ -19,6 +19,15 @@
     > * {
       flex: 1;
     }
+    @media (max-width: 500px) {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 0px;
+      > * {
+        width: 100%;
+      }
+      
+    }
   }
 
   &-btn {
@@ -32,7 +41,7 @@
   }
 }
 
-input {
+input, select, textarea {
   margin: 10px 0;
 }
 

@@ -1,7 +1,7 @@
 <div class="profile" *ngIf="userProfile$ | async as profile">
   <div *ngIf="!isLoading">
     <div class="profile-photo">
-      <app-avatar [user]="user" size="medium" />
+      <app-avatar [userProfile]="profile" size="medium" />
       <p>{{ profile.firstname }} {{ profile.lastname }}</p>
     </div>
     <div class="content">

@@ -74,6 +74,7 @@ export class ProductsService {
         description: product.get('description')?.value,
         price: numericConverter(product.get('price')?.value),
         reference: product.get('reference')?.value,
+        tva: product.get('tva')?.value,
       })
       this.loadProducts(uid);
     } catch (error) {

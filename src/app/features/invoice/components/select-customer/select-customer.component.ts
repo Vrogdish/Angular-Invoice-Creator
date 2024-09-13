@@ -1,6 +1,6 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component,  OnInit } from '@angular/core';
 import { NgSelectModule } from '@ng-select/ng-select';
-import { BehaviorSubject, Subscription } from 'rxjs';
+import { BehaviorSubject } from 'rxjs';
 import { Customer } from '../../../customers/models/customer.model';
 import { ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
@@ -26,11 +26,10 @@ import { Router } from '@angular/router';
   templateUrl: './select-customer.component.html',
   styleUrl: './select-customer.component.scss',
 })
-export class SelectCustomerComponent implements OnInit, OnDestroy {
+export class SelectCustomerComponent implements OnInit {
   customers$!: BehaviorSubject<Customer[] | null>;
   selectedCustomer: Customer | null = null;
   invoice$!: BehaviorSubject<InvoiceForm>;
-  subscription: Subscription = new Subscription();
   deliveryEditMode = false;
 
   constructor(
@@ -42,28 +41,11 @@ export class SelectCustomerComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    this.subscription.add(
-      this.auth.authState$.subscribe((user) => {
-        if (user) {
-          this.customersService.loadCustomers(user.uid);
-          this.profileService.loadProfile(user.uid);
-          this.profileService.profile$.subscribe((profile) => {
-            if (profile) {
-              this.invoiceCreatorService.initInvoice(profile);
-            }
-          });
-        }
-      })
-    );
     this.customers$ = this.customersService.customers$;
     this.invoice$ = this.invoiceCreatorService.invoice$;
   }
 
-  ngOnDestroy(): void {
-    this.subscription.unsubscribe();
-  }
-
-  setCustomer(event: Customer): void {
+    setCustomer(event: Customer): void {
     this.invoiceCreatorService.setCustomer(event);
     if (this.invoice$.value.delivery.withDelivery) {
       this.invoiceCreatorService.updateDeliveryAddress({

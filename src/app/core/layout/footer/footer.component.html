@@ -5,22 +5,29 @@
       <a routerLink="/privacy">Politique de confidentialité (RGPD)</a>
       <a routerLink="/terms">Conditions Générales d'utilisation (CGU)</a>
       <a routerLink="/help">Aide et support</a>
-
-
     </div>
     <div class="footer-section">
       <p class="contact">Nous contacter :</p>
-      <input type="text" placeholder="Email" />
-      <textarea placeholder="Message"></textarea>
-      <app-btn theme="secondary"  title="Envoyer"/>
+      <form [formGroup]="contactForm">
+        <input type="email" placeholder="Email" formControlName="email" />
+        <textarea placeholder="Message (10 caractères minimum)" formControlName="message"></textarea>
+
+        <app-btn *ngIf="contactForm.valid else disable"  theme="secondary" title="Envoyer" (handleClick)="onSubmit()" />
+        <ng-template #disable>
+        <app-btn  theme="disabled" title="Envoyer"  />
+        </ng-template>
+
+      </form>
+      <p class="error-message" >{{ errorMessage }}</p>
     </div>
-  </div>      <div class="copyright">
-        © 2024 - Tous droits réservés - Créé par
-        <a
-          href="https://www.linkedin.com/in/amine-smahi/"
-          target="_blank"
-          class="copyright"
-          >Cédric Gache</a
-        >
-      </div>
+  </div>
+  <div class="copyright">
+    © 2024 - Tous droits réservés - Créé par
+    <a
+      href="https://www.linkedin.com/in/amine-smahi/"
+      target="_blank"
+      class="copyright"
+      >Cédric Gache</a
+    >
+  </div>
 </footer>

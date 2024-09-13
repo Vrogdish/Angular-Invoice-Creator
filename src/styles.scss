@@ -45,6 +45,14 @@ input[type = "checkbox"] {
   height:16px;
 }
 
+select {
+  font-size: 1rem;
+  padding: 10px;
+  border: 1px solid $color-border;
+  border-radius: 5px;
+  width: 100%;
+}
+
 textarea {
   font-size: 1rem;
   padding: 10px;

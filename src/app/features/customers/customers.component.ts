@@ -4,7 +4,6 @@ import { BtnComponent } from '../../shared/components/btn/btn.component';
 import { CustomersService } from './services/customers.service';
 import { BehaviorSubject, Subscription } from 'rxjs';
 import { Customer } from './models/customer.model';
-import { AuthService } from '../../core/auth/services/auth.service';
 import { CommonModule } from '@angular/common';
 import { CustomersListComponent } from './components/customers-list/customers-list.component';
 import { RouterLink } from '@angular/router';
@@ -34,18 +33,9 @@ export class CustomersComponent implements OnInit, OnDestroy {
 
   constructor(
     private customersService: CustomersService,
-    private auth: AuthService
   ) {}
 
   ngOnInit(): void {
-    // this.subscription.add(
-    //   this.auth.authState$.subscribe((user) => {
-    //     if (user) {
-    //       this.customersService.loadCustomers(user.uid!);
-
-    //     }
-    //   })
-    // );
     this.customers$ = this.customersService.customers$;
     this.subscription.add(
       this.customersService.isLoading$.subscribe((isLoading) => {

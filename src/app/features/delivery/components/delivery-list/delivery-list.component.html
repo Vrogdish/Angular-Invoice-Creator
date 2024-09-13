@@ -1,0 +1,74 @@
+<p class="total">
+    {{ filteredDelivery.length }} / {{ deliveries.length }} Bons de livraisons trouvés
+  </p>
+  
+  <div class="invoice-list">
+    <table mat-table [dataSource]="filteredDelivery" class="mat-elevation-z8">
+      <ng-container matColumnDef="number">
+        <th mat-header-cell *matHeaderCellDef class="number">N°</th>
+        <td
+          mat-cell
+          *matCellDef="let delivery"
+          class="number"
+          [routerLink]="['/delivery/detail', delivery.id]"
+        >
+          {{ delivery.num || "-" }}
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="date">
+        <th mat-header-cell *matHeaderCellDef class="date">Date</th>
+        <td
+          mat-cell
+          *matCellDef="let delivery"
+          class="date"
+          [routerLink]="['/invoice/detail', delivery.id]"
+        >
+          {{ (delivery.createdAt | date : "dd/MM/yyyy") || "-" }}
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="customer">
+        <th mat-header-cell *matHeaderCellDef>Client</th>
+        <td
+          mat-cell
+          *matCellDef="let delivery"
+          [routerLink]="['/delivery/detail', delivery.id]"
+        >
+          {{ delivery.customer.civility }} {{ delivery.customer.firstname }}
+          {{ delivery.customer.lastname }}
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="produits">
+        <th mat-header-cell *matHeaderCellDef class="produits">Produits</th>
+        <td
+          mat-cell
+          *matCellDef="let delivery"
+          class="produits"
+          [routerLink]="['/delivery/detail', delivery.id]"
+        >
+          {{ delivery.productsList.length }}
+        </td>
+      </ng-container>
+  
+      <ng-container matColumnDef="delete">
+        <th mat-header-cell *matHeaderCellDef class="delete">
+          <img src="/icons/trash.png" alt="supprimer" class="trash" />
+        </th>
+        <td mat-cell *matCellDef="let delivery" class="delete">
+          <button (click)="deleteDelivery(delivery.id)">
+            <img src="/icons/delete.png" alt="supprimer" class="delete-btn" />
+          </button>
+        </td>
+      </ng-container>
+  
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr
+        mat-row
+        *matRowDef="let row; columns: displayedColumns"
+        class="row"
+      ></tr>
+    </table>
+    <p *ngIf="filteredDelivery.length === 0" class="not-found"
+      >Aucun Bon de livraison trouvé</p
+    >
+  </div>
+  

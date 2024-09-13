@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { User } from 'firebase/auth';
+import { UserProfile } from '../../../features/profile/models/userProfile.model';
 
 @Component({
   selector: 'app-avatar',
@@ -10,7 +10,7 @@ import { User } from 'firebase/auth';
   styleUrl: './avatar.component.scss'
 })
 export class AvatarComponent {
-  @Input() user!: User | null;
+  @Input() userProfile!: UserProfile | null;
   @Input() size : 'small' | 'medium' | 'large' = 'medium';
 
 }

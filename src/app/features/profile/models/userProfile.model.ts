@@ -16,6 +16,7 @@ export interface UserProfile {
   phone: string;
   createdAt: Date;
   updatedAt?: Date;
+  photoURL?: string;
 }
 
 export interface UserProfileForm {

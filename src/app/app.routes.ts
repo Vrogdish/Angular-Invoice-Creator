@@ -21,6 +21,7 @@ import { LegalNoticeComponent } from './features/legals/legal-notice/legal-notic
 import { PrivacyPolicyComponent } from './features/legals/privacy-policy/privacy-policy.component';
 import { TermsOfServiceComponent } from './features/legals/terms-of-service/terms-of-service.component';
 import { HelpComponent } from './features/help/help.component';
+import { DeliveryComponent } from './features/delivery/delivery.component';
 
 export const routes: Routes = [
   {
@@ -100,8 +101,8 @@ export const routes: Routes = [
     canActivate: [authGuard],
   },
   {
-    path: 'settings',
-    component: SettingsComponent,
+    path: 'delivery',
+    component: DeliveryComponent,
     canActivate: [authGuard],
   },
   {

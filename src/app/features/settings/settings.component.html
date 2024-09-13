@@ -3,11 +3,11 @@
     <form *ngIf="settings$ |async as settings" [formGroup]="settingsForm" >
         <div class="setting-form">
             <label for="tva-setting">Montant de la TVA (%) :</label>
-            <input type="number" id="tva-setting" formControlName="tva" />
+            <input type="number" id="tva-setting" formControlName="tva"   />
         </div>
         <div class="setting-form">
             <label for="invoice-start">Afficher mon logo :</label>
-            <input type="checkbox" id="logo-setting" formControlName="showLogo" />
+            <input type="checkbox" id="logo-setting" formControlName="showLogo"  />
         </div>
         <div class="setting-form">
             <label for="invoice-start">Afficher mon adresse mail :</label>

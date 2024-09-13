@@ -5,7 +5,6 @@ import { ProductsService } from '../../../products/services/products.service';
 import { CommonModule } from '@angular/common';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { FormsModule } from '@angular/forms';
-import { AuthService } from '../../../../core/auth/services/auth.service';
 import { BtnComponent } from '../../../../shared/components/btn/btn.component';
 import { InvoiceForm } from '../../models/invoice.model';
 import { MatTableModule } from '@angular/material/table';
@@ -35,15 +34,9 @@ export class SelectProductsComponent implements OnInit {
   constructor(
     private productsService: ProductsService,
     private invoiceCreatorService: InvoiceCreatorService,
-    private auth: AuthService
   ) {}
 
   ngOnInit(): void {
-    this.auth.authState$.subscribe((user) => {
-      if (user) {
-        this.productsService.loadProducts(user.uid);
-      }
-    });
     this.products$ = this.productsService.products$;
     this.invoice$ = this.invoiceCreatorService.invoice$;
   }

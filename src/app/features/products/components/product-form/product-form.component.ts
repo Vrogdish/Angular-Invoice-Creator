@@ -5,31 +5,34 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { Product, ProductForm } from '../../models/product.model';
+import { Product, ProductForm, TvaEnum } from '../../models/product.model';
 import { BtnComponent } from '../../../../shared/components/btn/btn.component';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { ProductsService } from '../../services/products.service';
 import { AuthService } from '../../../../core/auth/services/auth.service';
 import { CommonModule } from '@angular/common';
+import { TvaPipe } from "../../../../shared/pipes/tva.pipe";
 
 @Component({
   selector: 'app-product-form',
   standalone: true,
   templateUrl: './product-form.component.html',
   styleUrl: './product-form.component.scss',
-  imports: [ReactiveFormsModule, BtnComponent, RouterLink, CommonModule],
+  imports: [ReactiveFormsModule, BtnComponent, RouterLink, CommonModule, TvaPipe],
 })
 export class ProductFormComponent implements OnInit {
   @Input() product!: Product | null;
   productForm: FormGroup<ProductForm> = new FormGroup<ProductForm>({
     reference: new FormControl(''),
     name: new FormControl('', Validators.required),
-    price: new FormControl('', Validators.required),
+    price: new FormControl(0, Validators.required),
     description: new FormControl(''),
+    tva: new FormControl(TvaEnum.Normal),
   });
   isLoading$ = this.productService.isLoading$;
   errorMessages!: string;
   editMode = false;
+  tvaSelect : number[] = [TvaEnum.Normal, TvaEnum.intermediaire, TvaEnum.reduit, TvaEnum.particulier]; 
 
   constructor(
     private productService: ProductsService,
@@ -45,7 +48,7 @@ export class ProductFormComponent implements OnInit {
         if (this.product) {
           this.productForm.patchValue({
             ...this.product,
-            price: this.product.price.toString(),
+            price: this.product.price,
           });
         }
       } else {

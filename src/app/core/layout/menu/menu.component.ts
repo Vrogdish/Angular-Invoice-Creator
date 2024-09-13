@@ -30,7 +30,12 @@ export class MenuComponent implements OnInit {
     },
   ];
   onlineMenu = [
-     {
+    {
+      title: 'Mes bon de livraisons',
+      icons: '/icons/delivery.png',
+      link: '/delivery',
+    },
+    {
       title: 'Mes factures',
       icons: '/icons/invoice.png',
       link: '/invoice',
@@ -46,15 +51,10 @@ export class MenuComponent implements OnInit {
       link: '/customers',
     },
     {
-      title: 'Paramètres',
-      icons: '/icons/setting.png',
-      link: '/settings',
-    },
-    {
       title: 'Aide et support',
       icons: '/icons/help.png',
       link: '/help',
-    }
+    },
   ];
 
   constructor(private auth: AuthService) {}

@@ -1,0 +1,21 @@
+<div class="delivery">
+    <h1>Liste de mes bons de livraison</h1>
+    <app-search-bar (search)="onSearch($event)" />
+    <div class="btn">
+      <app-btn
+        title="Nouveau bon "
+        theme="secondary"
+        iconUrl="/icons/add.png"
+        routerLink="create"
+      />
+    </div>
+  
+    <div *ngIf="deliveries$ | async as deliveries">
+      <div *ngIf="!isLoading">
+        <app-delivery-list [deliveries]="deliveries" [searchQuery]="searchQuery" />
+      </div>
+      <div *ngIf="isLoading">
+        <app-loader></app-loader>
+      </div>
+    </div>
+  </div>

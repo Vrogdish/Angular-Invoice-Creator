@@ -1,6 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { AuthService } from '../../core/auth/services/auth.service';
-import { User } from 'firebase/auth';
 import { BtnComponent } from '../../shared/components/btn/btn.component';
 import { ProfileService } from './services/profile.service';
 import { UserProfile } from './models/userProfile.model';
@@ -18,7 +17,6 @@ import { LoaderComponent } from "../../shared/components/loader/loader.component
   imports: [BtnComponent, CommonModule, AvatarComponent, RouterLink, LoaderComponent],
 })
 export class ProfileComponent implements OnInit, OnDestroy {
-  user!: User | null;
   userProfile$!: Observable<UserProfile | null>;
   subscription: Subscription = new Subscription();
   isLoading = true;
@@ -27,13 +25,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
   
 
   ngOnInit() {
-    this.subscription.add(
-      this.auth.authState$.subscribe((user) => {
-          this.user = user;
-       
-      })
-    );
-    this.userProfile$ = this.profile.profile$;
+         this.userProfile$ = this.profile.profile$;
     this.subscription.add(
       this.profile.isLoading$.subscribe((isLoading) => {
         this.isLoading = isLoading;
