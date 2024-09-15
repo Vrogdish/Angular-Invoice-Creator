@@ -6,9 +6,9 @@ import { CommonModule } from '@angular/common';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { FormsModule } from '@angular/forms';
 import { BtnComponent } from '../../../../shared/components/btn/btn.component';
-import { InvoiceForm } from '../../models/invoice.model';
 import { MatTableModule } from '@angular/material/table';
-import { InvoiceCreatorService } from '../../services/invoice-creator.service';
+import { DocumentDetail } from '../../models/document-detail.model';
+import { DocumentMakerService } from '../../services/document-maker.service';
 
 @Component({
   selector: 'app-select-products',
@@ -25,7 +25,7 @@ import { InvoiceCreatorService } from '../../services/invoice-creator.service';
 })
 export class SelectProductsComponent implements OnInit {
   products$!: BehaviorSubject<Product[] | null>;
-  invoice$!: BehaviorSubject<InvoiceForm>;
+  documentDetail$!: BehaviorSubject<DocumentDetail>;
   selectedProduct!: Product | null;
   displayedColumns: string[] = ['ref', 'name', 'price', 'quantity', 'delete'];
   quantity = 1;
@@ -33,40 +33,40 @@ export class SelectProductsComponent implements OnInit {
 
   constructor(
     private productsService: ProductsService,
-    private invoiceCreatorService: InvoiceCreatorService,
+    private documentMakerService: DocumentMakerService,
   ) {}
 
   ngOnInit(): void {
     this.products$ = this.productsService.products$;
-    this.invoice$ = this.invoiceCreatorService.invoice$;
+    this.documentDetail$ = this.documentMakerService.documentDetail$;
   }
 
   addProduct(): void {
     if (!this.selectedProduct) {
       return;
     }
-    this.invoiceCreatorService.addProduct(this.selectedProduct, this.quantity);
+    this.documentMakerService.addProduct(this.selectedProduct, this.quantity);
     this.selectedProduct = null;
     this.quantity = 1;
   }
 
   removeProduct(id: string): void {
-    this.invoiceCreatorService.removeProduct(id);
+    this.documentMakerService.removeProduct(id);
   }
 
   incrementQuantity(id: string): void {
-    this.invoiceCreatorService.incrementQuantity(id);
+    this.documentMakerService.incrementQuantity(id);
   }
 
   decrementQuantity(id: string): void {
-    this.invoiceCreatorService.decrementQuantity(id);
+    this.documentMakerService.decrementQuantity(id);
   }
 
   previous() {
-    this.invoiceCreatorService.setStep(1);
+    this.documentMakerService.setStep(1);
   }
 
   next() {
-    this.invoiceCreatorService.setStep(3);
+    this.documentMakerService.setStep(3);
   }
 }

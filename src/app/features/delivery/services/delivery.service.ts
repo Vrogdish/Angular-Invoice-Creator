@@ -65,16 +65,16 @@ export class DeliveryService {
     }
   }
 
-  async createDelivery(delivery: DeliveryForm) {
+  async createDelivery(delivery: DeliveryForm, uid: string) {
     this.isLoading$.next(true);
     this.errorMessage$.next('');
     try {
       const collectionRef = collection(this.firestore, 'delivery');
       await addDoc(collectionRef, {
         ...delivery,
-        createdAt: Timestamp.fromDate(delivery.createdAt),
+        createdAt: Timestamp.fromDate(new Date()),
       });
-      await this.loadDeliveries(delivery.uid);
+      await this.loadDeliveries(uid);
     } catch (error) {
       console.error(error);
       this.errorMessage$.next(

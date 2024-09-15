@@ -1,0 +1,69 @@
+<div class="maker" *ngIf="step$ | async as step">
+  <h1 *ngIf="createMode === 'invoice'">Création de factures</h1>
+  <h1 *ngIf="createMode === 'delivery'">Création de bon de livraison</h1>
+
+  <div class="customer" *ngIf="step === 1">
+    <app-select-customer />
+    <app-delivery-address-form *ngIf="createMode === 'delivery'" />
+    <div class="btn">
+      <app-btn
+      *ngIf="createMode === 'invoice'"
+        title="Annuler"
+        theme="cancel"
+        [routerLink]="['/invoice']"
+      />
+      <app-btn
+      *ngIf="createMode === 'delivery'"
+        title="Annuler"
+        theme="cancel"
+        [routerLink]="['/delivery']"
+      />
+      <app-btn
+      title="Suivant"
+      theme="primary"
+      (handleClick)="setStep(2)"
+    />
+    </div>
+
+  </div>
+
+  <div class="products" *ngIf="step === 2">
+    <app-select-products />
+    <div class="btn">
+      <app-btn
+        title="Précédent"
+        theme="secondary"
+        (handleClick)="setStep(1)"
+      />
+      <app-btn
+        *ngIf="createMode === 'delivery'"
+        title="Créer le bon"
+        theme="primary"
+        (handleClick)="create()"
+      />
+      <app-btn
+        *ngIf="createMode === 'invoice'"
+        title="Suivant"
+        theme="primary"
+        (handleClick)="setStep(3)"
+      />
+    </div>
+  </div>
+
+  <div class="complete" *ngIf="step === 3">
+    <app-complete-invoice />
+    <div class="btn">
+      <app-btn
+        title="Précédent"
+        theme="secondary"
+        (handleClick)="setStep(2)"
+      />
+      <app-btn
+        title="Créer la facture"
+        theme="primary"
+        (handleClick)="create()"
+      />
+    </div>
+</div>
+
+<pre *ngIf="documentDetail$ | async as document">{{ document | json }}</pre>

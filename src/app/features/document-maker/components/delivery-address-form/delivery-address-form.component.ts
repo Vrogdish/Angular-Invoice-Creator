@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import {
   FormControl,
   FormGroup,
@@ -7,8 +7,9 @@ import {
   Validators,
 } from '@angular/forms';
 import { BtnComponent } from '../../../../shared/components/btn/btn.component';
-import { DeliveryAddressForm } from '../../models/invoice.model';
-import { InvoiceCreatorService } from '../../services/invoice-creator.service';
+import { DeliveryAddressForm } from '../../models/document-detail.model';
+import { DocumentMakerService } from '../../services/document-maker.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-delivery-address-form',
@@ -17,7 +18,7 @@ import { InvoiceCreatorService } from '../../services/invoice-creator.service';
   templateUrl: './delivery-address-form.component.html',
   styleUrl: './delivery-address-form.component.scss',
 })
-export class DeliveryAddressFormComponent implements OnInit {
+export class DeliveryAddressFormComponent implements OnInit, OnDestroy {
   deliveryAddressForm: FormGroup<DeliveryAddressForm> =
     new FormGroup<DeliveryAddressForm>({
       address: new FormControl('', Validators.required),
@@ -26,26 +27,37 @@ export class DeliveryAddressFormComponent implements OnInit {
       country: new FormControl('France', Validators.required),
     });
   errorMessages = '';
+  subscription: Subscription = new Subscription();
 
-  constructor(private invoiceCreatorService: InvoiceCreatorService) {}
+  constructor(private documentMakerservice: DocumentMakerService) {}
 
   ngOnInit(): void {
-    this.invoiceCreatorService.invoice$.subscribe((invoice) => {
-      this.deliveryAddressForm.patchValue(invoice.delivery.deliveryAddress);
-    });
-    this.deliveryAddressForm.valueChanges.subscribe((currentValue) => {
-      const previousValue = this.invoiceCreatorService.invoice$.value.delivery
+    this.subscription.add(
+      this.documentMakerservice.documentDetail$.subscribe((document) => {
+        this.deliveryAddressForm.patchValue(document.deliveryAddress);
+      })
+    );
 
-      if (
-        previousValue.deliveryAddress.address === currentValue.address &&
-        previousValue.deliveryAddress.postalCode === currentValue.postalCode &&
-        previousValue.deliveryAddress.city === currentValue.city &&
-        previousValue.deliveryAddress.country === currentValue.country
-      ) {
-        return;
-      }
-      this.onChangeDeliveryAddress()
-    })
+    this.subscription.add(
+      this.deliveryAddressForm.valueChanges.subscribe((currentValue) => {
+        const previousValue =
+          this.documentMakerservice.documentDetail$.value.deliveryAddress;
+
+        if (
+          previousValue?.address === currentValue.address &&
+          previousValue?.postalCode === currentValue.postalCode &&
+          previousValue?.city === currentValue.city &&
+          previousValue?.country === currentValue.country
+        ) {
+          return;
+        }
+        this.onChangeDeliveryAddress();
+      })
+    );
+  }
+
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
   }
 
   onChangeDeliveryAddress(): void {
@@ -54,13 +66,12 @@ export class DeliveryAddressFormComponent implements OnInit {
     } else {
       this.errorMessages = '';
 
-      this.invoiceCreatorService.updateDeliveryAddress({
+      this.documentMakerservice.updateDeliveryAddress({
         address: this.deliveryAddressForm.value.address || '',
         postalCode: this.deliveryAddressForm.value.postalCode || '',
         city: this.deliveryAddressForm.value.city || '',
         country: this.deliveryAddressForm.value.country || '',
       });
     }
-    console.log(this.invoiceCreatorService.invoice$.value);
   }
 }

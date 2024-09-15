@@ -12,8 +12,6 @@ import { CustomersComponent } from './features/customers/customers.component';
 import { CustomerFormComponent } from './features/customers/components/customer-form/customer-form.component';
 import { InvoiceComponent } from './features/invoice/invoice.component';
 import { PdfPreviewComponent } from './features/invoice/components/pdf-preview/pdf-preview.component';
-import { SettingsComponent } from './features/settings/settings.component';
-import { InvoiceCreatorComponent } from './features/invoice/components/invoice-creator/invoice-creator.component';
 import { InvoiceDetailComponent } from './features/invoice/components/invoice-detail/invoice-detail.component';
 import { CustomerDetailComponent } from './features/customers/components/customer-detail/customer-detail.component';
 import { ProductDetailComponent } from './features/products/components/product-detail/product-detail.component';
@@ -22,6 +20,7 @@ import { PrivacyPolicyComponent } from './features/legals/privacy-policy/privacy
 import { TermsOfServiceComponent } from './features/legals/terms-of-service/terms-of-service.component';
 import { HelpComponent } from './features/help/help.component';
 import { DeliveryComponent } from './features/delivery/delivery.component';
+import { DocumentMakerComponent } from './features/document-maker/document-maker.component';
 
 export const routes: Routes = [
   {
@@ -87,7 +86,7 @@ export const routes: Routes = [
   },
   {
     path: 'invoice/create',
-    component: InvoiceCreatorComponent,
+    component: DocumentMakerComponent,
     canActivate: [authGuard],
   },
   {
@@ -103,6 +102,11 @@ export const routes: Routes = [
   {
     path: 'delivery',
     component: DeliveryComponent,
+    canActivate: [authGuard],
+  },
+  {
+    path: 'delivery/create',
+    component: DocumentMakerComponent,
     canActivate: [authGuard],
   },
   {

@@ -1,4 +1,4 @@
-<h2>Liste des produits à ajouter à votre facture</h2>
+<h2>Liste des produits à ajouter </h2>
 <div *ngIf="products$ | async as products">
   <ng-select [(ngModel)]="selectedProduct" placeholder="Rechercher un produit">
     @for (product of products; track product.id) {
@@ -25,11 +25,11 @@
   </p>
 </div>
 
-<div class="product-list" *ngIf="invoice$ | async as invoice">
+<div class="product-list" *ngIf="documentDetail$ | async as documentDetail">
   <div class="product-list">
     <table
       mat-table
-      [dataSource]="invoice.productsList"
+      [dataSource]="documentDetail.productsList"
       class="mat-elevation-z8"
     >
       <ng-container matColumnDef="ref">
@@ -77,20 +77,8 @@
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
       <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
     </table>
-    <P *ngIf="invoice.productsList.length === 0" class="not-found"
+    <P *ngIf="documentDetail.productsList.length === 0" class="not-found"
       >Aucun produit ajouté</P
     >
   </div>
-  <div class="customer-btn">
-    <app-btn theme="cancel" title="Précédent" (handleClick)="previous()" />
-    <app-btn
-      theme="primary"
-      title="Suivant"
-      (handleClick)="next()"
-      *ngIf="invoice.productsList.length > 0 ; else disable"
-    />
-    <ng-template #disable>
-      <app-btn theme="disabled" title="Suivant" />
-    </ng-template>
-  </div>
-</div>
+ </div>

@@ -1,6 +1,9 @@
-import { FormControl } from '@angular/forms';
+import { FormArray, FormControl, FormGroup } from '@angular/forms';
 import { CivilityEnum } from '../../../shared/models/civility.model';
-import { Product } from '../../products/models/product.model';
+import { Product, ProductForm } from '../../products/models/product.model';
+import { UserProfile } from 'firebase/auth';
+import { Customer } from '../../customers/models/customer.model';
+import { ContactForm } from '../../../shared/models/contact.model';
 
 export interface DeliveryVendorForm {
   civility: CivilityEnum;
@@ -42,23 +45,48 @@ export interface DeliveryAddressForm {
   country: FormControl<string | null>;
 }
 
-export interface DeliveryForm {
-  uid: string;
+// export interface DeliveryForm {
+//   uid: string;
+//   num: number;
+//   createdAt: Date;
+//   delivery: {
+//     withDelivery: boolean;
+//     deliveryAddress: DeliveryAddress;
+//   };
+//   vendor: DeliveryVendorForm;
+//   customer: DeliveryCustomerForm;
+//   productsList: {
+//     product: Product;
+//     quantity: number;
+//   }[];
+// }
+
+// export interface Delivery extends DeliveryForm {
+//   id: string;
+// }
+
+export interface Delivery {
+  id: string;
   num: number;
-  createdAt: Date;
-  delivery: {
-    withDelivery: boolean;
-    deliveryAddress: DeliveryAddress;
-  };
-  vendor: DeliveryVendorForm;
-  customer: DeliveryCustomerForm;
+  vendor: UserProfile;
+  customer: Customer;
+  deliveryAdress: DeliveryAddress;
   productsList: {
     product: Product;
     quantity: number;
   }[];
-  tva: number;
+  createdAt: Date;
+  uid: string;
 }
 
-export interface Delivery extends DeliveryForm {
-  id: string;
+export interface DeliveryForm {
+  num: FormControl<number | null>;
+  vendor: FormGroup<ContactForm>;
+  customer: FormGroup<ContactForm>;
+  deliveryAdress: FormGroup<DeliveryAddressForm>;
+  productsList : FormArray<FormGroup<{
+    product: FormControl<Product | null>,
+    quantity: FormControl<number | null>
+  }>>
+  
 }
