@@ -12,22 +12,24 @@
     text-align: center;
   }
 }
-
-.select {
-    margin: 10px 0;
+h2 {
+  margin: 20px 0;
 }
 
+.select {
+  margin: 10px 0;
+}
 
- .delivery {
-    margin-bottom: 20px;
-  }
+.delivery {
+  margin-bottom: 20px;
+}
 
-  .btn {
-    display: flex;
-    justify-content: space-between;
-    gap: 20px;
-    margin-top: 40px;
-    > * {
-      flex: 1;
-    }
+.btn {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  margin-top: 80px;
+  > * {
+    flex: 1;
   }
+}

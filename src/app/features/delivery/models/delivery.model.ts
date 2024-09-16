@@ -1,6 +1,6 @@
 import { FormArray, FormControl, FormGroup } from '@angular/forms';
 import { CivilityEnum } from '../../../shared/models/civility.model';
-import { Product, ProductForm } from '../../products/models/product.model';
+import { Product, } from '../../products/models/product.model';
 import { UserProfile } from 'firebase/auth';
 import { Customer } from '../../customers/models/customer.model';
 import { ContactForm } from '../../../shared/models/contact.model';

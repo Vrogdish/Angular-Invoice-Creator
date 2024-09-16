@@ -2,13 +2,14 @@
   <h1 *ngIf="!editMode">Ajouter un produit</h1>
   <h1 *ngIf="editMode">Modifier le produit : {{ product?.name }}</h1>
   <form [formGroup]="productForm" (ngSubmit)="onSubmit()">
-    <div class="form-group">
-      <label for="ref">Référence : (facultatif)</label>
-      <input type="text" id="ref" formControlName="reference" />
-    </div>
+
     <div class="form-group">
       <label for="name">Nom :</label>
       <input type="text" id="name" formControlName="name" />
+    </div>
+    <div class="form-group">
+      <label for="ref">Référence : (facultatif)</label>
+      <input type="text" id="ref" formControlName="reference" />
     </div>
     <div class="price">
       <div class="form-group">

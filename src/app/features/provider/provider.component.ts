@@ -5,6 +5,7 @@ import { CustomersService } from '../customers/services/customers.service';
 import { ProductsService } from '../products/services/products.service';
 import { InvoiceService } from '../invoice/services/invoice.service';
 import { ProfileService } from '../profile/services/profile.service';
+import { DeliveryService } from '../delivery/services/delivery.service';
 // import { SettingsService } from '../settings/services/settings.service';
 
 @Component({
@@ -23,7 +24,7 @@ export class ProviderComponent implements OnInit, OnDestroy {
     private productService: ProductsService,
     private invoiceService: InvoiceService,
     private profilService: ProfileService,
-    // private settingService: SettingsService
+    private deliveryService: DeliveryService
   ) {}
 
   ngOnInit(): void {
@@ -34,7 +35,7 @@ export class ProviderComponent implements OnInit, OnDestroy {
           this.productService.loadProducts(user.uid!);
           this.invoiceService.loadInvoices(user.uid!);
           this.profilService.loadProfile(user.uid!);
-          // this.settingService.loadSettings(user.uid!);
+          this.deliveryService.loadDeliveries(user.uid!);
         }
       })
     );

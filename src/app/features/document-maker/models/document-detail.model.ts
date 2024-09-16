@@ -47,6 +47,8 @@ export interface DocumentDetail {
     id: string;
     num: number;
   }[];
+  deposit: number;
+  discount: number;
 }
 
 export interface DeliveryAdress {

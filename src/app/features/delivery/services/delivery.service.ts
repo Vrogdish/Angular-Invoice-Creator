@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { Delivery, DeliveryForm } from '../models/delivery.model';
 import { addDoc, collection, deleteDoc, doc, Firestore, getDoc, getDocs, orderBy, query, Timestamp, where } from '@angular/fire/firestore';
+import { DocumentDetail } from '../../document-maker/models/document-detail.model';
 
 @Injectable({
   providedIn: 'root'
@@ -65,14 +66,16 @@ export class DeliveryService {
     }
   }
 
-  async createDelivery(delivery: DeliveryForm, uid: string) {
+  async createDelivery(documentDetail : DocumentDetail, uid: string, deliveryNumber: number) {
     this.isLoading$.next(true);
     this.errorMessage$.next('');
     try {
-      const collectionRef = collection(this.firestore, 'delivery');
+      const collectionRef = collection(this.firestore, 'deliveries');
       await addDoc(collectionRef, {
-        ...delivery,
+        ...documentDetail,
         createdAt: Timestamp.fromDate(new Date()),
+        uid : uid,
+        num :deliveryNumber
       });
       await this.loadDeliveries(uid);
     } catch (error) {

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, firstValueFrom, Observable } from 'rxjs';
 import { DocumentDetail } from './models/document-detail.model';
 import { DocumentMakerService } from './services/document-maker.service';
 import { InvoiceService } from '../invoice/services/invoice.service';
@@ -8,52 +8,122 @@ import { CommonModule } from '@angular/common';
 import { createModeEnum } from './models/create-mode.model';
 import { SelectCustomerComponent } from './components/select-customer/select-customer.component';
 import { DeliveryAddressFormComponent } from './components/delivery-address-form/delivery-address-form.component';
-import { SelectProductsComponent } from "./components/select-products/select-products.component";
-import { BtnComponent } from "../../shared/components/btn/btn.component";
-import { CompleteInvoiceComponent } from "./components/complete-invoice/complete-invoice.component";
-
+import { SelectProductsComponent } from './components/select-products/select-products.component';
+import { BtnComponent } from '../../shared/components/btn/btn.component';
+import { CompleteInvoiceComponent } from './components/complete-invoice/complete-invoice.component';
+import { DeliveryService } from '../delivery/services/delivery.service';
+import { AuthService } from '../../core/auth/services/auth.service';
+import { User } from '@angular/fire/auth';
+import { SelectDeliveriesComponent } from "./components/select-deliveries/select-deliveries.component";
 
 @Component({
   selector: 'app-document-maker',
   standalone: true,
-  imports: [CommonModule, SelectCustomerComponent, DeliveryAddressFormComponent, SelectProductsComponent, BtnComponent, RouterLink, CompleteInvoiceComponent],
+  imports: [
+    CommonModule,
+    SelectCustomerComponent,
+    DeliveryAddressFormComponent,
+    SelectProductsComponent,
+    BtnComponent,
+    RouterLink,
+    CompleteInvoiceComponent,
+    SelectDeliveriesComponent
+],
   templateUrl: './document-maker.component.html',
   styleUrl: './document-maker.component.scss',
 })
 export class DocumentMakerComponent implements OnInit {
   step$!: BehaviorSubject<number>;
   documentDetail$!: BehaviorSubject<DocumentDetail>;
+  user$!: Observable<User | null>;
   createMode!: createModeEnum;
+  invoiceType! : 'manual' | 'withDelivery' | null;
 
   constructor(
     private documentMakerService: DocumentMakerService,
     private invoiceService: InvoiceService,
+    private deliveryService: DeliveryService,
     private router: Router,
-    private activatedRoute: ActivatedRoute
-    
+    private activatedRoute: ActivatedRoute,
+    private authService: AuthService
   ) {}
 
   ngOnInit(): void {
     this.activatedRoute.url.subscribe((url) => {
       console.log(url);
-      
+
       this.createMode = url[0].path as createModeEnum;
     });
-    
+
     this.step$ = this.documentMakerService.step$;
     this.documentDetail$ = this.documentMakerService.documentDetail$;
+    this.user$ = this.authService.authState$;
   }
 
-  create() {
-    //  this.invoiceService.createInvoice(this.invoice$.value);
-    console.log(this.documentDetail$.value);
-    
-    this.documentMakerService.resetDocumentDetail();
-    this.documentMakerService.setStep(1);
-    // this.router.navigate(['/invoice']);
+  async createInvoice() {
+    const invoiceNumber = await this.createInvoiceNumber();
+    this.user$.subscribe((user) => {
+      if (user) {
+        this.invoiceService.createInvoice(
+          this.documentDetail$.value,
+          user.uid,
+          invoiceNumber
+        );
+        this.documentMakerService.resetDocumentDetail();
+        this.documentMakerService.setStep(1);
+        this.router.navigate(['/invoice']);
+      }
+    });
+  }
+
+  async createDelivery() {
+    const deliveryNumber = await this.createDeliveryNumber();
+    this.user$.subscribe((user) => {
+      if (user) {
+        this.deliveryService.createDelivery(
+          this.documentDetail$.value,
+          user.uid,
+          deliveryNumber
+        );
+        this.documentMakerService.resetDocumentDetail();
+        this.documentMakerService.setStep(1);
+        this.router.navigate(['/delivery']);
+      }
+    });
   }
 
   setStep(step: number) {
     this.documentMakerService.setStep(step);
+  }
+
+  undoSelectProducts() {
+    this.setStep(1);
+    this.invoiceType = null;
+    this.documentMakerService.resetProducts();
+  }
+
+ 
+  setInvoiceType(type: 'manual' | 'withDelivery') {
+    this.invoiceType = type;
+  }
+  
+  private async createDeliveryNumber(): Promise<number> {
+    const deliveries = await firstValueFrom(this.deliveryService.deliveries$);
+    if (deliveries.length > 0) {
+      deliveries.sort((a, b) => b.num - a.num);
+      return deliveries[0].num + 1;  
+    } else {
+      return 1;
+    }
+  }
+
+   private async createInvoiceNumber(): Promise<number> {
+    const invoices = await firstValueFrom(this.invoiceService.invoices$);
+    if (invoices.length > 0) {
+      invoices.sort((a, b) => b.num - a.num);
+      return invoices[0].num + 1;  
+    } else {
+      return 1;  
+    }
   }
 }

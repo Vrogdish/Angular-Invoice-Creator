@@ -57,7 +57,8 @@ export class DeliveryListComponent implements OnChanges {
     'number',
     'date',
     'customer',
-    'produits',
+    'products',
+    'invoice',
     'delete',
   ];
 

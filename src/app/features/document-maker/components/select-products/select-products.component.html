@@ -1,6 +1,6 @@
 <h2>Liste des produits à ajouter </h2>
 <div *ngIf="products$ | async as products">
-  <ng-select [(ngModel)]="selectedProduct" placeholder="Rechercher un produit">
+  <ng-select [(ngModel)]="selectedProduct" placeholder="Rechercher un produit" notFoundText="Aucun produit trouvé">
     @for (product of products; track product.id) {
     <ng-option [value]="product">{{ product.name }}</ng-option>
     }

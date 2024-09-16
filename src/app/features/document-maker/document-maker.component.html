@@ -7,63 +7,89 @@
     <app-delivery-address-form *ngIf="createMode === 'delivery'" />
     <div class="btn">
       <app-btn
-      *ngIf="createMode === 'invoice'"
+        *ngIf="createMode === 'invoice'"
         title="Annuler"
-        theme="cancel"
+        theme="secondary"
         [routerLink]="['/invoice']"
       />
       <app-btn
-      *ngIf="createMode === 'delivery'"
+        *ngIf="createMode === 'delivery'"
         title="Annuler"
-        theme="cancel"
+        theme="secondary"
         [routerLink]="['/delivery']"
       />
-      <app-btn
-      title="Suivant"
-      theme="primary"
-      (handleClick)="setStep(2)"
-    />
+      <ng-container *ngIf="documentDetail$ | async as documentDetail">
+        <app-btn
+          title="Suivant"
+          theme="primary"
+          (handleClick)="setStep(2)"
+          *ngIf="documentDetail.customer.id"
+        />
+        <app-btn
+          title="Suivant"
+          theme="disabled"
+          *ngIf="!documentDetail.customer.id"
+        />
+      </ng-container>
     </div>
-
   </div>
 
   <div class="products" *ngIf="step === 2">
-    <app-select-products />
-    <div class="btn">
+    <div *ngIf="!invoiceType && createMode === 'invoice'">
+      <h2>Choisissez comment créer votre facture :</h2>
+      <div class="btn">
+        <app-btn
+          title="Manuellement"
+          theme="secondary"
+          (handleClick)="setInvoiceType('manual')"
+        />
+        <app-btn
+          title="A partir des bons de livraison"
+          theme="secondary"
+          (handleClick)="setInvoiceType('withDelivery')"
+        />
+      </div>
+    </div>
+    <app-select-deliveries
+      *ngIf="createMode === 'invoice' && invoiceType === 'withDelivery'"
+    />
+    <app-select-products
+      *ngIf="createMode === 'delivery' || invoiceType === 'manual'"
+    />
+    <div class="btn" *ngIf="invoiceType || createMode === 'delivery'">
       <app-btn
         title="Précédent"
         theme="secondary"
-        (handleClick)="setStep(1)"
+        (handleClick)="undoSelectProducts()"
       />
-      <app-btn
-        *ngIf="createMode === 'delivery'"
-        title="Créer le bon"
-        theme="primary"
-        (handleClick)="create()"
-      />
-      <app-btn
-        *ngIf="createMode === 'invoice'"
-        title="Suivant"
-        theme="primary"
-        (handleClick)="setStep(3)"
-      />
+      <ng-container *ngIf="documentDetail$ | async as documentDetail">
+        <ng-container *ngIf="documentDetail.productsList.length > 0">
+          <app-btn
+            *ngIf="createMode === 'delivery'"
+            title="Créer le bon"
+            theme="primary"
+            (handleClick)="createDelivery()" />
+          <app-btn
+            *ngIf="createMode === 'invoice'"
+            title="Créer la facture"
+            theme="primary"
+            (handleClick)="createInvoice()"
+        /></ng-container>
+        <ng-container *ngIf="documentDetail.productsList.length === 0">
+          <app-btn
+            *ngIf="createMode === 'delivery'"
+            title="Créer le bon"
+            theme="disabled"
+             />
+          <app-btn
+            *ngIf="createMode === 'invoice'"
+            title="Créer la facture"
+            theme="disabled"
+            />
+        </ng-container>
+      </ng-container>
     </div>
   </div>
-
-  <div class="complete" *ngIf="step === 3">
-    <app-complete-invoice />
-    <div class="btn">
-      <app-btn
-        title="Précédent"
-        theme="secondary"
-        (handleClick)="setStep(2)"
-      />
-      <app-btn
-        title="Créer la facture"
-        theme="primary"
-        (handleClick)="create()"
-      />
-    </div>
 </div>
 
 <pre *ngIf="documentDetail$ | async as document">{{ document | json }}</pre>

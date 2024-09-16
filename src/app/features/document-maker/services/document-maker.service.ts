@@ -8,6 +8,7 @@ import {
 import { UserProfile } from '../../profile/models/userProfile.model';
 import { Customer } from '../../customers/models/customer.model';
 import { Product } from '../../products/models/product.model';
+import { Delivery } from '../../delivery/models/delivery.model';
 
 @Injectable({
   providedIn: 'root',
@@ -50,6 +51,8 @@ export class DocumentMakerService {
       },
       productsList: [],
       deliveries: [],
+      deposit: 0,
+      discount: 0,
     });
 
   setStep(step: number) {
@@ -96,7 +99,7 @@ export class DocumentMakerService {
     this.documentDetail$.next({
       ...this.documentDetail$.value,
       customer: {
-        id : '',
+        id: '',
         civility: CivilityEnum.male,
         company: '',
         firstname: '',
@@ -137,14 +140,17 @@ export class DocumentMakerService {
       ...this.documentDetail$.value,
       productsList: [
         ...this.documentDetail$.value.productsList,
-        { product : {
-          id: product.id,
-          name: product.name,
-          reference: product.reference,
-          description: product.description,
-          price: product.price,
-          tva: product.tva,
-        }, quantity },
+        {
+          product: {
+            id: product.id,
+            name: product.name,
+            reference: product.reference,
+            description: product.description,
+            price: product.price,
+            tva: product.tva,
+          },
+          quantity,
+        },
       ],
     });
   }
@@ -155,6 +161,13 @@ export class DocumentMakerService {
       productsList: this.documentDetail$.value.productsList.filter(
         (product) => product.product.id !== id
       ),
+    });
+  }
+
+  resetProducts(): void {
+    this.documentDetail$.next({
+      ...this.documentDetail$.value,
+      productsList: [],
     });
   }
 
@@ -182,6 +195,76 @@ export class DocumentMakerService {
     });
   }
 
+  addDelivery(delivery: Delivery): void {
+    this.documentDetail$.next({
+      ...this.documentDetail$.value,
+      deliveries: [
+        ...this.documentDetail$.value.deliveries,
+        { id: delivery.id, num: delivery.num },
+      ],
+    });
+    const currentProducts = this.documentDetail$.value.productsList;
+    for (const product of delivery.productsList) {
+      if (!currentProducts.some((p) => p.product.id === product.product.id)) {
+        this.addProduct(product.product, product.quantity);
+      } else {
+        const productToUpdate = currentProducts.find(
+          (p) => p.product.id === product.product.id
+        );
+        if (productToUpdate) {
+          this.documentDetail$.next({
+            ...this.documentDetail$.value,
+            productsList: currentProducts.map((p) => {
+              if (p.product.id === product.product.id) {
+                return { ...p, quantity: p.quantity + product.quantity };
+              }
+              return p;
+            }),
+          });
+        }
+      }
+    }
+  }
+  removeDelivery(delivery: Delivery): void {
+    const updatedDeliveries = this.documentDetail$.value.deliveries.filter(
+      (item) => item.id !== delivery.id
+    );
+    const updatedProductsList = this.documentDetail$.value.productsList
+      .map((p) => {
+        const productInDelivery = delivery.productsList.find(
+          (product) => product.product.id === p.product.id
+        );
+        if (productInDelivery) {
+          const updatedQuantity = p.quantity - productInDelivery.quantity;
+          return updatedQuantity > 0
+            ? { ...p, quantity: updatedQuantity }
+            : null;
+        }
+        return p;
+      })
+      .filter((p) => p !== null);
+    this.documentDetail$.next({
+      ...this.documentDetail$.value,
+      deliveries: updatedDeliveries,
+      // eslint-disable-next-line  @typescript-eslint/no-explicit-any
+      productsList: updatedProductsList as any,
+    });
+  }
+
+  setDeposit(deposit: number): void {
+    this.documentDetail$.next({
+      ...this.documentDetail$.value,
+      deposit,
+    });
+  }
+
+  setDiscount(discount: number): void {
+    this.documentDetail$.next({
+      ...this.documentDetail$.value,
+      discount,
+    });
+  }
+
   resetDocumentDetail(): void {
     this.documentDetail$.next({
       vendor: {
@@ -197,7 +280,7 @@ export class DocumentMakerService {
         country: '',
       },
       customer: {
-        id : '',
+        id: '',
         civility: CivilityEnum.male,
         company: '',
         firstname: '',
@@ -217,6 +300,8 @@ export class DocumentMakerService {
       },
       productsList: [],
       deliveries: [],
+      deposit: 0,
+      discount: 0,
     });
   }
 }

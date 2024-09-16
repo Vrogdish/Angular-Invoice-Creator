@@ -6,8 +6,11 @@ import { SearchBarComponent } from "../../shared/components/search-bar/search-ba
 import { BtnComponent } from "../../shared/components/btn/btn.component";
 import { CommonModule } from '@angular/common';
 import { InvoicesListComponent } from "./components/invoices-list/invoices-list.component";
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { LoaderComponent } from "../../shared/components/loader/loader.component";
+import { DocumentMakerService } from '../document-maker/services/document-maker.service';
+import { ProfileService } from '../profile/services/profile.service';
+import { UserProfile } from '../profile/models/userProfile.model';
 
 @Component({
     selector: 'app-invoice',
@@ -28,9 +31,15 @@ export class InvoiceComponent implements OnInit, OnDestroy {
   searchQuery = '';
   subscription : Subscription = new Subscription();
   isLoading = true;
+  userProfile$!: BehaviorSubject<UserProfile | null>;
   
 
-  constructor(private invoiceService: InvoiceService) {}
+  constructor(
+    private invoiceService: InvoiceService, 
+    private documentMakerService : DocumentMakerService,
+    private router : Router,
+    private profileService : ProfileService
+  ) {}
 
   ngOnInit(): void {
      this.subscription.add(this.invoiceService.isLoading$.subscribe((isLoading) => {
@@ -38,6 +47,7 @@ export class InvoiceComponent implements OnInit, OnDestroy {
     }
     ));
     this.invoices$ = this.invoiceService.invoices$;
+    this.userProfile$ = this.profileService.profile$;
   }
 
   ngOnDestroy() {
@@ -46,5 +56,14 @@ export class InvoiceComponent implements OnInit, OnDestroy {
 
   onSearch(query: string) {
     this.searchQuery = query;
+  }
+
+  newDocument() {
+    this.documentMakerService.resetDocumentDetail();
+    this.documentMakerService.setStep(1);
+    this.userProfile$.subscribe((profile) => {
+      if (profile) this.documentMakerService.initDocumentDetail(profile);
+    });
+    this.router.navigate(['invoice/create']);
   }
 }

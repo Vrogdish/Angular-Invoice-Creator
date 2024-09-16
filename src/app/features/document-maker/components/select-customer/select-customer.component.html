@@ -5,6 +5,7 @@
       placeholder="Rechercher un client"
       (change)="setCustomer($event)"
       (clear)="resetCustomer()"
+      notFoundText="Aucun client trouvé"
     >
       @for (customer of customers; track customer.id) {
       <ng-option [value]="customer"

@@ -13,7 +13,8 @@ import {
   getDoc,
   orderBy,
 } from '@angular/fire/firestore';
-import {  Invoice, InvoiceForm } from '../models/invoice.model';
+import {  Invoice } from '../models/invoice.model';
+import { DocumentDetail } from '../../document-maker/models/document-detail.model';
 
 
 @Injectable({
@@ -91,16 +92,18 @@ export class InvoiceService {
     }
   }
 
-  async createInvoice(invoice: InvoiceForm) {
+  async createInvoice(documentDetail : DocumentDetail, uid : string, invoiceNumber : number) {
     this.isLoading$.next(true);
     this.errorMessage$.next('');
     try {
       const collectionRef = collection(this.firestore, 'invoices');
       await addDoc(collectionRef, {
-        ...invoice,
-        createdAt: Timestamp.fromDate(invoice.createdAt),
+        ...documentDetail,
+        createdAt: Timestamp.fromDate(new Date()),
+        uid : uid,
+        num : invoiceNumber
       });
-      await this.loadInvoices(invoice.uid);
+      await this.loadInvoices(uid);
     } catch (error) {
       console.error(error);
       this.errorMessage$.next(
