@@ -31,7 +31,7 @@ export class DeliveryComponent implements OnInit {
   userProfile$!: BehaviorSubject<UserProfile | null>;
   searchQuery = '';
   subscription: Subscription = new Subscription();
-  isLoading = false;
+  isLoading$!: BehaviorSubject<boolean>;
 
   constructor(
     private deliveryService: DeliveryService,
@@ -43,6 +43,7 @@ export class DeliveryComponent implements OnInit {
   ngOnInit(): void {
     this.deliveries$ = this.deliveryService.deliveries$;
     this.userProfile$ = this.profileService.profile$;
+    this.isLoading$ = this.deliveryService.isLoading$;
   }
 
   onSearch(query: string) {

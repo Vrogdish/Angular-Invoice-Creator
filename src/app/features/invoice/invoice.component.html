@@ -11,10 +11,12 @@
   </div>
 
   <div *ngIf="invoices$ | async as invoices">
-    <div *ngIf="!isLoading">
-      <app-invoices-list [invoices]="invoices" [searchQuery]="searchQuery" />
-    </div>
-    <div *ngIf="isLoading">
+    <app-invoices-list
+      [invoices]="invoices"
+      [searchQuery]="searchQuery"
+      *ngIf="(isLoading$ | async) === false"
+    />
+    <div *ngIf="isLoading$ | async">
       <app-loader></app-loader>
     </div>
   </div>

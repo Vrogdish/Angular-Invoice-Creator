@@ -1,21 +1,23 @@
 <div class="delivery">
-    <h1>Liste de mes bons de livraison</h1>
-    <app-search-bar (search)="onSearch($event)" />
-    <div class="btn">
-      <app-btn
-        title="Nouveau bon "
-        theme="secondary"
-        iconUrl="/icons/add.png"
-        (handleClick)="newDocument()"
-      />
-    </div>
-  
-    <div *ngIf="deliveries$ | async as deliveries">
-      <div *ngIf="!isLoading">
-        <app-delivery-list [deliveries]="deliveries" [searchQuery]="searchQuery" />
-      </div>
-      <div *ngIf="isLoading">
-        <app-loader></app-loader>
-      </div>
+  <h1>Liste de mes bons de livraison</h1>
+  <app-search-bar (search)="onSearch($event)" />
+  <div class="btn">
+    <app-btn
+      title="Nouveau bon "
+      theme="secondary"
+      iconUrl="/icons/add.png"
+      (handleClick)="newDocument()"
+    />
+  </div>
+
+  <div *ngIf="deliveries$ | async as deliveries">
+    <app-delivery-list
+      [deliveries]="deliveries"
+      [searchQuery]="searchQuery"
+      *ngIf="(isLoading$ | async) === false"
+    />
+    <div *ngIf="isLoading$ | async">
+      <app-loader></app-loader>
     </div>
   </div>
+</div>

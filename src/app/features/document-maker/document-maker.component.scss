@@ -13,7 +13,8 @@
   }
 }
 h2 {
-  margin: 20px 0;
+  margin-top: 20px;
+  text-align: center;
 }
 
 .select {
@@ -29,6 +30,16 @@ h2 {
   justify-content: space-between;
   gap: 20px;
   margin-top: 80px;
+  > * {
+    flex: 1;
+  }
+}
+
+.btn-choice {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  margin-top: 20px;
   > * {
     flex: 1;
   }

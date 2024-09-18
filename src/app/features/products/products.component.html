@@ -9,15 +9,13 @@
       routerLink="/products/create"
     />
   </div>
-
   <div *ngIf="products$ | async as products">
-    <div *ngIf="!isLoading">
-      <app-products-list
-        [products]="products"
-        [searchQuery]="searchQuery"
-      ></app-products-list>
-    </div>
-    <div *ngIf="isLoading">
+    <app-products-list
+      *ngIf="(isLoading$ | async) === false"
+      [products]="products"
+      [searchQuery]="searchQuery"
+    ></app-products-list>
+    <div *ngIf="isLoading$ | async">
       <app-loader></app-loader>
     </div>
   </div>

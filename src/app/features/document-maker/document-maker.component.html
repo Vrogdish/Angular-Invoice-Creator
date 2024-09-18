@@ -3,7 +3,7 @@
   <h1 *ngIf="createMode === 'delivery'">Création de bon de livraison</h1>
 
   <div class="customer" *ngIf="step === 1">
-    <app-select-customer />
+     <app-select-customer />
     <app-delivery-address-form *ngIf="createMode === 'delivery'" />
     <div class="btn">
       <app-btn
@@ -37,7 +37,7 @@
   <div class="products" *ngIf="step === 2">
     <div *ngIf="!invoiceType && createMode === 'invoice'">
       <h2>Choisissez comment créer votre facture :</h2>
-      <div class="btn">
+      <div class="btn-choice ">
         <app-btn
           title="Manuellement"
           theme="secondary"
@@ -92,4 +92,3 @@
   </div>
 </div>
 
-<pre *ngIf="documentDetail$ | async as document">{{ document | json }}</pre>

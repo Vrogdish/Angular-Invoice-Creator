@@ -1,8 +1,8 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Product } from './models/product.model';
 import { ProductsService } from './services/products.service';
 import { CommonModule } from '@angular/common';
-import { BehaviorSubject, Subscription } from 'rxjs';
+import { BehaviorSubject,  } from 'rxjs';
 import { BtnComponent } from '../../shared/components/btn/btn.component';
 import { ProductsListComponent } from './components/products-list/products-list.component';
 import { SearchBarComponent } from '../../shared/components/search-bar/search-bar.component';
@@ -23,30 +23,23 @@ import { LoaderComponent } from "../../shared/components/loader/loader.component
     LoaderComponent
 ],
 })
-export class ProductsComponent implements OnInit, OnDestroy {
+export class ProductsComponent implements OnInit{
   products$: BehaviorSubject<Product[] | null> = new BehaviorSubject<
     Product[] | null
   >(null);
   searchQuery = '';
-  subscription: Subscription = new Subscription();
-  isLoading = true;
+  isLoading$!: BehaviorSubject<boolean>;
 
   constructor(
     private productService: ProductsService,
   ) {}
 
   ngOnInit() {
-       this.subscription.add(
-      this.productService.isLoading$.subscribe((isLoading) => {
-        this.isLoading = isLoading;
-      })
-    );
+    this.isLoading$ = this.productService.isLoading$;
     this.products$ = this.productService.products$;
   }
 
-  ngOnDestroy() {
-    this.subscription.unsubscribe();
-  }
+
 
   onSearch(query: string) {
     this.searchQuery = query;

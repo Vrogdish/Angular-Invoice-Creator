@@ -1,8 +1,8 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { SearchBarComponent } from '../../shared/components/search-bar/search-bar.component';
 import { BtnComponent } from '../../shared/components/btn/btn.component';
 import { CustomersService } from './services/customers.service';
-import { BehaviorSubject, Subscription } from 'rxjs';
+import { BehaviorSubject } from 'rxjs';
 import { Customer } from './models/customer.model';
 import { CommonModule } from '@angular/common';
 import { CustomersListComponent } from './components/customers-list/customers-list.component';
@@ -23,13 +23,12 @@ import { LoaderComponent } from "../../shared/components/loader/loader.component
     LoaderComponent
 ],
 })
-export class CustomersComponent implements OnInit, OnDestroy {
+export class CustomersComponent implements OnInit{
   customers$: BehaviorSubject<Customer[] | null> = new BehaviorSubject<
     Customer[] | null
   >(null);
   searchQuery= '';
-  subscription: Subscription = new Subscription();
-  isLoading = true;
+  isLoading$!: BehaviorSubject<boolean>;
 
   constructor(
     private customersService: CustomersService,
@@ -37,17 +36,9 @@ export class CustomersComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.customers$ = this.customersService.customers$;
-    this.subscription.add(
-      this.customersService.isLoading$.subscribe((isLoading) => {
-        this.isLoading = isLoading;
-      })
-    );
+    this.isLoading$ = this.customersService.isLoading$;
   }
-
-  ngOnDestroy() {
-    this.subscription.unsubscribe();
-  }
-
+ 
   onSearch($event: string) {
     this.searchQuery = $event;
   }

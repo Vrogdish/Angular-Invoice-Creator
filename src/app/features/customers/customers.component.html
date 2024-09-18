@@ -1,20 +1,22 @@
-<div *ngIf="!isLoading"  class="customers">
-    <h1>Liste des clients</h1>
-    <app-search-bar (search)="onSearch($event)"/>
-    <div class="btn">
-      <app-btn
-        title="nouveau client"
-        theme="secondary"
-        iconUrl="/icons/add.png"
-        routerLink="/customers/create"
-      />
-    </div>
-    
-    <div *ngIf="customers$ | async as customers">
-        <app-customers-list [customers]="customers" [searchQuery]="searchQuery"/>
-    </div>
+<div class="customers">
+  <h1>Liste des clients</h1>
+  <app-search-bar (search)="onSearch($event)" />
+  <div class="btn">
+    <app-btn
+      title="nouveau client"
+      theme="secondary"
+      iconUrl="/icons/add.png"
+      routerLink="/customers/create"
+    />
   </div>
-
-  <div *ngIf="isLoading">
-    <app-loader></app-loader>
+  <div *ngIf="customers$ | async as customers">
+    <app-customers-list
+      [customers]="customers"
+      [searchQuery]="searchQuery"
+      *ngIf="(isLoading$ | async) === false"
+    />
   </div>
+</div>
+<div *ngIf="isLoading$ | async">
+  <app-loader></app-loader>
+</div>
