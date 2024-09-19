@@ -30,9 +30,22 @@
     }
   
     .produits {
+      @media (max-width: 1000px) {
+        display: none;
+        
+      }
+    }
+
+    .invoice {
       @media (max-width: 768px) {
         display: none;
         
+      }
+          
+    }
+    .date {
+      @media (max-width: 500px) {
+        display: none;
       }
     }
    

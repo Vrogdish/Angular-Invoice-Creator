@@ -9,8 +9,10 @@
     >
       @for (customer of customers; track customer.id) {
       <ng-option [value]="customer"
-        >{{ customer.firstname }} {{ customer.lastname }}</ng-option
-      >
+        >
+        <p>{{ customer.firstname }} {{ customer.lastname | uppercase }}</p>
+        <p class="address">{{ customer.address }} - {{customer.city }}</p>
+        </ng-option>
       }
     </ng-select>
   </div>

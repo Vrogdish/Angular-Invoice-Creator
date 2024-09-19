@@ -7,7 +7,10 @@
   >
     @for (delivery of filteredDeliveries; track delivery.id) {
     <ng-option [value]="delivery"
-      >{{ delivery.num }} {{ delivery.customer.firstname }}</ng-option
+      >
+      <p>N°{{ delivery.num }} - {{ delivery.customer.firstname }} {{delivery.customer.lastname | uppercase}}</p>
+      <p class="date-info">le {{ delivery.createdAt | date:'dd/MM/yyyy'  }}</p>
+      </ng-option
     >
     }
   </ng-select>
@@ -75,7 +78,7 @@
 <h2>Récapitulatif des produits à facturer :</h2>
     <div class="card">
     
-    <div class="products">
+    <div class="resume">
       <table
         mat-table
         [dataSource]="documentDetail.productsList"
@@ -99,7 +102,7 @@
         </ng-container>
         <ng-container matColumnDef="quantity">
           <th mat-header-cell *matHeaderCellDef class="table-quantity">
-            Quantité
+            Qté
           </th>
           <td mat-cell *matCellDef="let product" class="table-quantity">
             {{ product.quantity }}
@@ -114,12 +117,13 @@
         <tr mat-header-row *matHeaderRowDef="productDisplayedColumns"></tr>
         <tr mat-row *matRowDef="let row; columns: productDisplayedColumns"></tr>
       </table>
+      <P *ngIf="documentDetail.productsList.length === 0" class="not-found"
+      >Aucun produit ajouté</P
+    >
       <p class="total-result">
         Montant total HT : <span>{{ totalAmount | currency : "EUR" }} </span>
       </p>
-      <P *ngIf="documentDetail.productsList.length === 0" class="not-found"
-        >Aucun produit ajouté</P
-      >
+   
     </div>
     </div>
   </div>

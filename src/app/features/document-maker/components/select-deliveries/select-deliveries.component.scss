@@ -29,6 +29,10 @@ h2 {
     font-size: 14px;
   }
 }
+.date-info {
+  font-size: small;
+  color: gray;
+}
 
 .add {
   display: flex;
@@ -46,6 +50,19 @@ h2 {
   gap: 20px;
 }
 
+.products {
+  @media (max-width: 768px) {
+    display: none;
+    
+  }
+}
+
+.date {
+  @media (max-width: 500px) {
+    display: none;
+  }
+}
+
 .card {
   background-color: $color-primary;
   margin: 20px 0;
@@ -57,6 +74,19 @@ h2 {
   table {
     background-color: transparent;
   }
-  
+
+  .ref {
+    @media (max-width: 700px) {
+      display: none;
+      
+    }
+  }
+
+  .price {
+    @media (max-width: 500px) {
+      display: none;
+    }
+  }
  
+  
 }

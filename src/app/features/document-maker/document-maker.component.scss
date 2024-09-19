@@ -43,4 +43,11 @@ h2 {
   > * {
     flex: 1;
   }
+  @media (max-width: 768px) {
+    flex-direction: column;
+    gap: 20px;
+    max-width: 400px;
+    margin: 20px auto;
+    
+  }
 }
