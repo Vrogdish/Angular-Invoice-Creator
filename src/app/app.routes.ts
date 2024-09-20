@@ -21,6 +21,7 @@ import { TermsOfServiceComponent } from './features/legals/terms-of-service/term
 import { HelpComponent } from './features/help/help.component';
 import { DeliveryComponent } from './features/delivery/delivery.component';
 import { DocumentMakerComponent } from './features/document-maker/document-maker.component';
+import { DeliveryDetailComponent } from './features/delivery/components/delivery-detail/delivery-detail.component';
 
 export const routes: Routes = [
   {
@@ -110,6 +111,11 @@ export const routes: Routes = [
     canActivate: [authGuard],
   },
   {
+    path: 'delivery/detail/:id',
+    component: DeliveryDetailComponent,
+    canActivate: [authGuard],
+  },
+  {
     path: 'legal',
     component: LegalNoticeComponent,
   },
@@ -123,7 +129,7 @@ export const routes: Routes = [
   },
   {
     path: 'help',
-    component: HelpComponent
+    component: HelpComponent,
   },
   {
     path: '**',

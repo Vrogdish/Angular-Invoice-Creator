@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { BehaviorSubject, firstValueFrom, Observable } from 'rxjs';
+import { BehaviorSubject, firstValueFrom, Observable, take } from 'rxjs';
 import { DocumentDetail } from './models/document-detail.model';
 import { DocumentMakerService } from './services/document-maker.service';
 import { InvoiceService } from '../invoice/services/invoice.service';
@@ -14,7 +14,7 @@ import { CompleteInvoiceComponent } from './components/complete-invoice/complete
 import { DeliveryService } from '../delivery/services/delivery.service';
 import { AuthService } from '../../core/auth/services/auth.service';
 import { User } from '@angular/fire/auth';
-import { SelectDeliveriesComponent } from "./components/select-deliveries/select-deliveries.component";
+import { SelectDeliveriesComponent } from './components/select-deliveries/select-deliveries.component';
 
 @Component({
   selector: 'app-document-maker',
@@ -27,8 +27,8 @@ import { SelectDeliveriesComponent } from "./components/select-deliveries/select
     BtnComponent,
     RouterLink,
     CompleteInvoiceComponent,
-    SelectDeliveriesComponent
-],
+    SelectDeliveriesComponent,
+  ],
   templateUrl: './document-maker.component.html',
   styleUrl: './document-maker.component.scss',
 })
@@ -37,7 +37,7 @@ export class DocumentMakerComponent implements OnInit {
   documentDetail$!: BehaviorSubject<DocumentDetail>;
   user$!: Observable<User | null>;
   createMode!: createModeEnum;
-  invoiceType! : 'manual' | 'withDelivery' | null;
+  invoiceType!: 'manual' | 'withDelivery' | null;
 
   constructor(
     private documentMakerService: DocumentMakerService,
@@ -62,32 +62,36 @@ export class DocumentMakerComponent implements OnInit {
 
   async createInvoice() {
     const invoiceNumber = await this.createInvoiceNumber();
-    this.user$.subscribe((user) => {
+    this.user$.pipe(take(1)).subscribe(async (user) => {
       if (user) {
-        this.invoiceService.createInvoice(
+        const id = await this.invoiceService.createInvoice(
           this.documentDetail$.value,
           user.uid,
           invoiceNumber
         );
         this.documentMakerService.resetDocumentDetail();
         this.documentMakerService.setStep(1);
-        this.router.navigate(['/invoice']);
+        if (id) {
+          this.router.navigate(['/invoice/detail/' + id]);
+        }
       }
     });
   }
 
   async createDelivery() {
     const deliveryNumber = await this.createDeliveryNumber();
-    this.user$.subscribe((user) => {
+    this.user$.pipe(take(1)).subscribe(async (user) => {
       if (user) {
-        this.deliveryService.createDelivery(
+        const id = await this.deliveryService.createDelivery(
           this.documentDetail$.value,
           user.uid,
           deliveryNumber
         );
         this.documentMakerService.resetDocumentDetail();
         this.documentMakerService.setStep(1);
-        this.router.navigate(['/delivery']);
+        if (id) {
+          this.router.navigate(['/delivery/detail/' + id]);
+        }
       }
     });
   }
@@ -102,28 +106,27 @@ export class DocumentMakerComponent implements OnInit {
     this.documentMakerService.resetProducts();
   }
 
- 
   setInvoiceType(type: 'manual' | 'withDelivery') {
     this.invoiceType = type;
   }
-  
+
   private async createDeliveryNumber(): Promise<number> {
     const deliveries = await firstValueFrom(this.deliveryService.deliveries$);
     if (deliveries.length > 0) {
       deliveries.sort((a, b) => b.num - a.num);
-      return deliveries[0].num + 1;  
+      return deliveries[0].num + 1;
     } else {
       return 1;
     }
   }
 
-   private async createInvoiceNumber(): Promise<number> {
+  private async createInvoiceNumber(): Promise<number> {
     const invoices = await firstValueFrom(this.invoiceService.invoices$);
     if (invoices.length > 0) {
       invoices.sort((a, b) => b.num - a.num);
-      return invoices[0].num + 1;  
+      return invoices[0].num + 1;
     } else {
-      return 1;  
+      return 1;
     }
   }
 }

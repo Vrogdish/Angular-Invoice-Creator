@@ -1,0 +1,23 @@
+<div *ngIf="!isLoading">
+    <div *ngIf="delivery" class="detail">
+      <div class="title">
+        <h2>Bon de livraison n° {{ delivery.num }}</h2>
+  
+        <app-btn
+          title="Retour à la liste"
+          theme="primary"
+          routerLink="/delivery"
+        ></app-btn>
+      </div>
+      <p>du {{ delivery.createdAt | date : "dd/MM/yyyy" }}</p>
+      <app-pdf-delivery-preview [delivery]="delivery"></app-pdf-delivery-preview>
+        <div class="preview-btn">
+          <app-btn title="Ouvrir" theme="secondary" (handleClick)="openDeliveryPdf()" ></app-btn>
+          <app-btn title="Télécharger" theme="secondary" (handleClick)="downloadDeliveryPdf()"></app-btn>
+        </div>
+      </div>
+     </div>
+  <div *ngIf="isLoading">
+    <app-loader></app-loader>
+  </div>
+  

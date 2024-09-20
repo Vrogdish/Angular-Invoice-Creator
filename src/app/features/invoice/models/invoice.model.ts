@@ -46,17 +46,15 @@ export interface InvoiceForm {
   uid: string;
   num: number;
   createdAt: Date;
-  delivery: {
-    withDelivery: boolean;
-    deliveryAddress: DeliveryAddress;
-  };
+  deposit: number;
+  discount: number;
+  deliveries: number[];
   vendor: InvoiceVendorForm;
   customer: InvoiceCustomerForm;
   productsList: {
     product: Product;
     quantity: number;
   }[];
-  tva: number;
 }
 
 export interface Invoice extends InvoiceForm {

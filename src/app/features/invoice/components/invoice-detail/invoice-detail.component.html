@@ -15,14 +15,6 @@
       <app-btn title="Ouvrir" theme="secondary" (handleClick)="openInvoicePdf()" ></app-btn>
       <app-btn title="Télécharger" theme="secondary" (handleClick)="downloadInvoicePdf()"></app-btn>
     </div>
-    <div *ngIf="invoice.delivery?.withDelivery">
-      <h2>Bon de livraison associé :</h2>
-      <app-pdf-delivery-preview [invoice]="invoice"></app-pdf-delivery-preview>
-      <div class="preview-btn">
-        <app-btn title="Ouvrir" theme="secondary" (handleClick)="openDeliveryPdf()" ></app-btn>
-        <app-btn title="Télécharger" theme="secondary" (handleClick)="downloadDeliveryPdf()"></app-btn>
-      </div>
-    </div>
   </div>
 </div>
 <div *ngIf="isLoading">

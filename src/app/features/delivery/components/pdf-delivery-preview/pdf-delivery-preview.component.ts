@@ -2,10 +2,10 @@ import { CommonModule } from '@angular/common';
 import { Component, Input, OnInit } from '@angular/core';
 import { PdfViewerModule } from 'ng2-pdf-viewer';
 import { NgxExtendedPdfViewerModule } from 'ngx-extended-pdf-viewer';
-import { Invoice, InvoiceForm } from '../../models/invoice.model';
 import pdfMake from 'pdfmake/build/pdfmake';
 import pdfFonts from 'pdfmake/build/vfs_fonts';
 import { TDocumentDefinitions } from 'pdfmake/interfaces';
+import { Delivery } from '../../models/delivery.model';
 
 @Component({
   selector: 'app-pdf-delivery-preview',
@@ -15,7 +15,7 @@ import { TDocumentDefinitions } from 'pdfmake/interfaces';
   styleUrl: './pdf-delivery-preview.component.scss',
 })
 export class PdfDeliveryPreviewComponent implements OnInit {
-  @Input({required:true}) invoice!: InvoiceForm | Invoice;
+  @Input({required:true}) delivery!: Delivery;
   // eslint-disable-next-line  @typescript-eslint/no-explicit-any
   pdfSrc!: any;
 
@@ -36,7 +36,7 @@ export class PdfDeliveryPreviewComponent implements OnInit {
   }
 
   updatePdfSrc() {
-    if (!this.invoice) {
+    if (!this.delivery) {
       return;
     }
     const documentDefinition = this.getDocDefinition();
@@ -59,47 +59,45 @@ export class PdfDeliveryPreviewComponent implements OnInit {
           columns: [
             {
               text:
-                this.invoice.vendor.company +
+                this.delivery.vendor.company +
                 '\n' +
-                this.invoice.vendor.civility +
+                this.delivery.vendor.civility +
                 ' ' +
-                this.invoice.vendor.firstname +
+                this.delivery.vendor.firstname +
                 ' ' +
-                this.invoice.vendor.lastname +
+                this.delivery.vendor.lastname +
                 '\n' +
-                this.invoice.vendor.address +
+                this.delivery.vendor.address +
                 '\n' +
-                this.invoice.vendor.postalCode +
+                this.delivery.vendor.postalCode +
                 ' ' +
-                this.invoice.vendor.city,
+                this.delivery.vendor.city,
             },
             {
               text:
-                this.invoice.customer?.company +
+                this.delivery.customer.company +
                 '\n' +
-                this.invoice.customer?.civility +
+                this.delivery.customer.civility +
                 ' ' +
-                this.invoice.customer?.firstname +
+                this.delivery.customer.firstname +
                 ' ' +
-                this.invoice.customer?.lastname +
+                this.delivery.customer.lastname +
                 '\n' +
-                this.invoice.delivery.deliveryAddress.address +
+                this.delivery.deliveryAddress.address +
                 '\n' +
-                this.invoice.delivery.deliveryAddress.postalCode +
+                this.delivery.deliveryAddress.postalCode +
                 ' ' +
-                this.invoice.delivery.deliveryAddress.city,
+                this.delivery.deliveryAddress.city,
             },
           ],
           style: 'adress',
           alignment: 'justify',
         },
-        {
-          text: 'Numéro de facture associée : ' + this.invoice.num,
-        },
+        
 
         {
           text:
-            'Date de création du bon : ' + this.invoice.createdAt.toLocaleDateString(),
+            'Date de création du bon : ' + this.delivery.createdAt.toLocaleDateString(),
           margin: [0, 0, 0, 30],
         },
 
@@ -114,7 +112,7 @@ export class PdfDeliveryPreviewComponent implements OnInit {
                 'Quantité',
                 
               ],
-              ...this.invoice.productsList.map((product) => [
+              ...this.delivery.productsList.map((product) => [
                 product.product.reference,
                 product.product.name,
              
@@ -134,16 +132,16 @@ export class PdfDeliveryPreviewComponent implements OnInit {
           columns: [
             {
               text:
-                (this.invoice.vendor.company
-                  ? 'Société : ' + this.invoice.vendor.company
-                  : this.invoice.vendor.lastname.toUpperCase() +
+                (this.delivery.vendor.company
+                  ? 'Société : ' + this.delivery.vendor.company
+                  : this.delivery.vendor.lastname.toUpperCase() +
                     ' ' +
-                    this.invoice.vendor.firstname) +
+                    this.delivery.vendor.firstname) +
                 '  -  ' +
-                (this.invoice.vendor.phone &&
-                  'Téléphone : ' + this.invoice.vendor.phone + " - ") +
-                (this.invoice.vendor.email &&
-                  'Email : ' + this.invoice.vendor.email),
+                (this.delivery.vendor.phone &&
+                  'Téléphone : ' + this.delivery.vendor.phone + " - ") +
+                (this.delivery.vendor.email &&
+                  'Email : ' + this.delivery.vendor.email),
               style: 'footer',
             },
           ],

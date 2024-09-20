@@ -71,18 +71,20 @@ export class DeliveryService {
     this.errorMessage$.next('');
     try {
       const collectionRef = collection(this.firestore, 'deliveries');
-      await addDoc(collectionRef, {
+      const docRef = await addDoc(collectionRef, {
         ...documentDetail,
         createdAt: Timestamp.fromDate(new Date()),
         uid : uid,
         num :deliveryNumber
       });
       await this.loadDeliveries(uid);
+      return docRef.id;
     } catch (error) {
       console.error(error);
       this.errorMessage$.next(
         'Impossible de créer le bon de livraison. Veuillez réessayer.'
       );
+      return null;
     } finally {
       this.isLoading$.next(false);
     

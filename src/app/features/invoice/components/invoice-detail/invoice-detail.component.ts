@@ -5,20 +5,18 @@ import { Subscription } from 'rxjs';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { PdfPreviewComponent } from '../pdf-preview/pdf-preview.component';
 import { CommonModule } from '@angular/common';
-import { PdfDeliveryPreviewComponent } from "../pdf-delivery-preview/pdf-delivery-preview.component";
 import { BtnComponent } from "../../../../shared/components/btn/btn.component";
 import { LoaderComponent } from "../../../../shared/components/loader/loader.component";
 
 @Component({
   selector: 'app-invoice-detail',
   standalone: true,
-  imports: [PdfPreviewComponent, CommonModule, PdfDeliveryPreviewComponent, BtnComponent, RouterLink, LoaderComponent],
+  imports: [PdfPreviewComponent, CommonModule,  BtnComponent, RouterLink, LoaderComponent],
   templateUrl: './invoice-detail.component.html',
   styleUrl: './invoice-detail.component.scss',
 })
 export class InvoiceDetailComponent implements OnInit, OnDestroy {
   @ViewChild(PdfPreviewComponent) pdfPreviewComponent!: PdfPreviewComponent;
-  @ViewChild(PdfDeliveryPreviewComponent) PdfDeliveryPreviewComponent!: PdfDeliveryPreviewComponent;
 
   invoice!: Invoice | null;
   id!: string | null;
@@ -58,16 +56,9 @@ export class InvoiceDetailComponent implements OnInit, OnDestroy {
  this.pdfPreviewComponent.openPdf();
   }
 
-  openDeliveryPdf(): void {
-    this.PdfDeliveryPreviewComponent.openPdf();
-  }
-
   downloadInvoicePdf(): void {
     this.pdfPreviewComponent.downloadPdf();
   }
 
-  downloadDeliveryPdf(): void {
-    this.PdfDeliveryPreviewComponent.downloadPdf();
-  }
 
 }

@@ -1,9 +1,9 @@
 import { FormArray, FormControl, FormGroup } from '@angular/forms';
 import { CivilityEnum } from '../../../shared/models/civility.model';
 import { Product, } from '../../products/models/product.model';
-import { UserProfile } from 'firebase/auth';
 import { Customer } from '../../customers/models/customer.model';
 import { ContactForm } from '../../../shared/models/contact.model';
+import { UserProfile } from '../../profile/models/userProfile.model';
 
 export interface DeliveryVendorForm {
   civility: CivilityEnum;
@@ -70,7 +70,7 @@ export interface Delivery {
   num: number;
   vendor: UserProfile;
   customer: Customer;
-  deliveryAdress: DeliveryAddress;
+  deliveryAddress: DeliveryAddress;
   productsList: {
     product: Product;
     quantity: number;

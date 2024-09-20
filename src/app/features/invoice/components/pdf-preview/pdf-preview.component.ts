@@ -26,11 +26,16 @@ export class PdfPreviewComponent implements OnInit {
     pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
     this.totalHT = this.invoice.productsList.reduce(
-      (acc, product) => acc + +product.product.price * +product.quantity,
+      (acc, product) => acc + product.product.price * product.quantity,
       0
     );
-    this.totalTva = this.totalHT * this.invoice.tva;
-    this.totalTTC = this.totalHT + this.totalTva;
+    this.totalTTC = this.invoice.productsList.reduce(
+      (acc, product) =>
+        acc +
+        product.product.price * product.quantity * (1 + product.product.tva / 100),
+      0
+    );
+    this.totalTva = this.totalTTC - this.totalHT;
     this.updatePdfSrc();
   }
 
@@ -103,7 +108,7 @@ export class PdfPreviewComponent implements OnInit {
           alignment: 'justify',
         },
         {
-          text : 'Numéro de facture : ' + this.invoice.num,
+          text: 'Numéro de facture : ' + this.invoice.num,
         },
 
         {
@@ -127,9 +132,9 @@ export class PdfPreviewComponent implements OnInit {
               ...this.invoice.productsList.map((product) => [
                 product.product.reference,
                 product.product.name,
-                +product.product.price.toFixed(2) + ' €',
-                +product.quantity,
-                (+product.product.price * +product.quantity).toFixed(2) + ' €',
+                product.product.price.toFixed(2) + ' €',
+                product.quantity,
+                (product.product.price * product.quantity).toFixed(2) + ' €',
               ]),
             ],
           },
@@ -140,9 +145,7 @@ export class PdfPreviewComponent implements OnInit {
           text:
             'Total HT : ' +
             this.totalHT.toFixed(2) +
-            ' €\nTVA ' +
-            (this.invoice.tva * 100).toFixed(2) +
-            '% : ' +
+            ' €\nMontant TVA : ' +
             this.totalTva.toFixed(2) +
             ' €\nTotal TTC : ' +
             this.totalTTC.toFixed(2) +
@@ -166,7 +169,7 @@ export class PdfPreviewComponent implements OnInit {
                     this.invoice.vendor.firstname) +
                 '  -  ' +
                 (this.invoice.vendor.phone &&
-                  'Téléphone : ' + this.invoice.vendor.phone + " - ") +
+                  'Téléphone : ' + this.invoice.vendor.phone + ' - ') +
                 (this.invoice.vendor.email &&
                   'Email : ' + this.invoice.vendor.email),
               style: 'footer',

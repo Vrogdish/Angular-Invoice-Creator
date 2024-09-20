@@ -97,18 +97,20 @@ export class InvoiceService {
     this.errorMessage$.next('');
     try {
       const collectionRef = collection(this.firestore, 'invoices');
-      await addDoc(collectionRef, {
+      const docRef = await addDoc(collectionRef, {
         ...documentDetail,
         createdAt: Timestamp.fromDate(new Date()),
         uid : uid,
         num : invoiceNumber
       });
       await this.loadInvoices(uid);
+      return docRef.id
     } catch (error) {
       console.error(error);
       this.errorMessage$.next(
         'Impossible de créer la facture. Veuillez réessayer.'
       );
+      return null;
     } finally {
       this.isLoading$.next(false);
     
