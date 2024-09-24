@@ -66,6 +66,7 @@ export class InvoicesListComponent implements OnChanges {
     'date',
     'customer',
     'produits',
+    'bdl',
     'delete',
   ];
 

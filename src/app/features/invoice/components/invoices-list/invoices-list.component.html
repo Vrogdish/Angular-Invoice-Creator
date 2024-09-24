@@ -48,6 +48,17 @@
         {{ invoice.productsList.length }}
       </td>
     </ng-container>
+    <ng-container matColumnDef="bdl">
+      <th mat-header-cell *matHeaderCellDef class="deliveries">BDL</th>
+      <td
+        mat-cell
+        *matCellDef="let invoice"
+        class="deliveries"
+        [routerLink]="['/invoice/detail', invoice.id]"
+      >
+        {{ invoice.deliveries.length }}
+      </td>
+    </ng-container>
 
     <ng-container matColumnDef="delete">
       <th mat-header-cell *matHeaderCellDef class="delete">
