@@ -47,7 +47,7 @@ export class SignInComponent {
     try {
       const user = await this.auth.login(email, password);
       if (user.data) {
-        this.router.navigate(['profile']);
+        this.router.navigate(['invoice']);
       } else {
         this.errorMessage = 'Email ou mot de passe incorrecte';
       }

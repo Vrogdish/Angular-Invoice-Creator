@@ -6,6 +6,7 @@ import {
   onAuthStateChanged,
   User,
   createUserWithEmailAndPassword,
+  sendEmailVerification,
 } from '@angular/fire/auth';
 import { BehaviorSubject } from 'rxjs';
 
@@ -28,9 +29,12 @@ export class AuthService {
         email,
         password
       );
-      
+      if (userCredential.user) {
+        await sendEmailVerification(userCredential.user);
+      }
+
       return { data: userCredential.user };
-  // eslint-disable-next-line  @typescript-eslint/no-explicit-any
+      // eslint-disable-next-line  @typescript-eslint/no-explicit-any
     } catch (error: any) {
       console.error(error);
       return { error: error };
@@ -68,6 +72,13 @@ export class AuthService {
     } catch (error) {
       console.error(error);
       return { error: error };
+    }
+  }
+
+  sendVerificationEmail() {
+    const user = this.auth.currentUser;
+    if (user) {
+      sendEmailVerification(user);
     }
   }
 

@@ -1,0 +1,21 @@
+<div class="email">
+  <h1>Verification de l'adresse mail</h1>
+  <div class="content">
+    <p>
+      Un e-mail vous a été envoyé à l'adresse <strong>{{ user?.email }}</strong>
+    </p>
+    <p>
+      Vous devez cliquer sur le lien de vérification pour activer votre compte
+    </p>
+  </div>
+  <div class="email-btn">
+    <app-btn
+      *ngIf="!isLoading"
+      title="Renvoyer un e-mail"
+      (click)="resendVerificationEmail()"
+      theme="secondary"
+    ></app-btn>
+    <app-btn theme="loading" title="Envoie en cours" *ngIf="isLoading"></app-btn>
+    <app-btn title="Se déconnecter" (click)="logout()" theme="alert"></app-btn>
+  </div>
+</div>

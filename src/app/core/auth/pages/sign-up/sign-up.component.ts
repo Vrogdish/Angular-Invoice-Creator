@@ -31,7 +31,10 @@ export class SignUpComponent {
     email: new FormControl('', Validators.required),
     company: new FormControl(''),
     phone: new FormControl(''),
-    password: new FormControl('', Validators.required),
+    password: new FormControl('', {
+      validators: [Validators.required, Validators.minLength(6)],
+      
+    }),
     confirmPassword: new FormControl('', Validators.required),
   });
   errorMessage: string | null = null;
@@ -48,6 +51,7 @@ export class SignUpComponent {
       this.errorMessage = 'Veuillez remplir tous les champs';
       return;
     }
+    
 
     const password = this.signupForm.get('password')?.value;
     const confirmPassword = this.signupForm.get('confirmPassword')?.value;
@@ -78,7 +82,7 @@ export class SignUpComponent {
         await this.profile.createProfile(
           user.data.uid, this.signupForm
         );
-        this.router.navigate(['profile']);
+        this.router.navigate(['invoice']);
       } else {
         this.errorMessage = 'Erreur inconnue, veuillez réessayer';
       }

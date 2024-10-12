@@ -13,6 +13,10 @@ export const authGuard: CanActivateFn = () => {
         router.navigate(['/']);
         return false;
       }
+      if (user && !user.emailVerified) {
+        router.navigate(['/email-verification']);
+        return false;
+      }
       return true;
     })
   );

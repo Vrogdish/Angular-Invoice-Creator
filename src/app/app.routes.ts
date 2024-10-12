@@ -22,6 +22,7 @@ import { HelpComponent } from './features/help/help.component';
 import { DeliveryComponent } from './features/delivery/delivery.component';
 import { DocumentMakerComponent } from './features/document-maker/document-maker.component';
 import { DeliveryDetailComponent } from './features/delivery/components/delivery-detail/delivery-detail.component';
+import { EmailVerificationComponent } from './features/email-verification/email-verification.component';
 
 export const routes: Routes = [
   {
@@ -130,6 +131,11 @@ export const routes: Routes = [
   {
     path: 'help',
     component: HelpComponent,
+  },
+
+  {
+    path: 'email-verification',
+    component: EmailVerificationComponent
   },
   {
     path: '**',
