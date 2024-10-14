@@ -1,25 +1,45 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
-import { Delivery, DeliveryForm } from '../models/delivery.model';
-import { addDoc, collection, deleteDoc, doc, Firestore, getDoc, getDocs, orderBy, query, Timestamp, where } from '@angular/fire/firestore';
+import { Delivery } from '../models/delivery.model';
+import {
+  addDoc,
+  collection,
+  deleteDoc,
+  doc,
+  Firestore,
+  getDoc,
+  getDocs,
+  orderBy,
+  query,
+  Timestamp,
+  where,
+} from '@angular/fire/firestore';
 import { DocumentDetail } from '../../document-maker/models/document-detail.model';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class DeliveryService {
   errorMessage$: BehaviorSubject<string> = new BehaviorSubject<string>('');
-  deliveries$: BehaviorSubject<Delivery[]> = new BehaviorSubject<Delivery[]>([]);
+  deliveries$: BehaviorSubject<Delivery[]> = new BehaviorSubject<Delivery[]>(
+    []
+  );
   isLoading$ = new BehaviorSubject<boolean>(false);
 
   constructor(private firestore: Firestore) {}
+
+
 
   async loadDeliveries(uid: string) {
     this.isLoading$.next(true);
     this.errorMessage$.next('');
     try {
       const collectionRef = collection(this.firestore, 'deliveries');
-      const q = query(collectionRef, where('uid', '==', uid), orderBy('createdAt', 'desc'));
+      const q = query(
+        collectionRef,
+        where('uid', '==', uid),
+        orderBy('createdAt', 'desc')
+      );
       const querySnapshot = await getDocs(q);
       const deliveries: Delivery[] = [];
       querySnapshot.forEach((doc) => {
@@ -37,7 +57,6 @@ export class DeliveryService {
       );
     } finally {
       this.isLoading$.next(false);
-      
     }
   }
 
@@ -66,16 +85,27 @@ export class DeliveryService {
     }
   }
 
-  async createDelivery(documentDetail : DocumentDetail, uid: string, deliveryNumber: number) {
+  async createDelivery(
+    documentDetail: DocumentDetail,
+    uid: string,
+    deliveryNumber: number
+  ) {
     this.isLoading$.next(true);
     this.errorMessage$.next('');
+    const delivery: Delivery = {
+      vendor: documentDetail.vendor,
+      customer: documentDetail.customer,
+      deliveryAddress: documentDetail.deliveryAddress,
+      productsList: documentDetail.productsList,
+      uid: uid,
+      num: deliveryNumber,
+    };
     try {
       const collectionRef = collection(this.firestore, 'deliveries');
       const docRef = await addDoc(collectionRef, {
-        ...documentDetail,
+        ...delivery,
         createdAt: Timestamp.fromDate(new Date()),
-        uid : uid,
-        num :deliveryNumber
+        
       });
       await this.loadDeliveries(uid);
       return docRef.id;
@@ -87,7 +117,6 @@ export class DeliveryService {
       return null;
     } finally {
       this.isLoading$.next(false);
-    
     }
   }
 
@@ -108,5 +137,3 @@ export class DeliveryService {
     }
   }
 }
-
-

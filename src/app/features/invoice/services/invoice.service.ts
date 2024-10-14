@@ -13,9 +13,8 @@ import {
   getDoc,
   orderBy,
 } from '@angular/fire/firestore';
-import {  Invoice } from '../models/invoice.model';
+import { Invoice } from '../models/invoice.model';
 import { DocumentDetail } from '../../document-maker/models/document-detail.model';
-
 
 @Injectable({
   providedIn: 'root',
@@ -27,10 +26,7 @@ export class InvoiceService {
 
   constructor(private firestore: Firestore) {}
 
-  
-
-
-  getTotalHT(invoice : Invoice): number {
+  getTotalHT(invoice: Invoice): number {
     const total = invoice.productsList.reduce(
       (acc, product) => acc + product.product.price * product.quantity,
       0
@@ -38,14 +34,16 @@ export class InvoiceService {
     return total;
   }
 
-
-
   async loadInvoices(uid: string) {
     this.isLoading$.next(true);
     this.errorMessage$.next('');
     try {
       const collectionRef = collection(this.firestore, 'invoices');
-      const q = query(collectionRef, where('uid', '==', uid), orderBy('createdAt', 'desc'));
+      const q = query(
+        collectionRef,
+        where('uid', '==', uid),
+        orderBy('createdAt', 'desc')
+      );
       const querySnapshot = await getDocs(q);
       const invoices: Invoice[] = [];
       querySnapshot.forEach((doc) => {
@@ -63,7 +61,6 @@ export class InvoiceService {
       );
     } finally {
       this.isLoading$.next(false);
-      
     }
   }
 
@@ -92,19 +89,32 @@ export class InvoiceService {
     }
   }
 
-  async createInvoice(documentDetail : DocumentDetail, uid : string, invoiceNumber : number) {
+  async createInvoice(
+    documentDetail: DocumentDetail,
+    uid: string,
+    invoiceNumber: number
+  ) {
     this.isLoading$.next(true);
     this.errorMessage$.next('');
+    const invoice: Invoice = {
+      customer: documentDetail.customer,
+      vendor: documentDetail.vendor,
+      deliveries: documentDetail.deliveries,
+      deposit: documentDetail.deposit,
+      discount: documentDetail.discount,
+      productsList: documentDetail.productsList,
+      num: invoiceNumber,
+      uid: uid,
+    };
     try {
       const collectionRef = collection(this.firestore, 'invoices');
       const docRef = await addDoc(collectionRef, {
-        ...documentDetail,
+        ...invoice,
         createdAt: Timestamp.fromDate(new Date()),
-        uid : uid,
-        num : invoiceNumber
+        totalHt: this.getTotalHT(invoice),
       });
       await this.loadInvoices(uid);
-      return docRef.id
+      return docRef.id;
     } catch (error) {
       console.error(error);
       this.errorMessage$.next(
@@ -113,7 +123,6 @@ export class InvoiceService {
       return null;
     } finally {
       this.isLoading$.next(false);
-    
     }
   }
 

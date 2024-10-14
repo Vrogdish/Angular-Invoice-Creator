@@ -1,14 +1,14 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { CivilityEnum } from '../../../shared/models/civility.model';
-import {
-  DeliveryAdress,
-  DocumentDetail,
-} from '../models/document-detail.model';
+import { DocumentDetail } from '../models/document-detail.model';
 import { UserProfile } from '../../profile/models/userProfile.model';
 import { Customer } from '../../customers/models/customer.model';
 import { Product } from '../../products/models/product.model';
-import { Delivery } from '../../delivery/models/delivery.model';
+import {
+  Delivery,
+  DeliveryAddress,
+} from '../../delivery/models/delivery.model';
 
 @Injectable({
   providedIn: 'root',
@@ -114,7 +114,7 @@ export class DocumentMakerService {
     });
   }
 
-  updateDeliveryAddress(deliveryAddress: DeliveryAdress) {
+  updateDeliveryAddress(deliveryAddress: DeliveryAddress) {
     this.documentDetail$.next({
       ...this.documentDetail$.value,
       deliveryAddress: {
@@ -196,6 +196,9 @@ export class DocumentMakerService {
   }
 
   addDelivery(delivery: Delivery): void {
+    if (!delivery.id) {
+      return;
+    }
     this.documentDetail$.next({
       ...this.documentDetail$.value,
       deliveries: [

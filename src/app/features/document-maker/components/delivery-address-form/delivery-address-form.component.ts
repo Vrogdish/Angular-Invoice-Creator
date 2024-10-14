@@ -7,9 +7,9 @@ import {
   Validators,
 } from '@angular/forms';
 import { BtnComponent } from '../../../../shared/components/btn/btn.component';
-import { DeliveryAddressForm } from '../../models/document-detail.model';
 import { DocumentMakerService } from '../../services/document-maker.service';
 import { Subscription } from 'rxjs';
+import { DeliveryAddressForm } from '../../../delivery/models/delivery.model';
 
 @Component({
   selector: 'app-delivery-address-form',

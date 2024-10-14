@@ -2,9 +2,10 @@ import { FormControl } from "@angular/forms";
 import { CivilityEnum } from "./civility.model";
 
 export interface Contact {
+    id?: string;
     civility: CivilityEnum;
-    firstName: string;
-    lastName: string;
+    firstname: string;
+    lastname: string;
     company: string;
     email: string;
     phone: string;
@@ -16,8 +17,8 @@ export interface Contact {
 
 export interface ContactForm {
     civility : FormControl<string | null>,
-    firstName : FormControl<string | null>,
-    lastName : FormControl<string | null>,
+    firstname : FormControl<string | null>,
+    lastname : FormControl<string | null>,
     company : FormControl<string | null>,
     email : FormControl<string | null>,
     phone : FormControl<string | null>,

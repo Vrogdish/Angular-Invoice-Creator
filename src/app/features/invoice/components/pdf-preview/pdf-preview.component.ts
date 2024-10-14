@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { Invoice, InvoiceForm } from '../../models/invoice.model';
+import { Invoice } from '../../models/invoice.model';
 import { NgxExtendedPdfViewerModule } from 'ngx-extended-pdf-viewer';
 import pdfMake from 'pdfmake/build/pdfmake';
 import pdfFonts from 'pdfmake/build/vfs_fonts';
@@ -15,7 +15,7 @@ import { PdfViewerModule } from 'ng2-pdf-viewer';
   imports: [NgxExtendedPdfViewerModule, CommonModule, PdfViewerModule],
 })
 export class PdfPreviewComponent implements OnInit {
-  @Input({ required: true }) invoice!: InvoiceForm | Invoice;
+  @Input({ required: true }) invoice!: Invoice;
   // eslint-disable-next-line  @typescript-eslint/no-explicit-any
   pdfSrc!: any;
   totalHT!: number;
@@ -114,7 +114,7 @@ export class PdfPreviewComponent implements OnInit {
         {
           text:
             'Date de facturation : ' +
-            this.invoice.createdAt.toLocaleDateString(),
+            this.invoice.createdAt?.toLocaleDateString(),
           margin: [0, 0, 0, 30],
         },
 

@@ -14,7 +14,7 @@ export interface Product {
     description: string;
     price: number;
     tva : TvaEnum;
-    uid: string;
+    uid?: string;
 }
 
 export interface ProductForm {

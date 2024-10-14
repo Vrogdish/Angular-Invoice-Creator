@@ -97,7 +97,7 @@ export class PdfDeliveryPreviewComponent implements OnInit {
 
         {
           text:
-            'Date de création du bon : ' + this.delivery.createdAt.toLocaleDateString(),
+            'Date de création du bon : ' + this.delivery.createdAt?.toLocaleDateString(),
           margin: [0, 0, 0, 30],
         },
 

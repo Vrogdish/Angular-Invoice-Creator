@@ -1,62 +1,22 @@
-import { FormControl } from '@angular/forms';
-import { CivilityEnum } from '../../../shared/models/civility.model';
 import { Product } from '../../products/models/product.model';
+import { Contact } from '../../../shared/models/contact.model';
 
-export interface InvoiceVendorForm {
-  civility: CivilityEnum;
-  firstname: string;
-  lastname: string;
-  email: string;
-  company: string;
-  phone: string;
-  address: string;
-  postalCode: string;
-  city: string;
-  country: string;
-}
-
-export interface InvoiceCustomerForm {
-  civility: CivilityEnum;
-  firstname: string;
-  lastname: string;
-  email: string;
-  company: string;
-  phone: string;
-  address: string;
-  postalCode: string;
-  city: string;
-  country: string;
-}
-
-export interface DeliveryAddress {
-  address: string;
-  postalCode: string;
-  city: string;
-  country: string;
-}
-
-export interface DeliveryAddressForm {
-  address: FormControl<string | null>;
-  postalCode: FormControl<string | null>;
-  city: FormControl<string | null>;
-  country: FormControl<string | null>;
-}
-
-export interface InvoiceForm {
-  uid: string;
+export interface Invoice {
+  id?: string;
+  uid?: string;
   num: number;
-  createdAt: Date;
+  createdAt?: Date;
   deposit: number;
   discount: number;
-  deliveries: number[];
-  vendor: InvoiceVendorForm;
-  customer: InvoiceCustomerForm;
+  deliveries: {
+    id: string;
+    num: number;
+  }[];
+  vendor: Contact;
+  customer: Contact;
   productsList: {
     product: Product;
     quantity: number;
   }[];
-}
-
-export interface Invoice extends InvoiceForm {
-  id: string;
+  totalHt?: number;
 }

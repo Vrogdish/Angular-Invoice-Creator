@@ -1,37 +1,11 @@
-import { FormControl } from "@angular/forms";
+import { Contact } from "../../../shared/models/contact.model";
+import { DeliveryAddress } from "../../delivery/models/delivery.model";
+
 
 export interface DocumentDetail {
-  vendor: {
-    civility: string;
-    firstname: string;
-    lastname: string;
-    company: string;
-    email: string;
-    phone: string;
-    address: string;
-    city: string;
-    postalCode: string;
-    country: string;
-  };
-  customer: {
-    id: string;
-    civility: string;
-    company: string;
-    firstname: string;
-    lastname: string;
-    email: string;
-    phone: string;
-    address: string;
-    city: string;
-    postalCode: string;
-    country: string;
-  };
-  deliveryAddress: {
-    address: string;
-    postalCode: string;
-    city: string;
-    country: string;
-  };
+  vendor: Contact;
+  customer: Contact;
+  deliveryAddress: DeliveryAddress
   productsList: {
     product: {
       id : string;
@@ -51,16 +25,5 @@ export interface DocumentDetail {
   discount: number;
 }
 
-export interface DeliveryAdress {
-  address: string;
-  postalCode: string;
-  city: string;
-  country: string;
-}
 
-export interface DeliveryAddressForm {
-  address: FormControl< string | null>;
-  postalCode: FormControl< string | null>;
-  city: FormControl< string | null>;
-  country: FormControl< string | null>;
-}
+

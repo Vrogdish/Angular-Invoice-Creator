@@ -5,7 +5,7 @@ import { DocumentMakerService } from './services/document-maker.service';
 import { InvoiceService } from '../invoice/services/invoice.service';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { createModeEnum } from './models/create-mode.model';
+import { DocumentTypeEnum } from './models/document-type.model';
 import { SelectCustomerComponent } from './components/select-customer/select-customer.component';
 import { DeliveryAddressFormComponent } from './components/delivery-address-form/delivery-address-form.component';
 import { SelectProductsComponent } from './components/select-products/select-products.component';
@@ -36,7 +36,7 @@ export class DocumentMakerComponent implements OnInit {
   step$!: BehaviorSubject<number>;
   documentDetail$!: BehaviorSubject<DocumentDetail>;
   user$!: Observable<User | null>;
-  createMode!: createModeEnum;
+  createMode!: DocumentTypeEnum;
   invoiceType!: 'manual' | 'withDelivery' | null;
 
   constructor(
@@ -52,7 +52,7 @@ export class DocumentMakerComponent implements OnInit {
     this.activatedRoute.url.subscribe((url) => {
       console.log(url);
 
-      this.createMode = url[0].path as createModeEnum;
+      this.createMode = url[0].path as DocumentTypeEnum;
     });
 
     this.step$ = this.documentMakerService.step$;
