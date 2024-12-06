@@ -50,14 +50,14 @@
         (removeDeliveryEmitter)="removeDelivery($event)"
       ></app-select-deliveries>
     </div>
-    <div class="btn">
+    <div class="btn" *ngIf="invoiceMode() !== 'none'">
       <app-btn
         title="Précédent"
         theme="secondary"
         (handleClick)="previousStep()"
       />
       <app-btn
-        title="Créer le bon"
+        title="Créer la facture"
         theme="primary"
         [isDisabled]="!hasProducts"
         (handleClick)="createInvoice()"
@@ -66,4 +66,3 @@
   </div>
 
 </div>
-<pre> {{invoiceForm.value |json}}</pre>

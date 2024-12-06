@@ -41,8 +41,8 @@
           </td>
         </ng-container>
         <ng-container matColumnDef="customer">
-          <th mat-header-cell *matHeaderCellDef>Client</th>
-          <td mat-cell *matCellDef="let delivery">
+          <th mat-header-cell *matHeaderCellDef class="customer">Client</th>
+          <td mat-cell *matCellDef="let delivery" class="customer">
             {{ delivery.customer.civility }} {{ delivery.customer.firstname }}
             {{ delivery.customer.lastname | uppercase }}
           </td>
@@ -129,5 +129,8 @@
         </p>
       </div>
     </div>
+    <div class="alert">
+    <p>Attention : les bons de livraison sélectionné seront supprimé après la création de facture</p>
+    <p>Assurez-vous d'avoir sauvegardé vos bons sur votre appareil</p></div>
   </div>
 </div>

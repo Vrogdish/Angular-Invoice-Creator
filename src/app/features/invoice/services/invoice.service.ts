@@ -12,8 +12,10 @@ import {
   doc,
   getDoc,
   orderBy,
+  writeBatch,
 } from '@angular/fire/firestore';
 import { Invoice } from '../models/invoice.model';
+import { DeliveryService } from '../../delivery/services/delivery.service';
 
 @Injectable({
   providedIn: 'root',
@@ -23,7 +25,7 @@ export class InvoiceService {
   invoices$: BehaviorSubject<Invoice[]> = new BehaviorSubject<Invoice[]>([]);
   isLoading$ = new BehaviorSubject<boolean>(false);
 
-  constructor(private firestore: Firestore) {}
+  constructor(private firestore: Firestore, private deliverySerice : DeliveryService) {}
 
   getTotalHT(invoice: Invoice): number {
     const total = invoice.productsList.reduce(
@@ -88,25 +90,35 @@ export class InvoiceService {
     }
   }
 
-  async createInvoice(
-    invoice : Invoice, 
-  ) {
+ 
+
+  async createInvoice(invoice: Invoice) {
     this.isLoading$.next(true);
     this.errorMessage$.next('');
-   
     try {
       const collectionRef = collection(this.firestore, 'invoices');
       const docRef = await addDoc(collectionRef, {
         ...invoice,
         createdAt: Timestamp.fromDate(new Date()),
-        totalHt: this.getTotalHT(invoice),
       });
+      if (invoice.deliveries && invoice.deliveries.length > 0) {
+        let batch = writeBatch(this.firestore);
+
+        for (const delivery of invoice.deliveries) {
+          const deliveryDocRef = doc(this.firestore, 'deliveries', delivery.id);
+          batch.delete(deliveryDocRef);
+
+          await batch.commit();
+          batch = writeBatch(this.firestore);
+        }
+      }
       await this.loadInvoices(invoice.uid);
+      await this.deliverySerice.loadDeliveries(invoice.uid);
       return docRef.id;
     } catch (error) {
       console.error(error);
       this.errorMessage$.next(
-        'Impossible de créer la facture. Veuillez réessayer.'
+        'Impossible de créer la facture ou de supprimer les bons de livraison associés. Veuillez réessayer.'
       );
       return null;
     } finally {
