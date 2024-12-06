@@ -33,6 +33,7 @@ export class DeliveryFormComponent implements OnInit {
   deliveryFormBuilder!: DeliveryForm;
   profile$ = this.profileService.profile$;
   step = 1;
+  totalAmount = 0;
 
   constructor(private profileService: ProfileService, private deliveryService : DeliveryService, private router : Router) {}
 
@@ -78,11 +79,13 @@ export class DeliveryFormComponent implements OnInit {
       quantity: new FormControl(product.quantity),
     });
     productsList.push(productGroup);
+    this.calculateTotalAmount();
   }
 
   removeProduct(index: number): void {
     const productsList = this.deliveryForm.get('productsList') as FormArray;
     productsList.removeAt(index);
+    this.calculateTotalAmount();
   }
 
   updateProductQuantity(event: { index: number; quantity: number }): void {
@@ -90,6 +93,7 @@ export class DeliveryFormComponent implements OnInit {
     const productGroup = productsList.at(event.index) as FormGroup;
     const quantity = productGroup.get('quantity')?.value + event.quantity;
     productGroup.patchValue({ quantity });
+    this.calculateTotalAmount();
   }
 
   get hasProducts(): boolean {
@@ -110,4 +114,14 @@ export class DeliveryFormComponent implements OnInit {
   previousStep(): void {
     this.step--;
   }
+
+  calculateTotalAmount(): void {
+    const productsList = this.deliveryForm.get('productsList') as FormArray;
+    this.totalAmount = productsList.controls.reduce((acc, productGroup) => {
+      const quantity = productGroup.get('quantity')?.value;
+      const price = productGroup.get('product.price')?.value;
+      return acc + quantity * price;
+    }, 0);
+  }
+
 }

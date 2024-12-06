@@ -67,17 +67,7 @@
         {{ delivery.deliveryAddress.city }}</p>
       </td>
     </ng-container>
-    <ng-container matColumnDef="invoice">
-      <th mat-header-cell *matHeaderCellDef class="invoice">N° de facture</th>
-      <td
-        mat-cell
-        *matCellDef="let delivery"
-        class="invoice"
-        [routerLink]="['/delivery/detail', delivery.id]"
-      >
-        -
-      </td>
-    </ng-container>
+    
 
     <ng-container matColumnDef="delete">
       <th mat-header-cell *matHeaderCellDef class="delete">

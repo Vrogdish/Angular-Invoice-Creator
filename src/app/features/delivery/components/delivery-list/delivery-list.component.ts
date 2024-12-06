@@ -62,7 +62,6 @@ export class DeliveryListComponent implements OnChanges, OnInit, OnDestroy {
     'customer',
     'products',
     'address',
-    'invoice',
     'delete',
   ];
   invoices! : Invoice[];

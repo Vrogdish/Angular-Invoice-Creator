@@ -25,6 +25,7 @@
   <div class="product" *ngIf="step === 2">
     <app-select-product
       [form]="deliveryForm"
+      [totalAmount]="totalAmount"
       (addCartItemEmitter)="addProduct($event)"
       (updateProductQuantityEmitter)="updateProductQuantity($event)"
       (removeCartItemEmitter)="removeProduct($event)"

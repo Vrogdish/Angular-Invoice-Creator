@@ -15,7 +15,7 @@ import { Delivery } from '../../models/delivery.model';
   styleUrl: './pdf-delivery-preview.component.scss',
 })
 export class PdfDeliveryPreviewComponent implements OnInit {
-  @Input({required:true}) delivery!: Delivery;
+  @Input({ required: true }) delivery!: Delivery;
   // eslint-disable-next-line  @typescript-eslint/no-explicit-any
   pdfSrc!: any;
 
@@ -24,7 +24,6 @@ export class PdfDeliveryPreviewComponent implements OnInit {
     this.updatePdfSrc();
   }
 
-  
   downloadPdf() {
     const documentDefinition = this.getDocDefinition();
     pdfMake.createPdf(documentDefinition).download();
@@ -93,11 +92,14 @@ export class PdfDeliveryPreviewComponent implements OnInit {
           style: 'adress',
           alignment: 'justify',
         },
-        
+        {
+          text: 'Numero de bon : ' + this.delivery.num,
+        },
 
         {
           text:
-            'Date de création du bon : ' + this.delivery.createdAt?.toLocaleDateString(),
+            'Date de création du bon : ' +
+            this.delivery.createdAt?.toLocaleDateString(),
           margin: [0, 0, 0, 30],
         },
 
@@ -105,27 +107,30 @@ export class PdfDeliveryPreviewComponent implements OnInit {
           table: {
             widths: [60, '*', 100, 60, 100],
             body: [
-              [
-                'Ref',
-                'Article',
-                
-                'Quantité',
-                
-              ],
+              ['Ref', 'Article', 'Quantité'],
               ...this.delivery.productsList.map((product) => [
                 product.product.reference,
                 product.product.name,
-             
+
                 product.quantity,
-              
               ]),
             ],
           },
           style: 'table',
         },
 
-        
-    
+        {
+          text:
+            'Adresse de livraison : ' +
+            '\n' +
+            '\n' +
+            this.delivery.deliveryAddress.address +
+            '\n' +
+            this.delivery.deliveryAddress.postalCode +
+            ' ' +
+            this.delivery.deliveryAddress.city,
+          margin: [0, 30],
+        },
       ],
       footer: () => {
         return {
@@ -139,7 +144,7 @@ export class PdfDeliveryPreviewComponent implements OnInit {
                     this.delivery.vendor.firstname) +
                 '  -  ' +
                 (this.delivery.vendor.phone &&
-                  'Téléphone : ' + this.delivery.vendor.phone + " - ") +
+                  'Téléphone : ' + this.delivery.vendor.phone + ' - ') +
                 (this.delivery.vendor.email &&
                   'Email : ' + this.delivery.vendor.email),
               style: 'footer',
@@ -171,5 +176,4 @@ export class PdfDeliveryPreviewComponent implements OnInit {
       },
     };
   }
-
 }
