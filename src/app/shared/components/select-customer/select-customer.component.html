@@ -1,0 +1,55 @@
+
+    <h2 >Choix du client :</h2>
+    <div *ngIf="customers$ | async as customers">
+      <ng-select
+        placeholder="Rechercher un client"
+        (change)="setCustomer($event)"
+        (clear)="resetCustomer()"
+        notFoundText="Aucun client trouvé"
+      >
+        @for (customer of customers; track customer.id) {
+        <ng-option [value]="customer"
+          >
+          <p>{{ customer.firstname }} {{ customer.lastname | uppercase }}</p>
+          <p class="address">{{ customer.address }} - {{customer.city }}</p>
+          </ng-option>
+        }
+      </ng-select>
+    </div>
+  
+    <div class="card">
+      <div class="card-item">
+        <img src="/icons/user.png" alt="nom" />
+        <p>
+          {{ customerSelected?.civility }}
+          {{ customerSelected?.firstname }}
+          {{ customerSelected?.lastname || "-" }}
+        </p>
+      </div>
+      <div class="card-item">
+        <img src="/icons/corporate.png" alt="société" />
+        <p>{{ customerSelected?.company || "-" }}</p>
+      </div>
+      <div class="card-item">
+        <img src="/icons/home.png" alt="adresse" />
+        <div>
+          <p>
+            {{ customerSelected?.address || "-" }}
+          </p>
+          <p>
+            {{ customerSelected?.postalCode }}
+            {{ customerSelected?.city }}
+          </p>
+        </div>
+      </div>
+      <div class="card-item">
+        <img src="/icons/phone.png" alt="téléphone" />
+        <p>{{ customerSelected?.phone || "-" }}</p>
+      </div>
+      <div class="card-item">
+        <img src="/icons/email.png" alt="email" />
+        <p>{{ customerSelected?.email || "-" }}</p>
+      </div>
+    </div>
+ 
+  

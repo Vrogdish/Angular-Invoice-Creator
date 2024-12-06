@@ -1,4 +1,4 @@
-import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, Input, OnChanges, OnDestroy, OnInit, SimpleChanges } from '@angular/core';
 import { Delivery } from '../../models/delivery.model';
 import { MatTableModule } from '@angular/material/table';
 import { MatDialog, MatDialogActions, MatDialogClose, MatDialogContent, MatDialogRef, MatDialogTitle } from '@angular/material/dialog';
@@ -9,6 +9,9 @@ import { AuthService } from '../../../../core/auth/services/auth.service';
 import { MatButtonModule } from '@angular/material/button';
 import { RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import { InvoiceService } from '../../../invoice/services/invoice.service';
+import { Invoice } from '../../../invoice/models/invoice.model';
+import { Subscription } from 'rxjs';
 
 
 @Component({
@@ -49,7 +52,7 @@ export class DialogComponent {
   templateUrl: './delivery-list.component.html',
   styleUrl: './delivery-list.component.scss'
 })
-export class DeliveryListComponent implements OnChanges {
+export class DeliveryListComponent implements OnChanges, OnInit, OnDestroy {
   @Input() deliveries: Delivery[] = [];
   @Input() searchQuery = '';
   filteredDelivery: Delivery[] = [];
@@ -62,17 +65,30 @@ export class DeliveryListComponent implements OnChanges {
     'invoice',
     'delete',
   ];
+  invoices! : Invoice[];
+  subscription!: Subscription;
 
   constructor(
     private dialog: MatDialog,
     private deliveryService: DeliveryService,
-    private auth: AuthService
+    private auth: AuthService,
+    private invoiceService: InvoiceService
     ) {}
+
+    ngOnInit(): void {
+      this.subscription = (this.invoiceService.invoices$.subscribe((invoices) => {
+        this.invoices = invoices;
+      }))
+    }
 
     ngOnChanges(changes: SimpleChanges) {
       if (changes['deliveries'] || changes['searchQuery']) {
         this.filterDelivery();
       }
+    }
+
+    ngOnDestroy() {
+      this.subscription.unsubscribe();
     }
   
     private filterDelivery() {
@@ -104,6 +120,8 @@ export class DeliveryListComponent implements OnChanges {
         }
       });
     }
+
+    
   }
 
 

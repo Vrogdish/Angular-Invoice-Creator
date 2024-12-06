@@ -6,9 +6,8 @@ import { SearchBarComponent } from '../../shared/components/search-bar/search-ba
 import { BtnComponent } from '../../shared/components/btn/btn.component';
 import { CommonModule } from '@angular/common';
 import { InvoicesListComponent } from './components/invoices-list/invoices-list.component';
-import { Router, RouterLink } from '@angular/router';
+import { RouterLink } from '@angular/router';
 import { LoaderComponent } from '../../shared/components/loader/loader.component';
-import { DocumentMakerService } from '../document-maker/services/document-maker.service';
 import { ProfileService } from '../profile/services/profile.service';
 import { UserProfile } from '../profile/models/userProfile.model';
 
@@ -34,8 +33,6 @@ export class InvoiceComponent implements OnInit {
 
   constructor(
     private invoiceService: InvoiceService,
-    private documentMakerService: DocumentMakerService,
-    private router: Router,
     private profileService: ProfileService
   ) {}
 
@@ -45,18 +42,7 @@ export class InvoiceComponent implements OnInit {
     this.userProfile$ = this.profileService.profile$;
   }
 
- 
-
   onSearch(query: string) {
     this.searchQuery = query;
-  }
-
-  newDocument() {
-    this.documentMakerService.resetDocumentDetail();
-    this.documentMakerService.setStep(1);
-    this.userProfile$.subscribe((profile) => {
-      if (profile) this.documentMakerService.initDocumentDetail(profile);
-    });
-    this.router.navigate(['invoice/create']);
   }
 }

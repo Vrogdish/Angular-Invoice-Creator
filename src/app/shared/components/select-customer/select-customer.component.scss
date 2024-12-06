@@ -1,4 +1,4 @@
-@import "../../../shared/styles/colors.scss";
+@import "../../styles/colors.scss";
 
 .select {
   margin: 10px 0;
@@ -6,6 +6,11 @@
 
 h2{
   margin: 20px 0;
+}
+
+.address {
+  font-size: small;
+  color: gray;
 }
 
 .card {

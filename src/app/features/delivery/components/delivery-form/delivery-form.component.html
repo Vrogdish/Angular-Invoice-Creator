@@ -1,0 +1,48 @@
+<div class="delivery-form">
+  <h1>Création d&apos;un bon de livraison</h1>
+
+  <div class="cutomer" *ngIf="step === 1">
+    <app-select-customer
+      [form]="deliveryForm"
+      (customerEmitter)="patchCustomer($event)"
+    ></app-select-customer>
+
+    <app-delivery-address-form
+      [deliveryForm]="deliveryForm"
+    ></app-delivery-address-form>
+
+    <div class="btn">
+      <app-btn title="Annuler" theme="secondary" [routerLink]="'/delivery'" />
+      <app-btn
+        title="Suivant"
+        (handleClick)="nextStep()"
+        [theme]=" 'primary' "
+        [isDisabled]="deliveryForm.invalid"
+      />
+    </div>
+  </div>
+
+  <div class="product" *ngIf="step === 2">
+    <app-select-product
+      [form]="deliveryForm"
+      (addCartItemEmitter)="addProduct($event)"
+      (updateProductQuantityEmitter)="updateProductQuantity($event)"
+      (removeCartItemEmitter)="removeProduct($event)"
+    ></app-select-product>
+
+    <div class="btn">
+      <app-btn
+        title="Précédent"
+        theme="secondary"
+        (handleClick)="previousStep()"
+      />
+      <app-btn
+        title="Créer le bon"
+        theme="primary"
+        [isDisabled]="!hasProducts"
+        (handleClick)="createDelivery()"
+      />
+    </div>
+  </div>
+
+</div>

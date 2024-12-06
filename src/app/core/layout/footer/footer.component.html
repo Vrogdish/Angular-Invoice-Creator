@@ -12,10 +12,8 @@
         <input type="email" placeholder="Email" formControlName="email" />
         <textarea placeholder="Message (10 caractères minimum)" formControlName="message"></textarea>
 
-        <app-btn *ngIf="contactForm.valid else disable"  theme="secondary" title="Envoyer" (handleClick)="onSubmit()" />
-        <ng-template #disable>
-        <app-btn  theme="disabled" title="Envoyer"  />
-        </ng-template>
+        <app-btn theme="secondary" title="Envoyer" (handleClick)="onSubmit()" [isDisabled]="contactForm.invalid" />
+
 
       </form>
       <p class="error-message" >{{ errorMessage }}</p>

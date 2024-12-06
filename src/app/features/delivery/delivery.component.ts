@@ -7,8 +7,7 @@ import { BehaviorSubject, Subscription } from 'rxjs';
 import { Delivery } from './models/delivery.model';
 import { DeliveryListComponent } from './components/delivery-list/delivery-list.component';
 import { DeliveryService } from './services/delivery.service';
-import { Router, RouterLink } from '@angular/router';
-import { DocumentMakerService } from '../document-maker/services/document-maker.service';
+import {  RouterLink } from '@angular/router';
 import { ProfileService } from '../profile/services/profile.service';
 import { UserProfile } from '../profile/models/userProfile.model';
 
@@ -32,12 +31,11 @@ export class DeliveryComponent implements OnInit {
   searchQuery = '';
   subscription: Subscription = new Subscription();
   isLoading$!: BehaviorSubject<boolean>;
+  deliveriesWithInvoices! : {Delivery : Delivery, InvoiceID : string | null}[];
 
   constructor(
     private deliveryService: DeliveryService,
-    private documentMakerService: DocumentMakerService,
     private profileService: ProfileService,
-    private router : Router
   ) {}
 
   ngOnInit(): void {
@@ -50,12 +48,5 @@ export class DeliveryComponent implements OnInit {
     this.searchQuery = query;
   }
 
-  newDocument() {
-    this.documentMakerService.resetDocumentDetail();
-    this.documentMakerService.setStep(1);
-    this.userProfile$.subscribe((profile) => {
-      if (profile) this.documentMakerService.initDocumentDetail(profile);
-    });
-    this.router.navigate(['delivery/create']);
-  }
+
 }

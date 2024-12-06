@@ -35,7 +35,6 @@ export class DeliveryDetailComponent implements OnInit, OnDestroy {
         this.id = params['id'];
         if (this.id) {
           this.delivery = await this.deliveryService.getDeliveryById(this.id);
-          console.log(this.delivery);
           
         }
       })

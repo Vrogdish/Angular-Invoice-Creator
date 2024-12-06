@@ -14,7 +14,6 @@ import {
   Timestamp,
   where,
 } from '@angular/fire/firestore';
-import { DocumentDetail } from '../../document-maker/models/document-detail.model';
 
 @Injectable({
   providedIn: 'root',
@@ -86,28 +85,18 @@ export class DeliveryService {
   }
 
   async createDelivery(
-    documentDetail: DocumentDetail,
-    uid: string,
-    deliveryNumber: number
+    delivery: Delivery,
   ) {
     this.isLoading$.next(true);
-    this.errorMessage$.next('');
-    const delivery: Delivery = {
-      vendor: documentDetail.vendor,
-      customer: documentDetail.customer,
-      deliveryAddress: documentDetail.deliveryAddress,
-      productsList: documentDetail.productsList,
-      uid: uid,
-      num: deliveryNumber,
-    };
+    this.errorMessage$.next('');  
     try {
       const collectionRef = collection(this.firestore, 'deliveries');
       const docRef = await addDoc(collectionRef, {
         ...delivery,
-        createdAt: Timestamp.fromDate(new Date()),
+        createdAt: Timestamp.fromDate(delivery.createdAt),
         
       });
-      await this.loadDeliveries(uid);
+      await this.loadDeliveries(delivery.uid);
       return docRef.id;
     } catch (error) {
       console.error(error);
@@ -135,5 +124,11 @@ export class DeliveryService {
     } finally {
       this.isLoading$.next(false);
     }
+  }
+
+  getDeliveriesbyCustomer(customerId: string) : Delivery[] {
+    return this.deliveries$.value.filter(
+      (delivery) => delivery.customer.id === customerId
+    );
   }
 }

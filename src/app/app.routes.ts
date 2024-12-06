@@ -20,9 +20,10 @@ import { PrivacyPolicyComponent } from './features/legals/privacy-policy/privacy
 import { TermsOfServiceComponent } from './features/legals/terms-of-service/terms-of-service.component';
 import { HelpComponent } from './features/help/help.component';
 import { DeliveryComponent } from './features/delivery/delivery.component';
-import { DocumentMakerComponent } from './features/document-maker/document-maker.component';
 import { DeliveryDetailComponent } from './features/delivery/components/delivery-detail/delivery-detail.component';
 import { EmailVerificationComponent } from './features/email-verification/email-verification.component';
+import { DeliveryFormComponent } from './features/delivery/components/delivery-form/delivery-form.component';
+import { InvoiceFormComponent } from './features/invoice/components/invoice-form/invoice-form.component';
 
 export const routes: Routes = [
   {
@@ -86,9 +87,10 @@ export const routes: Routes = [
     component: InvoiceComponent,
     canActivate: [authGuard],
   },
+
   {
-    path: 'invoice/create',
-    component: DocumentMakerComponent,
+    path: 'invoice/new',
+    component: InvoiceFormComponent,
     canActivate: [authGuard],
   },
   {
@@ -106,11 +108,13 @@ export const routes: Routes = [
     component: DeliveryComponent,
     canActivate: [authGuard],
   },
+
   {
-    path: 'delivery/create',
-    component: DocumentMakerComponent,
+    path: 'delivery/new',
+    component: DeliveryFormComponent,
     canActivate: [authGuard],
   },
+
   {
     path: 'delivery/detail/:id',
     component: DeliveryDetailComponent,

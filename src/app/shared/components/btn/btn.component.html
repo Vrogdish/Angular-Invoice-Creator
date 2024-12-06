@@ -1,6 +1,6 @@
 <button
   (click)="handleclick()"
-  [ngClass]="theme"
+  [ngClass]="!isDisabled ? theme : 'disabled'"
   type="{{ typeVariant }}"
   [disabled]="isDisabled"
 >

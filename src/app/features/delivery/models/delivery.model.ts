@@ -28,8 +28,9 @@ export interface Delivery {
     product: Product;
     quantity: number;
   }[];
-  createdAt?: Date;
+  createdAt: Date;
   uid: string;
+
 }
 
 

@@ -1,0 +1,69 @@
+<div class="invoice-form">
+  <h1>Création de factures</h1>
+  <div class="cutomer" *ngIf="step === 1">
+    <app-select-customer
+      [form]="invoiceForm"
+      (customerEmitter)="patchCustomer($event)"
+    ></app-select-customer>
+    <div class="btn">
+      <app-btn title="Annuler" theme="secondary" [routerLink]="'/invoice'" />
+      <app-btn
+        title="Suivant"
+        (handleClick)="nextStep()"
+        [theme]="'primary'"
+        [isDisabled]="invoiceForm.invalid"
+      />
+    </div>
+  </div>
+  <div class="product" *ngIf="step === 2">
+    <div *ngIf="invoiceMode() === 'none'">
+      <h2>Choisissez comment créer votre facture :</h2>
+      <div class="btn-choice">
+        <app-btn
+          title="Manuellement"
+          theme="secondary"
+          (handleClick)="setInvoiceModeManual()"
+        />
+        <app-btn
+          title="A partir des bons de livraison"
+          theme="secondary"
+          (handleClick)="setInvoiceModeWithDelivery()"
+        />
+      </div>
+    </div>
+    <div *ngIf="invoiceMode() === 'manual'">
+      <app-select-product
+        [form]="invoiceForm"
+        [totalAmount]="totalAmount"
+        (addCartItemEmitter)="addProduct($event)"
+        (updateProductQuantityEmitter)="updateProductQuantity($event)"
+        (removeCartItemEmitter)="removeProduct($event)"
+      ></app-select-product>
+    </div>
+    <div *ngIf="invoiceMode() === 'withDelivery'">
+      <app-select-deliveries
+        [cart]="cart"
+        [deliveries]="filteredDeliveries"
+        [selectedDeliveries]="selectedDeliveries()"
+        [totalAmount]="totalAmount"
+        (addDeliveryEmitter)="addDelivery($event)"
+        (removeDeliveryEmitter)="removeDelivery($event)"
+      ></app-select-deliveries>
+    </div>
+    <div class="btn">
+      <app-btn
+        title="Précédent"
+        theme="secondary"
+        (handleClick)="previousStep()"
+      />
+      <app-btn
+        title="Créer le bon"
+        theme="primary"
+        [isDisabled]="!hasProducts"
+        (handleClick)="createInvoice()"
+      />
+    </div>
+  </div>
+
+</div>
+<pre> {{invoiceForm.value |json}}</pre>

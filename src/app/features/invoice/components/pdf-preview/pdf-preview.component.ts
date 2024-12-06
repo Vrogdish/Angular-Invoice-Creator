@@ -32,7 +32,9 @@ export class PdfPreviewComponent implements OnInit {
     this.totalTTC = this.invoice.productsList.reduce(
       (acc, product) =>
         acc +
-        product.product.price * product.quantity * (1 + product.product.tva / 100),
+        product.product.price *
+          product.quantity *
+          (1 + product.product.tva / 100),
       0
     );
     this.totalTva = this.totalTTC - this.totalHT;
@@ -154,7 +156,15 @@ export class PdfPreviewComponent implements OnInit {
           margin: [0, 30, 0, 0],
         },
         {
+          text: this.invoice.deliveries.length > 0 ? 'Liste des bons de livraison associés à cette facture :' : '',
+          margin: [0, 0, 0, 5],
+        },
+        {
+          text: this.invoice.deliveries.map((delivery) => delivery.num + '\n'),
+        },
+        {
           text: 'Merci de votre confiance.',
+          margin: [0, 30, 0, 0],
         },
       ],
       footer: () => {

@@ -1,22 +1,19 @@
-import { Product } from '../../products/models/product.model';
 import { Contact } from '../../../shared/models/contact.model';
+import { CartItem } from '../../../shared/models/cartItem.model';
 
 export interface Invoice {
   id?: string;
-  uid?: string;
+  uid: string;
   num: number;
-  createdAt?: Date;
+  createdAt: Date;
   deposit: number;
   discount: number;
   deliveries: {
     id: string;
-    num: number;
+    num: string;
   }[];
   vendor: Contact;
   customer: Contact;
-  productsList: {
-    product: Product;
-    quantity: number;
-  }[];
-  totalHt?: number;
+  productsList: CartItem[];
+  totalHt: number;
 }

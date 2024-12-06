@@ -14,7 +14,6 @@ import {
   orderBy,
 } from '@angular/fire/firestore';
 import { Invoice } from '../models/invoice.model';
-import { DocumentDetail } from '../../document-maker/models/document-detail.model';
 
 @Injectable({
   providedIn: 'root',
@@ -90,22 +89,11 @@ export class InvoiceService {
   }
 
   async createInvoice(
-    documentDetail: DocumentDetail,
-    uid: string,
-    invoiceNumber: number
+    invoice : Invoice, 
   ) {
     this.isLoading$.next(true);
     this.errorMessage$.next('');
-    const invoice: Invoice = {
-      customer: documentDetail.customer,
-      vendor: documentDetail.vendor,
-      deliveries: documentDetail.deliveries,
-      deposit: documentDetail.deposit,
-      discount: documentDetail.discount,
-      productsList: documentDetail.productsList,
-      num: invoiceNumber,
-      uid: uid,
-    };
+   
     try {
       const collectionRef = collection(this.firestore, 'invoices');
       const docRef = await addDoc(collectionRef, {
@@ -113,7 +101,7 @@ export class InvoiceService {
         createdAt: Timestamp.fromDate(new Date()),
         totalHt: this.getTotalHT(invoice),
       });
-      await this.loadInvoices(uid);
+      await this.loadInvoices(invoice.uid);
       return docRef.id;
     } catch (error) {
       console.error(error);
